@@ -1,2 +1,4 @@
 # Cache-MoneyQL
-populate later
+This is a GraphQL project.
+
+\section{Getting Started}
