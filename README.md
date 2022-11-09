@@ -15,7 +15,7 @@ First, install the Redis package for Node.js
 
 Then install our npm package.
 
-## Technology stacks used
+## Tech stack used
 Node - Express - React - Material-UI - ChartJS - Redis - GraphQL - TypeScript - Jest - Supertest - AWS RDS - Webpack
 
 ## Here's how to contribute to our open source library
