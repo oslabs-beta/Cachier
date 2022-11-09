@@ -22,13 +22,13 @@ Node - Express - React - Material-UI - ChartJS - Redis - GraphQL - TypeScript - 
 Our vision for our open-source project is for fellow developers to be able to interate on and improve this tool. This is exactly where you and the community comes in. So, if you have an idea that can make CacheQL better, you can make that idea come to life by following the steps below: 
 
 1. Fork Cache-MoneyQL
-2. Pull down our dev branch with command (git pull origin dev)
-3. Create your own Feature Branch with the command (git checkout -b <yourFeatureName>)
-4. Add your changes with the command (git add .)
-5. Stage and commit your changes with the command (git commit -m "<your comment>")
-6. Merge your branch with the dev branch locally with the command (git merge dev)
+2. Pull down our dev branch with command  ```git pull origin dev```
+3. Create your own Feature Branch with the command ```git checkout -b <yourFeatureName>```
+4. Add your changes with the command ```git add .```
+5. Stage and commit your changes with the command ```git commit -m "<your comment>"```
+6. Merge your branch with the dev branch locally with the command ```git merge dev```
 7. Resolve any merge conflicts
-8. Push up your branch with the command (git push origin <your feature branch name>)
+8. Push up your branch with the command ```git push origin <your feature branch name>```
 9. Open a pull request
 
 Please star our repo if you've found this useful, we want to be able to help as many of developers as we can!
