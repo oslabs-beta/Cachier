@@ -8,10 +8,6 @@ const cors = require('cors');
 
 const PORT = 3000;
 
-// const REDIS_PORT = process.env.PORT || 6379;
-// const client = redis.createClient(REDIS_PORT);
-// client.connect();
-
 const app = express();
 
 app.use(express.json());
@@ -22,7 +18,6 @@ app.use('/graphql', expressGraphQL({
   schema: schema,
   graphiql: true,
 }));
-
 
 app.use((req, res) => res.status(404).send('Cannot get route'));
 
@@ -39,5 +34,4 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT,  () => console.log(`listening on port ${PORT}...`));
 
-//export default app;
 module.exports = app
