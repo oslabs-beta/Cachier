@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 const Demo = () => {
     const [queryData, setQueryData] = useState([]);
@@ -89,58 +90,66 @@ const Demo = () => {
 
     return (
         <div>
-          <Button variant='contained' size='medium' id='queryButton' onClick={handleQuery} >Run Query</Button>
-          <div>
-            Query Time Array
-            {displayQueryTimeArray()}
-          </div>
-          <Typography variant='h3'>Uncached Time: {queryTimeArray[0] ? queryTimeArray[0] : 0 }ms </Typography>
-          <Typography variant='h3'>Cached Time: {queryTime}ms</Typography>
-          <div id='queryString'> 
-            <h2>Query String</h2>
-            {queryString}
-          </div>
+          {
+        //   <Typography variant='h4'>
+        //     Query Time Array
+        //     {displayQueryTimeArray()}
+        //   </Typography>
+          }
         
-          <Grid container spacing={2}>
+          <Grid container spacing={5} alignItems="center" justifyContent="center">
               <Grid item>
-                <Container sx={{ pt: 5 }}>
-                    <TextField 
-                        id="outlined-multiline-static"
-                        label="Query String"
-                        multiline
-                        rows={7}
-                        defaultValue='{ 
-                            cities { 
-                                id 
-                                name 
-                                population
-                                country_id } 
-                        }'
-                    />
-                </Container>
+                <Box display='flex' flexDirection='column' sx={{gap : 3}}>
+                    <Container id='queryString'> 
+                        <h2>Query String</h2>
+                        {queryString}
+                    </Container>
+                    <Container sx={{ pt: 5  }}>
+                        <TextField 
+                            id="outlined-multiline-static"
+                            label="Query String"
+                            style ={{ width: 400}}
+                            multiline
+                            rows={7}
+                            defaultValue='{ 
+                                cities { 
+                                    id 
+                                    name 
+                                    population
+                                    country_id } 
+                            }'
+                        />
+                    </Container>
+                    <Button variant='contained' size='medium' id='queryButton' onClick={handleQuery} >Run Query</Button>
+                </Box>
               </Grid>
-              
+
               <Grid item>
                 <Typography variant='h2'>Query Result</Typography>
-                  <Container sx={{ overflow: 'auto', height:300, width: 500, backgroundColor:'lightgray', display:'flex', justifyContent: 'flex-start' }} className='queryResult'>
-                    <pre> {queryResult} </pre>
+                  <Container sx={{ overflow: 'auto', height:300, width: 500, backgroundColor:'black', display:'flex', justifyContent: 'flex-start', borderRadius:5 }} className='queryResult'>
+                    <pre style={{ fontWeight : 700, color:'white',  fontSize : 18 }}> {queryResult} </pre>
                   </Container>
               </Grid>
           </Grid>
         
+          <Grid container alignItems='center' justifyContent='center' flex sx={{pt: 5}} >
+            <Grid item>
+              <Box justifyContent='center' sx={{width: 500}}>
+                <Typography variant='h4'>Uncached Time: {queryTimeArray[0] ? queryTimeArray[0] : 0 }ms </Typography>
+                <Typography variant='h4'>Cached Time: {queryTime}ms</Typography>
+              </Box>
+            </Grid>
+
+            <Grid item sx={{width: 700}}>
+              <Box className="barChartContainer" justifyContent='center'>
+                <BarChart style={{width: 600}} chartData={chartData} />
+              </Box>
+            </Grid>
+
+          </Grid>
           
-          {/* { <div className='displayData'>
-            <h2>Display Data</h2>
-            {displayData()}
-            </div> */}
-          
-          <Container maxWidth="sm" className="barChartContainer">
-            <BarChart chartData={chartData} />
-          </Container>
-            
         </div>
     )
 }
 
 export default Demo;
-//hey man check your discord DM
