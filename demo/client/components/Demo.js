@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 const Demo = () => {
     const [queryData, setQueryData] = useState([]);
     const [queryString, setQueryString] = useState(`{ cities  { id  name population country_id } }`);
+    const [queryTime, setQueryTime] = useState(0);
 
     useEffect(() => {
         console.log("start")
         async function fetchData () {
+            const startTime = performance.now();
             console.log(queryString);
             await fetch('http://localhost:3000/graphql', {
             method: 'POST',
@@ -23,7 +25,8 @@ const Demo = () => {
             return res.json();
         })
         .then((data) => {
-            console.log(data.data.cities);
+            const endTime = performance.now() - startTime;
+            setQueryTime(endTime);
             setQueryData(data.data.cities)
             //setQueryData(JSON.stringify(data, null, 2));
             
@@ -34,8 +37,8 @@ const Demo = () => {
     }, []);
 
     const displayData = () => {
-        return queryData.map(item => {
-            return <div key="{item}">{JSON.stringify(item)}</div>
+        return queryData.map((item, i) => {
+            return <div key={i}>{JSON.stringify(item)}</div>
         })
     }
 
@@ -43,7 +46,11 @@ const Demo = () => {
 
     return (
         <div>
+          <h1>Fetch Time: {queryTime}</h1>
+          <div className="displayData">
             {displayData()}
+          </div>
+            
         </div>
     )
 }
