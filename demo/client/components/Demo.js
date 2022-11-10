@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
+import Button from '@mui/material/Button';
 
 const Demo = () => {
     const [queryData, setQueryData] = useState([]);
@@ -53,7 +54,7 @@ const Demo = () => {
         return res.json();
     })
     .then((data) => {
-        const endTime = performance.now() - startTime;
+        const endTime = (performance.now() - startTime).toFixed(2);
         setQueryTime(endTime);
         setQueryTimeArray([...queryTimeArray, endTime]);
         setQueryData(data.data.cities)
@@ -82,13 +83,13 @@ const Demo = () => {
 
     return (
         <div>
-          <button id='queryButton' onClick={handleQuery}>Run Query</button>
+          <Button variant='contained' size='medium' id='queryButton' onClick={handleQuery} >Run Query</Button>
           <div>
             Query Time Array
             {displayQueryTimeArray()}
           </div>
-          <h1>Uncached Time: {queryTimeArray[0]}</h1>
-          <h1>Cached Time: {queryTime}</h1>
+          <h1>Uncached Time: {queryTimeArray[0] ? queryTimeArray[0] : 0 }ms</h1>
+          <h1>Cached Time: {queryTime}ms</h1>
           <div id='queryString'> 
             <h2>Query String</h2>
             {queryString}
