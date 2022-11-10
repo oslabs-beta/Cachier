@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
 
 const Demo = () => {
     const [queryData, setQueryData] = useState([]);
@@ -88,26 +94,53 @@ const Demo = () => {
             Query Time Array
             {displayQueryTimeArray()}
           </div>
-          <h1>Uncached Time: {queryTimeArray[0] ? queryTimeArray[0] : 0 }ms</h1>
-          <h1>Cached Time: {queryTime}ms</h1>
+          <Typography variant='h3'>Uncached Time: {queryTimeArray[0] ? queryTimeArray[0] : 0 }ms </Typography>
+          <Typography variant='h3'>Cached Time: {queryTime}ms</Typography>
           <div id='queryString'> 
             <h2>Query String</h2>
             {queryString}
           </div>
-          <div className='queryResult'>
-            <h2>Query Result</h2>
-            {queryResult}
-          </div>
-          <div className='displayData'>
+        
+          <Grid container spacing={2}>
+              <Grid item>
+                <Container sx={{ pt: 5 }}>
+                    <TextField 
+                        id="outlined-multiline-static"
+                        label="Query String"
+                        multiline
+                        rows={7}
+                        defaultValue='{ 
+                            cities { 
+                                id 
+                                name 
+                                population
+                                country_id } 
+                        }'
+                    />
+                </Container>
+              </Grid>
+              
+              <Grid item>
+                <Typography variant='h2'>Query Result</Typography>
+                  <Container sx={{ overflow: 'auto', height:300, width: 500, backgroundColor:'lightgray', display:'flex', justifyContent: 'flex-start' }} className='queryResult'>
+                    <pre> {queryResult} </pre>
+                  </Container>
+              </Grid>
+          </Grid>
+        
+          
+          {/* { <div className='displayData'>
             <h2>Display Data</h2>
             {displayData()}
-          </div>
-          <div className="barChartContainer">
+            </div> */}
+          
+          <Container maxWidth="sm" className="barChartContainer">
             <BarChart chartData={chartData} />
-          </div>
+          </Container>
             
         </div>
     )
 }
 
 export default Demo;
+//hey man check your discord DM
