@@ -1,3 +1,58 @@
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
+function CacheMoney(endpoint, redisClient, capacity, groupSize) {
+  const queue = new EvictionQueue();
+  let currGroupSize = groupSize;
+
+  return async function checkRedis(req, res, next) {
+    const { query } = req.body;
+    let { variables } = req.body;
+
+    console.log(queue);
+
+    //accounts for if client did not include a variables object in the body of the post.
+    if (!variables) {
+      variables = {};
+    }
+
+    //Stringifies variables and concats with queryStr to form a unique key in the cache.
+    const variablesStr = JSON.stringify(variables);
+    const cacheKey = JSON.stringify(`${query}${variablesStr}`);
+
+    //checks if query is already in our redis cache.
+    const valueFromCache = await redisClient.get(cacheKey);
+
+    if (valueFromCache) {
+      res.json(valueFromCache);
+      queue.updateRecencyOfExistingCache(cacheKey);
+    } else {
+      const start = performance.now();
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({
+          query,
+          variables,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const end = performance.now();
+          const latency = end - start;
+          res.json(data);
+          redisClient.set(cacheKey, JSON.stringify(data));
+          queue.add(cacheKey, latency);
+          if (queue.length > capacity) {
+            queue.removeSmallestLatencyFromGroup(currGroupSize);
+            currGroupSize -= 1;
+            if (currGroupSize <= 0) currGroupSize = groupSize;
+          }
+        });
+    }
+  };
+}
+
 //Node constructor for our doubly linkedlist;
 class Node {
   constructor(key, latency) {
@@ -17,12 +72,15 @@ class EvictionQueue {
     this.tail = null;
     //keeps track of the number of nodes in the queue.
     this.length = 0;
+    //Keeps all nodes of linkedlist in a hashmap associated with their redis keys to allow O(1) updates to node positions in the queue.
+    this.cache = {};
   }
 
   //adds a node to the queue.
   add(cacheKey, latency) {
     //creates a new Node containing the latency of the query and its key in the cache.
     const newNode = new Node(cacheKey, latency);
+    this.cache[cacheKey] = newNode;
     //accounts for if the queue is empty.
     if (this.head === null && this.tail === null) {
       this.head = newNode;
@@ -52,6 +110,7 @@ class EvictionQueue {
       this.head = null;
       this.tail = null;
       this.length--;
+      delete this.cache[currentNode.key];
       return currentNode;
     }
 
@@ -68,6 +127,7 @@ class EvictionQueue {
       this.head = this.head.next;
       this.head.prev = null;
       this.length--;
+      delete this.cache[minLatencyNodeInGroup.key];
       return minLatencyNodeInGroup;
     }
 
@@ -76,6 +136,7 @@ class EvictionQueue {
       this.tail = this.tail.prev;
       this.tail.next = null;
       this.length--;
+      delete this.cache[minLatencyNodeInGroup.key];
       return minLatencyNodeInGroup;
     }
 
@@ -84,16 +145,34 @@ class EvictionQueue {
     minLatencyNodeInGroup.prev.next = minLatencyNodeInGroup.next;
     minLatencyNodeInGroup.next.prev = minLatencyNodeInGroup.prev;
     this.length--;
+    delete this.cache[removedNode.key];
     return removedNode;
   }
 
   //Moves node to front of the linkedList if its cache is accessed again inorder to update recency.
-  updateRecencyOfExistingCache(cacheKey) {}
+  updateRecencyOfExistingCache(cacheKey) {
+    const node = this.cache[cacheKey];
+    //if node being updated is already at the head of list, we can just return since it is already in the most recent position.
+    if (this.head === node) {
+      console.log('hit head');
+      return;
+    }
+    //remove linkage of the node at the current position.
+    //accounts for if the tail node is the one getting updated since it wouldnt have a next node in the list.
+    if (this.tail === node) {
+      node.prev.next = node.next;
+      this.tail = node.prev;
+    } else {
+      node.next.prev = node.prev;
+      node.prev.next = node.next;
+    }
+
+    //move node to the head of the queue inorder to update the recency.
+    this.head.prev = node;
+    node.next = this.head;
+    this.head = node;
+    this.head.prev = null;
+  }
 }
 
-const queue = new EvictionQueue();
-
-queue.add('query1', 120);
-queue.add('query2', 150);
-queue.add('query3', 110);
-queue.add('query4', 10);
+module.exports = CacheMoney;

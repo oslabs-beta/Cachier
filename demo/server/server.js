@@ -4,9 +4,7 @@ const cors = require('cors');
 const port = 3000;
 const Redis = require('redis');
 const REDIS_PORT = 6379;
-const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const axios = require('axios');
+const cacheMoney = require('./cacheMoney');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,79 +12,85 @@ app.use(cors());
 
 const client = Redis.createClient(REDIS_PORT);
 client.connect();
-client.set('cache', 'money');
 
-async function getData() {
-  const queryStr = `query{
-    continents {
-        name
-        code
-    }
-} `;
-  let queryData;
+app.use(
+  '/cacheMoney',
+  cacheMoney('https://api.spacex.land/graphql/', client, 3, 2)
+);
 
-  const data = await fetch('https://countries.trevorblades.com/', {
-    method: 'POST',
-    headers: { 'Content-type': 'application/json' },
-    body: JSON.stringify({
-      query: queryStr,
-      variables: {},
-    }),
-  });
+// client.set('cache', 'money');
 
-  const theData = await data.json();
-  setter(queryStr, JSON.stringify(theData));
-  const test = await getter(queryStr);
-  const parsed = JSON.parse(test);
-  console.log('test', parsed);
+// async function getData() {
+//   const queryStr = `query{
+//     continents {
+//         name
+//         code
+//     }
+// } `;
+//   let queryData;
 
-  //   console.log(theData.data);=
-  return theData.data;
-}
+//   const data = await fetch('https://countries.trevorblades.com/', {
+//     method: 'POST',
+//     headers: { 'Content-type': 'application/json' },
+//     body: JSON.stringify({
+//       query: queryStr,
+//       variables: {},
+//     }),
+//   });
 
-getData();
+//   const theData = await data.json();
+//   setter(queryStr, JSON.stringify(theData));
+//   const test = await getter(queryStr);
+//   const parsed = JSON.parse(test);
+//   console.log('test', parsed);
 
-// getData().then((data) => console.log(data));
+//   //   console.log(theData.data);=
+//   return theData.data;
+// }
 
-// const endpoint = 'https://countries.trevorblades.com/';
-// const headers = {
-//   'Content-type': 'application/json',
-// };
-// const graphQLGetData = {
-//   query: `query { continents { name code }}`,
-//   variables: {},
-// };
-//
-// const response = axios({
-//   url: endpoint,
-//   method: 'post',
-//   headers: headers,
-//   data: graphQLGetData,
-// }).then((data) => {
-//   console.log(data.data);
-// });
+// getData();
 
-//should be inside a setter
-async function setter(key, value) {
-  await client.set(key, value);
-}
-setter('Andy', 'Big Andy');
+// // getData().then((data) => console.log(data));
 
-// getter
-async function getter(key) {
-  const value = await client.get(key);
-  // const parsedData = await JSON.parse(value);
-  //   console.log(value);
-  return value;
-}
+// // const endpoint = 'https://countries.trevorblades.com/';
+// // const headers = {
+// //   'Content-type': 'application/json',
+// // };
+// // const graphQLGetData = {
+// //   query: `query { continents { name code }}`,
+// //   variables: {},
+// // };
+// //
+// // const response = axios({
+// //   url: endpoint,
+// //   method: 'post',
+// //   headers: headers,
+// //   data: graphQLGetData,
+// // }).then((data) => {
+// //   console.log(data.data);
+// // });
 
-// deleting function
-async function deleter(key) {
-  await client.sendCommand(['DEL', key]);
-}
+// //should be inside a setter
+// async function setter(key, value) {
+//   await client.set(key, value);
+// }
+// setter('Andy', 'Big Andy');
 
-setter('Andy', 'Big Andy');
+// // getter
+// async function getter(key) {
+//   const value = await client.get(key);
+//   // const parsedData = await JSON.parse(value);
+//   //   console.log(value);
+//   return value;
+// }
 
-getter('Andy');
+// // deleting function
+// async function deleter(key) {
+//   await client.sendCommand(['DEL', key]);
+// }
+
+// setter('Andy', 'Big Andy');
+
+// getter('Andy');
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
