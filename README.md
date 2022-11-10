@@ -42,7 +42,7 @@ Roman Darker || [Github](https://github.com/romanjamesd) || [Linkedin](https://w
 
 ## Works cited
 - LRU based small latency first replacement (SLFR) algorithm for the proxy cache. (2003). Proceedings IEEE/WIC International Conference on Web Intelligence (WI 2003). https://doi.org/10.1109/wi.2003.1241250
-- Wang, Y., Wang, Z., & Wang, J. (2020). Dynamically Configuring LRU Replacement Policy in Redis. National Science Foundation, the National Key R&D Program of China.
+- Wang, Y., Yang, J., & Wang, Z. (2020). Dynamically Configuring LRU Replacement Policy in Redis. The International Symposium on Memory Systems. https://doi.org/10.1145/3422575.3422799
 - Morales, K., & Lee, B. K. (2012). Fixed Segmented LRU cache replacement scheme with selective caching. 2012 IEEE 31st International Performance Computing and Communications Conference (IPCCC). https://doi.org/10.1109/pccc.2012.6407712
 
 
