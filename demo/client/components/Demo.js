@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BarChart from './BarChart';
 
 const Demo = () => {
     const [queryData, setQueryData] = useState([]);
@@ -6,19 +7,34 @@ const Demo = () => {
     const [queryString, setQueryString] = useState(`{ cities  { id  name population country_id } }`);
     const [queryTime, setQueryTime] = useState(0);
     const [queryTimeArray, setQueryTimeArray] = useState([]);
+    
     const [chartData, setChartData] = useState({
         labels: [1, 2, 3],
         datasets : [{
             label: 'Query Time in Milliseconds',
-            data: queryTimeArray.map((data) => data)
+            data: queryTimeArray,
+            backgroundColor: ['blue'],
+            borderColor: "black",
+            borderWidth: 2,
         }]
 
     });
 
     useEffect(() => {
-        // console.log("start")
-        // fetchData();
-    }, []);
+        let arr = [];
+        setChartData({
+            labels: queryTimeArray.map((data, i) => {
+                return i === 0 ? 'Uncached query time' : `Cached query ${i}`;
+            }),
+        datasets : [{
+            label: 'Query Time in Milliseconds',
+            data: queryTimeArray,
+            backgroundColor: ['blue'],
+            borderColor: "black",
+            borderWidth: 2,
+        }]
+        })
+    }, [queryTimeArray]);
 
     const fetchData = async () => {
         const startTime = performance.now();
@@ -71,7 +87,8 @@ const Demo = () => {
             Query Time Array
             {displayQueryTimeArray()}
           </div>
-          <h1>Fetch Time: {queryTime}</h1>
+          <h1>Uncached Time: {queryTimeArray[0]}</h1>
+          <h1>Cached Time: {queryTime}</h1>
           <div id='queryString'> 
             <h2>Query String</h2>
             {queryString}
@@ -83,6 +100,9 @@ const Demo = () => {
           <div className='displayData'>
             <h2>Display Data</h2>
             {displayData()}
+          </div>
+          <div className="barChartContainer">
+            <BarChart chartData={chartData} />
           </div>
             
         </div>
