@@ -1,10 +1,14 @@
+//const path = require('path');
 const express = require('express');
-const app = express();
+const expressGraphQL = require('express-graphql').graphqlHTTP;
+const schema = require('./schema.js');
+const cacheMoney = require('./cacheMoney.js');
 const cors = require('cors');
-const port = 3000;
 const Redis = require('redis');
 const REDIS_PORT = 6379;
-const cacheMoney = require('./cacheMoney');
+const PORT = 3000;
+
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,82 +19,30 @@ client.connect();
 
 app.use(
   '/cacheMoney',
-  cacheMoney('https://api.spacex.land/graphql/', client, 3, 2)
+  cacheMoney('http://localhost:3000/graphql', client, 50, 5)
 );
 
-// client.set('cache', 'money');
+app.use(
+  '/graphql',
+  expressGraphQL({
+    schema: schema,
+    graphiql: true,
+  })
+);
 
-// async function getData() {
-//   const queryStr = `query{
-//     continents {
-//         name
-//         code
-//     }
-// } `;
-//   let queryData;
+app.use((req, res) => res.status(404).send('Cannot get route'));
 
-//   const data = await fetch('https://countries.trevorblades.com/', {
-//     method: 'POST',
-//     headers: { 'Content-type': 'application/json' },
-//     body: JSON.stringify({
-//       query: queryStr,
-//       variables: {},
-//     }),
-//   });
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
+});
 
-//   const theData = await data.json();
-//   setter(queryStr, JSON.stringify(theData));
-//   const test = await getter(queryStr);
-//   const parsed = JSON.parse(test);
-//   console.log('test', parsed);
+app.listen(PORT, () => console.log(`listening on port ${PORT}...`));
 
-//   //   console.log(theData.data);=
-//   return theData.data;
-// }
-
-// getData();
-
-// // getData().then((data) => console.log(data));
-
-// // const endpoint = 'https://countries.trevorblades.com/';
-// // const headers = {
-// //   'Content-type': 'application/json',
-// // };
-// // const graphQLGetData = {
-// //   query: `query { continents { name code }}`,
-// //   variables: {},
-// // };
-// //
-// // const response = axios({
-// //   url: endpoint,
-// //   method: 'post',
-// //   headers: headers,
-// //   data: graphQLGetData,
-// // }).then((data) => {
-// //   console.log(data.data);
-// // });
-
-// //should be inside a setter
-// async function setter(key, value) {
-//   await client.set(key, value);
-// }
-// setter('Andy', 'Big Andy');
-
-// // getter
-// async function getter(key) {
-//   const value = await client.get(key);
-//   // const parsedData = await JSON.parse(value);
-//   //   console.log(value);
-//   return value;
-// }
-
-// // deleting function
-// async function deleter(key) {
-//   await client.sendCommand(['DEL', key]);
-// }
-
-// setter('Andy', 'Big Andy');
-
-// getter('Andy');
-
-app.listen(port, () => console.log(`Server started on port ${port}`));
+module.exports = app;
