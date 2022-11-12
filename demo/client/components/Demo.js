@@ -16,7 +16,8 @@ const Demo = () => {
   const [queryData, setQueryData] = useState([]);
   const [queryResult, setQueryResult] = useState('');
   const [queryString, setQueryString] = useState(
-    `{ cities  { id  name population country_id } }`
+    `{ clients { id name email phone }}`
+    //`{ cities  { id  name population country_id } }`
   );
   const [queryTime, setQueryTime] = useState(0);
   const [queryTimeArray, setQueryTimeArray] = useState([]);
@@ -69,7 +70,7 @@ const Demo = () => {
   const fetchData = async () => {
     const startTime = performance.now();
     console.log(queryString);
-    await fetch('http://localhost:3000/cacheMoney', {
+    await fetch('http://localhost:3000/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -83,10 +84,12 @@ const Demo = () => {
         return res.json();
       })
       .then((data) => {
+        console.log("FIRING")
+        console.log(data);
         const endTime = (performance.now() - startTime).toFixed(2);
         setQueryTime(endTime);
         setQueryTimeArray([...queryTimeArray, endTime]);
-        setQueryData(data.data.cities);
+        //setQueryData(data.data.cities);
         //console.log(JSON.stringify(data, null, 2));
         setQueryResult(JSON.stringify(data, null, 2));
       });
