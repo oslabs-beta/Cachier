@@ -1,0 +1,24 @@
+{
+  "name": "cache-money",
+  "version": "1.0.0",
+  "description": "a cache for queries to GraphQL APIs and including customizable eviction policies as well as built-in latency tracking for queries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/oslabs-beta/Cache-MoneyQL.git"
+  },
+  "keywords": [
+    "cache",
+    "GraphQL",
+    "eviction"
+  ],
+  "author": "cache-money inc (not actually incorporated)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/Cache-MoneyQL/issues"
+  },
+  "homepage": "https://github.com/oslabs-beta/Cache-MoneyQL#readme"
+}
