@@ -70,7 +70,7 @@ const Demo = () => {
   const fetchData = async () => {
     const startTime = performance.now();
     console.log(queryString);
-    await fetch('http://localhost:3000/graphql', {
+    await fetch('http://localhost:3000/cacheMoney', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -91,6 +91,7 @@ const Demo = () => {
         setQueryTimeArray([...queryTimeArray, endTime]);
         //setQueryData(data.data.cities);
         //console.log(JSON.stringify(data, null, 2));
+        //setQueryResult(data);
         setQueryResult(JSON.stringify(data, null, 2));
       });
   };
