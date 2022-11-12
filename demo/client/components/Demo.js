@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
+import LineChart from './LineChart';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
@@ -8,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { Navigate } from 'react-router-dom';
+
 
 const Demo = () => {
   const [queryData, setQueryData] = useState([]);
@@ -19,7 +22,7 @@ const Demo = () => {
   const [queryTimeArray, setQueryTimeArray] = useState([]);
 
   const [chartData, setChartData] = useState({
-    labels: [1, 2, 3],
+    labels: [],
     datasets: [
       {
         label: 'Query Time in Milliseconds',
@@ -29,6 +32,9 @@ const Demo = () => {
         borderWidth: 2,
       },
     ],
+    options: {
+    indexAxis: 'y',
+  }
   });
 
   useEffect(() => {
@@ -39,9 +45,20 @@ const Demo = () => {
       }),
       datasets: [
         {
+          axis: 'y',
           label: 'Query Time in Milliseconds',
           data: queryTimeArray,
-          backgroundColor: ['blue'],
+          fill: true,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ],
+          //backgroundColor: ['blue'],
           borderColor: 'black',
           borderWidth: 2,
         },
@@ -91,7 +108,9 @@ const Demo = () => {
   };
 
   return (
+
     <div>
+
       {
         //   <Typography variant='h4'>
         //     Query Time Array
@@ -174,6 +193,12 @@ const Demo = () => {
         <Grid item sx={{ width: 700 }}>
           <Box className='barChartContainer' justifyContent='center'>
             <BarChart style={{ width: 600 }} chartData={chartData} />
+          </Box>
+        </Grid>
+
+        <Grid item sx={{ width: 700 }}>
+          <Box className='lineChartContainer' justifyContent='center'>
+            <LineChart style={{ width: 600 }} chartData={chartData} />
           </Box>
         </Grid>
       </Grid>

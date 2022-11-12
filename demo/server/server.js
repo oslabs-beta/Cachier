@@ -1,4 +1,4 @@
-//const path = require('path');
+const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 const schema = require('./schema.js');
@@ -17,6 +17,8 @@ app.use(cors());
 const client = Redis.createClient(REDIS_PORT);
 client.connect();
 
+app.use(express.static(path.resolve(__dirname, "../client")));
+
 app.use(
   '/cacheMoney',
   cacheMoney('http://localhost:3000/graphql', client, 50, 5)
@@ -29,6 +31,14 @@ app.use(
     graphiql: true,
   })
 );
+
+app.get('/*', (req, res) => {
+    return res.sendFile(path.resolve(__dirname, "../client/index.html"), function(err) {
+        if (err) {
+            res.status(500).send(err)
+        }
+    })
+})
 
 app.use((req, res) => res.status(404).send('Cannot get route'));
 
