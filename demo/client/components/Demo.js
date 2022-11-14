@@ -3,24 +3,27 @@ import BarChart from './BarChart';
 import LineChart from './LineChart';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { Navigate } from 'react-router-dom';
+
 
 
 const Demo = () => {
   const [queryData, setQueryData] = useState([]);
   const [queryResult, setQueryResult] = useState('');
-  const [queryString, setQueryString] = useState(
-    `{ clients { id name email phone }}`
-    //`{ cities  { id  name population country_id } }`
-  );
+  const [queryString, setQueryString] = useState('');
+
+
+  const [queryGraphQLString, setQueryGraphQLString] = useState('{ clients { id name email phone } }');
   const [queryTime, setQueryTime] = useState(0);
   const [queryTimeArray, setQueryTimeArray] = useState([]);
+
+  const [clientChecked, setClientChecked] = useState(false);
+  const [clientIdChecked, setClientIdChecked] = useState(true);
+  const [clientNameChecked, setClientNameChecked] = useState(true);
+  const [clientEmailChecked, setClientEmailChecked] = useState(true);
+  const [clientPhoneChecked, setClientPhoneChecked] = useState(true);
 
   const [chartData, setChartData] = useState({
     labels: [],
@@ -37,6 +40,11 @@ const Demo = () => {
     indexAxis: 'y',
   }
   });
+
+  useEffect(() => {
+    setQueryGraphQLString(`{ clients { ${clientIdChecked ? 'id':''} ${clientNameChecked ? 'name':''} ${clientEmailChecked ? 'email':''} ${clientPhoneChecked ? 'phone':''} } }`)
+
+  }, [clientIdChecked, clientNameChecked, clientEmailChecked, clientPhoneChecked]);
 
   useEffect(() => {
     let arr = [];
@@ -69,7 +77,7 @@ const Demo = () => {
 
   const fetchData = async () => {
     const startTime = performance.now();
-    console.log(queryString);
+    console.log(queryGraphQLString);
     await fetch('http://localhost:3000/cacheMoney', {
       method: 'POST',
       headers: {
@@ -77,14 +85,13 @@ const Demo = () => {
         Accept: 'application/json',
       },
       body: JSON.stringify({
-        query: queryString,
+        query: queryGraphQLString,
       }),
     })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        console.log("FIRING")
         console.log(data);
         const endTime = (performance.now() - startTime).toFixed(2);
         setQueryTime(endTime);
@@ -111,9 +118,32 @@ const Demo = () => {
     fetchData();
   };
 
+  const handleUpload = () =>  {
+    setQueryString(`{ clients { id name email phone } }`);
+  }
+
+  const testQuery = () => {
+    if (clientChecked){
+      return (
+        <div>
+          <p style={{margin: 0, paddingTop: 20}}>&#123;</p>
+          <span>&nbsp;&nbsp;client 	&#123;</span>
+          {clientIdChecked && <p style={{margin: 0}}>&nbsp;&nbsp;&nbsp;&nbsp;id</p>}
+          {clientNameChecked && <p style={{margin: 0}}>&nbsp;&nbsp;&nbsp;&nbsp;name</p>}
+          {clientEmailChecked && <p style={{margin: 0}}>&nbsp;&nbsp;&nbsp;&nbsp;email</p>}
+          {clientPhoneChecked && <p style={{margin: 0}}>&nbsp;&nbsp;&nbsp;&nbsp;phone</p>}
+          <p style={{margin: 0}}>&nbsp;&nbsp;  &#125;</p>
+          <p style={{margin: 0}}>&#125;</p>
+        </div>
+        
+      )
+    }
+  }
+
+
   return (
 
-    <div>
+    <div className="demoDiv">
 
       {
         //   <Typography variant='h4'>
@@ -127,26 +157,54 @@ const Demo = () => {
           <Box display='flex' flexDirection='column' sx={{ gap: 3 }}>
             <Container id='queryString'>
               <h2>Query String</h2>
-              {queryString}
+              <input type="checkbox" onChange={()=> clientChecked ? setClientChecked(false) : setClientChecked(true)} id="clients" name="clients" value="clients"/>
+              <label for="clients"> Clients</label>
+              <Container>
+                {clientChecked === true && 
+                <div>
+                  <input type="checkbox" onChange={()=> clientIdChecked ? setClientIdChecked(false) : setClientIdChecked(true)} checked={clientIdChecked} id="clients" name="clientId" value="clientId"/>
+                  <label for="clientId"> ID</label>
+                  <input type="checkbox" onChange={()=> clientNameChecked ? setClientNameChecked(false) : setClientNameChecked(true)} checked={clientNameChecked} id="clientName" name="clientName" value="clientName"/>
+                  <label for="clientName"> Name</label>
+                  <input type="checkbox" onChange={()=> clientEmailChecked ? setClientEmailChecked(false) : setClientEmailChecked(true)} checked={clientEmailChecked} id="clientEmail" name="clientEmail" value="clientEmail"/>
+                  <label for="clientEmail"> Email</label>
+                  <input type="checkbox" onChange={()=> clientPhoneChecked ? setClientPhoneChecked(false) : setClientPhoneChecked(true)} checked={clientPhoneChecked} id="clientPhone" name="clientPhone" value="clientPhone"/>
+                  <label for="clientPhone"> Phone</label>
+                </div>
+                }
+              </Container>
+              
+              
             </Container>
-            <Container sx={{ pt: 5 }}>
-              <TextField
-                id='outlined-multiline-static'
-                label='Query String'
-                style={{ width: 400 }}
-                multiline
-                rows={7}
-                defaultValue='{ 
-                                cities { 
-                                    id 
-                                    name 
-                                    population
-                                    country_id } 
-                            }'
-              />
+            <Container
+              sx={{
+                overflow: 'auto',
+                height: 300,
+                width: 500,
+                backgroundColor: 'white',
+                display: 'flex',
+                justifyContent: 'flex-start',
+                borderRadius: 5,
+                border: '2px solid black',
+                color: '#9C528B'
+              }}
+              className='queryStringContainer'
+            >
+              {testQuery()}
+              <p> {queryString} </p>
             </Container>
+            {/* <Button
+              variant='contained'
+              color='info'
+              size='medium'
+              id='uploadButton'
+              onClick={handleUpload}
+            >
+              Upload Query
+            </Button> */}
             <Button
               variant='contained'
+              color='success'
               size='medium'
               id='queryButton'
               onClick={handleQuery}
