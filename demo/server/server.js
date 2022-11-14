@@ -1,10 +1,8 @@
-require ('dotenv').config()
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 //const graphqlHTTP = require('express-graphql').graphqlHTTP;
-
-
 
 const schema = require('./schema.js');
 // Jonathan's Linked List
@@ -13,11 +11,11 @@ const cacheMoney = require('./cacheMoney.js');
 const cors = require('cors');
 const Redis = require('redis');
 const REDIS_PORT = 6379;
-// Changing port variable 
+// Changing port variable
 // const PORT = 3000;
-const connectDB = require ('./config/db');
-const port = process.env.PORT || 3000 
-const app = express(); 
+const connectDB = require('./config/db');
+const port = process.env.PORT || 3000;
+const app = express();
 
 connectDB();
 // Changed package.json to "start": "server2.js"
@@ -28,31 +26,32 @@ app.use(express.urlencoded({ extended: true }));
 const client = Redis.createClient(REDIS_PORT);
 client.connect();
 
-
-
-app.use(express.static(path.resolve(__dirname, "../client")));
+app.use(express.static(path.resolve(__dirname, '../client')));
 
 app.use(
-    '/cacheMoney',
-    cacheMoney('http://localhost:3000/graphql', client, 50, 5)
+  '/cacheMoney',
+  cacheMoney('http://localhost:3000/graphql', 50, 5, client)
 );
 
-app.use ('/graphql',
-    expressGraphQL({
-    schema,  
-    graphiql: process.env.NODE_ENV === 'development'
+app.use(
+  '/graphql',
+  expressGraphQL({
+    schema,
+    graphiql: process.env.NODE_ENV === 'development',
   })
 );
 
-  
 app.get('/*', (req, res) => {
-    return res.sendFile(path.resolve(__dirname, "../client/index.html"), function(err) {
-        if (err) {
-            res.status(500).send(err)
-        }
-    })
-})
+  return res.sendFile(
+    path.resolve(__dirname, '../client/index.html'),
+    function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});
 
-app.listen (port, console.log (port));
+app.listen(port, console.log(port));
 
 module.exports = app;
