@@ -10,15 +10,16 @@ import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Navigate } from 'react-router-dom';
-
+import QueueVisualizer from './QueueVisualizer';
 
 const Demo = () => {
-  const [queryData, setQueryData] = useState([]);
+  // const [queryData, setQueryData] = useState([]);
   const [queryResult, setQueryResult] = useState('');
   const [queryString, setQueryString] = useState(
     `{ clients { id name email phone }}`
     //`{ cities  { id  name population country_id } }`
   );
+  const [llData, setLLData] = useState({});
   const [queryTime, setQueryTime] = useState(0);
   const [queryTimeArray, setQueryTimeArray] = useState([]);
 
@@ -34,8 +35,8 @@ const Demo = () => {
       },
     ],
     options: {
-    indexAxis: 'y',
-  }
+      indexAxis: 'y',
+    },
   });
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const Demo = () => {
             'rgba(75, 192, 192, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             'rgba(153, 102, 255, 0.2)',
-            'rgba(201, 203, 207, 0.2)'
+            'rgba(201, 203, 207, 0.2)',
           ],
           //backgroundColor: ['blue'],
           borderColor: 'black',
@@ -84,15 +85,13 @@ const Demo = () => {
         return res.json();
       })
       .then((data) => {
-        console.log("FIRING")
-        console.log(data);
-        const endTime = (performance.now() - startTime).toFixed(2);
+        const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
+        console.log('FIRING');
+        setLLData(data.queue); // updates state linked list object
         setQueryTime(endTime);
-        setQueryTimeArray([...queryTimeArray, endTime]);
+        setQueryTimeArray([...queryTimeArray, endTime]); // updates data points for charts
         //setQueryData(data.data.cities);
-        //console.log(JSON.stringify(data, null, 2));
-        //setQueryResult(data);
-        setQueryResult(JSON.stringify(data, null, 2));
+        setQueryResult(JSON.stringify(data.data, null, 2));
       });
   };
 
@@ -112,9 +111,7 @@ const Demo = () => {
   };
 
   return (
-
     <div>
-
       {
         //   <Typography variant='h4'>
         //     Query Time Array
@@ -206,6 +203,7 @@ const Demo = () => {
           </Box>
         </Grid>
       </Grid>
+      <QueueVisualizer queue={llData} />
     </div>
   );
 };
