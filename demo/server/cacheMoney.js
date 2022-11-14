@@ -4,8 +4,9 @@ const fetch = (...args) =>
 function CacheMoney(endpoint, redisClient, capacity, groupSize) {
   const queue = new EvictionQueue();
   let currGroupSize = groupSize;
-
+  //console.log(req.body)
   return async function checkRedis(req, res, next) {
+    console.log(req.body)
     const { query } = req.body;
     let { variables } = req.body;
 
@@ -24,7 +25,7 @@ function CacheMoney(endpoint, redisClient, capacity, groupSize) {
     const valueFromCache = await redisClient.get(cacheKey);
 
     if (valueFromCache) {
-      res.json(valueFromCache);
+      res.send(valueFromCache);
       queue.updateRecencyOfExistingCache(cacheKey);
     } else {
       const start = performance.now();
