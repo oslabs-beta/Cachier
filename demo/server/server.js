@@ -30,7 +30,7 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 
 app.use(
   '/cacheMoney',
-  cacheMoney('http://localhost:3000/graphql', 50, 5, client)
+  cacheMoney('http://localhost:3000/graphql', 50, 5)
 );
 
 app.use(

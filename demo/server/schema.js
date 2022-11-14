@@ -18,8 +18,8 @@ const { setgroups } = require('process');
 const ClientType = new GraphQLObjectType({
   name: 'Client',
   fields : () => ({
-    id : {type: GraphQLID },
-    name: {type: GraphQLString },
+    id : {type: GraphQLID},
+    name: {type: GraphQLString},
     email: {type: GraphQLString},
     phone: {type: GraphQLString} 
   })
@@ -28,8 +28,8 @@ const ClientType = new GraphQLObjectType({
 const ProjectType = new GraphQLObjectType({
   name: 'Project',
   fields : () => ({
-    id : {type: GraphQLID },
-    name: {type: GraphQLString },
+    id : {type: GraphQLID},
+    name: {type: GraphQLString},
     description : {type: GraphQLString},
     status: {type: GraphQLString},
     client: {

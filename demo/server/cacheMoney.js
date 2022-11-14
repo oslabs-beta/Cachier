@@ -57,9 +57,10 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log("uncached", data);
           const end = performance.now();
           const latency = end - start;
-          res.json({ data, queue });
+          res.json(data);
 
           redisClient
             ? redisClient.set(cacheKey, JSON.stringify(data))
