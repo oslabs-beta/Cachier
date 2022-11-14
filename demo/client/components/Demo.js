@@ -44,9 +44,11 @@ const Demo = () => {
   });
 
   useEffect(() => {
-    setQueryGraphQLString(`{ clients { ${clientIdChecked ? 'id':''} ${clientNameChecked ? 'name':''} ${clientEmailChecked ? 'email':''} ${clientPhoneChecked ? 'phone':''} } }`)
+    const string = `{ clients { ${clientIdChecked ? 'id':''}${clientNameChecked ? ' name':''}${clientEmailChecked ? ' email':''}${clientPhoneChecked ? ' phone':''} } }`
+    //string.replaceAll("  ", " ");
+    setQueryGraphQLString(string);
 
-  }, [clientIdChecked, clientNameChecked, clientEmailChecked, clientPhoneChecked]);
+  }, [clientChecked, clientIdChecked, clientNameChecked, clientEmailChecked, clientPhoneChecked]);
 
   useEffect(() => {
     let arr = [];
@@ -129,7 +131,7 @@ const Demo = () => {
       return (
         <div>
           <p style={{margin: 0, paddingTop: 20}}>&#123;</p>
-          <span>&nbsp;&nbsp;client 	&#123;</span>
+          <span>&nbsp;&nbsp;clients 	&#123;</span>
           {clientIdChecked && <p style={{margin: 0}}>&nbsp;&nbsp;&nbsp;&nbsp;id</p>}
           {clientNameChecked && <p style={{margin: 0}}>&nbsp;&nbsp;&nbsp;&nbsp;name</p>}
           {clientEmailChecked && <p style={{margin: 0}}>&nbsp;&nbsp;&nbsp;&nbsp;email</p>}
@@ -146,7 +148,7 @@ const Demo = () => {
   return (
 
     <div className="demoDiv">
-
+      <h2>{queryGraphQLString}</h2>
       {
         //   <Typography variant='h4'>
         //     Query Time Array
