@@ -10,7 +10,7 @@ import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Navigate } from 'react-router-dom';
-
+import '../styles/Demo.scss';
 
 const Demo = () => {
   const [queryData, setQueryData] = useState([]);
@@ -30,12 +30,12 @@ const Demo = () => {
         data: queryTimeArray,
         backgroundColor: ['blue'],
         borderColor: 'black',
-        borderWidth: 2,
-      },
+        borderWidth: 2
+      }
     ],
     options: {
-    indexAxis: 'y',
-  }
+      indexAxis: 'y'
+    }
   });
 
   useEffect(() => {
@@ -61,9 +61,9 @@ const Demo = () => {
           ],
           //backgroundColor: ['blue'],
           borderColor: 'black',
-          borderWidth: 2,
-        },
-      ],
+          borderWidth: 2
+        }
+      ]
     });
   }, [queryTimeArray]);
 
@@ -74,17 +74,17 @@ const Demo = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        Accept: 'application/json'
       },
       body: JSON.stringify({
-        query: queryString,
-      }),
+        query: queryString
+      })
     })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        console.log("FIRING")
+        console.log('FIRING');
         console.log(data);
         const endTime = (performance.now() - startTime).toFixed(2);
         setQueryTime(endTime);
@@ -112,9 +112,7 @@ const Demo = () => {
   };
 
   return (
-
-    <div>
-
+    <div className="demoDiv">
       {
         //   <Typography variant='h4'>
         //     Query Time Array
@@ -122,33 +120,33 @@ const Demo = () => {
         //   </Typography>
       }
 
-      <Grid container spacing={5} alignItems='center' justifyContent='center'>
+      <Grid container spacing={5} alignItems="center" justifyContent="center">
         <Grid item>
-          <Box display='flex' flexDirection='column' sx={{ gap: 3 }}>
-            <Container id='queryString'>
+          <Box display="flex" flexDirection="column" sx={{ gap: 3 }}>
+            <Container id="queryString">
               <h2>Query String</h2>
               {queryString}
             </Container>
             <Container sx={{ pt: 5 }}>
               <TextField
-                id='outlined-multiline-static'
-                label='Query String'
+                id="outlined-multiline-static"
+                label="Query String"
                 style={{ width: 400 }}
                 multiline
                 rows={7}
-                defaultValue='{ 
+                defaultValue="{ 
                                 cities { 
                                     id 
                                     name 
                                     population
                                     country_id } 
-                            }'
+                            }"
               />
             </Container>
             <Button
-              variant='contained'
-              size='medium'
-              id='queryButton'
+              variant="contained"
+              size="medium"
+              id="queryButton"
               onClick={handleQuery}
             >
               Run Query
@@ -157,7 +155,7 @@ const Demo = () => {
         </Grid>
 
         <Grid item>
-          <Typography variant='h2'>Query Result</Typography>
+          <Typography variant="h2">Query Result</Typography>
           <Container
             sx={{
               overflow: 'auto',
@@ -166,9 +164,9 @@ const Demo = () => {
               backgroundColor: 'black',
               display: 'flex',
               justifyContent: 'flex-start',
-              borderRadius: 5,
+              borderRadius: 5
             }}
-            className='queryResult'
+            className="queryResult"
           >
             <pre style={{ fontWeight: 700, color: 'white', fontSize: 18 }}>
               {' '}
@@ -180,28 +178,28 @@ const Demo = () => {
 
       <Grid
         container
-        alignItems='center'
-        justifyContent='center'
+        alignItems="center"
+        justifyContent="center"
         flex
         sx={{ pt: 5 }}
       >
         <Grid item>
-          <Box justifyContent='center' sx={{ width: 500 }}>
-            <Typography variant='h4'>
+          <Box justifyContent="center" sx={{ width: 500 }}>
+            <Typography variant="h4">
               Uncached Time: {queryTimeArray[0] ? queryTimeArray[0] : 0}ms{' '}
             </Typography>
-            <Typography variant='h4'>Cached Time: {queryTime}ms</Typography>
+            <Typography variant="h4">Cached Time: {queryTime}ms</Typography>
           </Box>
         </Grid>
 
         <Grid item sx={{ width: 700 }}>
-          <Box className='barChartContainer' justifyContent='center'>
+          <Box className="barChartContainer" justifyContent="center">
             <BarChart style={{ width: 600 }} chartData={chartData} />
           </Box>
         </Grid>
 
         <Grid item sx={{ width: 700 }}>
-          <Box className='lineChartContainer' justifyContent='center'>
+          <Box className="lineChartContainer" justifyContent="center">
             <LineChart style={{ width: 600 }} chartData={chartData} />
           </Box>
         </Grid>
