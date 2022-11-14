@@ -1,16 +1,22 @@
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-function CacheMoney(endpoint, redisClient, capacity, groupSize) {
+function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
+  //initalizes a new eviction queue (linked list) for the server
   const queue = new EvictionQueue();
+  //keeps track of the current group size
   let currGroupSize = groupSize;
-  //console.log(req.body)
-  return async function checkRedis(req, res, next) {
-    console.log(req.body)
+  const cacheMoneyCache = {};
+
+  if (capacity < 1 || groupSize < 1 || groupSize > capacity) {
+    throw new Error(
+      'Capacity and groupSize needs to be a number greater than 1 and groupsize cannot exceed capacity'
+    );
+  }
+
+  return async function checkCache(req, res, next) {
     const { query } = req.body;
     let { variables } = req.body;
-
-    console.log(queue);
 
     //accounts for if client did not include a variables object in the body of the post.
     if (!variables) {
@@ -20,12 +26,24 @@ function CacheMoney(endpoint, redisClient, capacity, groupSize) {
     //Stringifies variables and concats with queryStr to form a unique key in the cache.
     const variablesStr = JSON.stringify(variables);
     const cacheKey = JSON.stringify(`${query}${variablesStr}`);
+    let valueFromCache;
 
-    //checks if query is already in our redis cache.
-    const valueFromCache = await redisClient.get(cacheKey);
+    //checks if query is already in our redis cache or cacheMoneyCache if redis is not being used.
+    if (redisClient) {
+      try {
+        valueFromCache = await redisClient.get(cacheKey);
+      } catch (error) {
+        return next({ log: 'invalid RedisPort' });
+      }
+    } else {
+      console.log('running local cache');
+      valueFromCache = cacheMoneyCache[cacheKey];
+    }
 
     if (valueFromCache) {
+      // if cache contains the requested data return data from the cache.
       res.send(valueFromCache);
+      // update recency of the accessed cacheKey by moving it to the front of the linked list.
       queue.updateRecencyOfExistingCache(cacheKey);
     } else {
       const start = performance.now();
@@ -41,14 +59,29 @@ function CacheMoney(endpoint, redisClient, capacity, groupSize) {
         .then((data) => {
           const end = performance.now();
           const latency = end - start;
-          res.json(data);
-          redisClient.set(cacheKey, JSON.stringify(data));
+          res.json({ data, queue });
+
+          redisClient
+            ? redisClient.set(cacheKey, JSON.stringify(data))
+            : (cacheMoneyCache[cacheKey] = JSON.stringify(data));
+
           queue.add(cacheKey, latency);
           if (queue.length > capacity) {
-            queue.removeSmallestLatencyFromGroup(currGroupSize);
+            const removedQueryKey =
+              queue.removeSmallestLatencyFromGroup(currGroupSize).key;
+
+            redisClient
+              ? redisClient.del(removedQueryKey)
+              : delete cacheMoneyCache[removedQueryKey];
+
             currGroupSize -= 1;
             if (currGroupSize <= 0) currGroupSize = groupSize;
           }
+        })
+        .catch((err) => {
+          next({
+            log: `Error:${err} unable to fetch query from specified endpoint`,
+          });
         });
     }
   };

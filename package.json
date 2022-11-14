@@ -1,12 +1,13 @@
 {
-  "name": "CacheMoneyQL",
+  "name": "cache-money",
   "description": "",
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {
     "start": "NODE_ENV=production node demo/server/server.js",
     "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack-dev-server --open & node demo/server/server.js"
+    "dev": "NODE_ENV=development webpack-dev-server --open & node demo/server/server.js",
+    "web-server": "webpack-dev-server"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -26,7 +27,12 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
     "redis": "^4.5.0",
+<<<<<<< HEAD
     "sass": "^1.56.1"
+=======
+    "sass": "^1.56.1",
+    "styled-components": "^5.3.6"
+>>>>>>> dev
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",

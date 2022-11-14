@@ -1,0 +1,5 @@
+@use './variables' as *;
+
+body {
+  background: linear-gradient($primary-color, $tertiary-color);
+}
