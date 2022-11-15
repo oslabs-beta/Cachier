@@ -14,7 +14,7 @@ import '../styles/Demo.scss';
 const Demo = () => {
   const [queryData, setQueryData] = useState([]);
   const [queryResult, setQueryResult] = useState('');
-  const [queryString, setQueryString] = useState('');
+  const [queryDisplayString, setQueryDisplayString] = useState('');
 
 
   const [queryGraphQLString, setQueryGraphQLString] = useState('{ clients { id name email phone } }');
@@ -100,9 +100,6 @@ const Demo = () => {
         const endTime = (performance.now() - startTime).toFixed(2);
         setQueryTime(endTime);
         setQueryTimeArray([...queryTimeArray, endTime]);
-        //setQueryData(data.data.cities);
-        //console.log(JSON.stringify(data, null, 2));
-        //setQueryResult(data);
         setQueryResult(JSON.stringify(data, null, 2));
       });
   };
@@ -123,10 +120,10 @@ const Demo = () => {
   };
 
   const handleUpload = () =>  {
-    setQueryString(`{ clients { id name email phone } }`);
+    setQueryDisplayString(`{ clients { id name email phone } }`);
   }
 
-  const testQuery = () => {
+  const displayQueryFields = () => {
     if (clientChecked){
       return (
         <div>
@@ -159,7 +156,7 @@ const Demo = () => {
       <Grid container spacing={5} alignItems="center" justifyContent="center">
         <Grid item>
           <Box display="flex" flexDirection="column" sx={{ gap: 3 }}>
-            <Container id="queryString">
+            <Container id="queryDisplayString">
               <h2>Query String</h2>
               <input type="checkbox" onChange={()=> clientChecked ? setClientChecked(false) : setClientChecked(true)} id="clients" name="clients" value="clients"/>
               <label for="clients"> Clients</label>
@@ -192,10 +189,10 @@ const Demo = () => {
                 border: '2px solid black',
                 color: '#9C528B'
               }}
-              className='queryStringContainer'
+              className='queryDisplayStringContainer'
             >
-              {testQuery()}
-              <p> {queryString} </p>
+              {displayQueryFields()}
+              <p> {queryDisplayString} </p>
             </Container>
             {/* <Button
               variant='contained'
