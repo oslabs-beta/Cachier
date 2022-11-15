@@ -50,6 +50,6 @@ app.get('/*', (req, res) => {
   );
 });
 
-app.listen(port, console.log(port));
+app.listen(port, console.log(`Server listening on ${port}`));
 
 module.exports = app;
