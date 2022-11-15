@@ -8,6 +8,8 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Navigate } from 'react-router-dom';
 import QueueVisualizer from './QueueVisualizer';
+import { shadows } from '@mui/system';
+
 import '../styles/Demo.scss';
 
 const Demo = () => {
@@ -125,6 +127,7 @@ const Demo = () => {
         return res.json();
       })
       .then((data) => {
+        console.log("AAAAAAA", queryTimeArray[queryTimeArray.length - 1].cached);
         const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
         setLLData(data.queue); // updates state linked list object
         if (data.removedNode) {
@@ -187,11 +190,12 @@ const Demo = () => {
   };
 
   return (
+
     <div className='demoDiv'>
       <Grid container spacing={5} alignItems='center' justifyContent='center'>
         <Grid item>
-          <Box display='flex' flexDirection='column' sx={{ gap: 3 }}>
-            <Container id='queryString'>
+          <Box display='flex' flexDirection='column' sx={{ boxShadow: 24 }}>
+            <Container id='queryString' sx={{border: 'black 2px', borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor: '#121F4E', padding:2, color: '#F0F3BD' }}>
               <input
                 type='checkbox'
                 onChange={() =>
@@ -204,7 +208,7 @@ const Demo = () => {
                 value='clients'
               />
               <label htmlFor='clients'> Clients</label>
-              <Container>
+              <Container >
                 {clientChecked === true && (
                   <div>
                     <input
@@ -271,14 +275,13 @@ const Demo = () => {
                 backgroundColor: 'white',
                 display: 'flex',
                 justifyContent: 'flex-start',
-                borderRadius: 5,
-                border: '2px solid black',
                 color: '#9C528B',
+                
               }}
-              className='queryStringContainer'
+              className='queryDisplayStringContainer'
             >
-              {testQuery()}
-              <p> {queryString} </p>
+              {/* {displayQueryFields()} */}
+              <p style={{fontSize: 20}}> {testQuery()} </p>
             </Container>
             {/* <Button
               variant='contained'
@@ -291,35 +294,47 @@ const Demo = () => {
             </Button> */}
             <Button
               variant='contained'
-              color='success'
-              size='medium'
+              size='large'
               id='queryButton'
               onClick={handleQuery}
+              sx ={{ backgroundColor: '#121F4E'}}
             >
               Run Query
             </Button>
           </Box>
         </Grid>
 
-        <Grid item>
-          <Typography variant='h2'>Query Result</Typography>
-          <Container
-            sx={{
-              overflow: 'auto',
-              height: 300,
-              width: 500,
-              backgroundColor: 'black',
-              display: 'flex',
-              justifyContent: 'flex-start',
-              borderRadius: 5,
-            }}
-            className='queryResult'
-          >
-            <pre style={{ fontWeight: 700, color: 'white', fontSize: 18 }}>
-              {' '}
-              {queryResult}{' '}
-            </pre>
+        <Grid item sx={{padding: 0}}>
+          <Container sx={{boxShadow: 24, margin: 0, padding: '0px !important', border: 'black 2px', borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor: '#121F4E', paddingLeft: 0, paddingRight:0, color: 'white'}}>
+            <Typography variant='h4' sx={{fontFamily: 'Georgia, serif', justifyContent: 'center', padding: 1, display: 'flex'}}>Query Result</Typography>
+            <Container
+              sx={{
+                overflow: 'auto',
+                height: 300,
+                width: 500,
+                backgroundColor: 'black',
+                display: 'flex',
+                justifyContent: 'flex-start',
+                borderRadius: 5,
+                boxShadow: 3,
+              }}
+              className='queryResult'
+            >
+              <pre style={{ fontWeight: 700, color: 'white', fontSize: 18 }}>
+                {' '}
+                {queryResult}{' '}
+              </pre>
+            </Container>
+            <Box sx={{paddingTop: 1, display: 'flex', justifyContent: 'space-between'}}>
+              <Typography variant='span' sx={{fontFamily: 'Georgia, serif', fontSize: 25, paddingLeft: 3}}>Query Time:</Typography>
+              <Typography variant='span' sx={{fontFamily: 'Georgia, serif', fontSize: 25, paddingRight: 3, color:'red'}}>{queryTime}<span style={{fontSize:15}}>ms</span></Typography>
+            </Box>
+            <Container sx={{paddingBottom: 1, display: 'flex', justifyContent: 'space-between'}}>
+              <Typography variant='span' sx={{fontFamily: 'Georgia, serif', fontSize: 25}}>Cache Hit:</Typography>
+              <Typography variant='span' sx={{fontFamily: 'Georgia, serif', fontSize: 25, color: 'red'}}>{queryTimeArray[queryTimeArray.length - 1].cached ? 'Hit' : 'Miss'}</Typography>
+            </Container>
           </Container>
+          
         </Grid>
       </Grid>
 
@@ -330,13 +345,14 @@ const Demo = () => {
         flex
         sx={{ pt: 5 }}
       >
-        <Grid item>
+        {/* <Grid item>
           <Box justifyContent='center' sx={{ width: 500 }}>
             <Typography variant='h4'>Query Time: {queryTime}ms</Typography>
           </Box>
-        </Grid>
-
-        <Grid item sx={{ width: 700 }}>
+        </Grid> */}
+        
+        <Grid item sx={{ width: 900, border: 'black 1px solid', borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor: 'white', padding:2, color: '#121F4E', boxShadow: 24}}>
+          <Typography variant='h3' sx={{fontFamily: 'Georgia, serif', textAlign: 'center'}}> Query Cache Performance Chart </Typography>
           <Box className='barChartContainer' justifyContent='center'>
             <BarChart style={{ width: 600 }} chartData={chartData} />
           </Box>
@@ -348,7 +364,7 @@ const Demo = () => {
           </Box>
         </Grid> */}
       </Grid>
-      <QueueVisualizer
+      <QueueVisualizer 
         queue={llData}
         removedNode={removedNode}
         currGroupSize={currGroupSize}
