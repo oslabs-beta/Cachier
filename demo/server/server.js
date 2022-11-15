@@ -29,7 +29,7 @@ client.connect();
 
 app.use(express.static(path.resolve(__dirname, '../client')));
 
-app.use('/cacheMoney', demoFunc('http://localhost:3000/graphql', 8, 3));
+app.use('/cacheMoney', demoFunc('http://localhost:3000/graphql', 4, 2));
 
 app.use(
   '/graphql',

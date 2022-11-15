@@ -2,6 +2,22 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
+  const traverse = (list) => {
+    let currNode = list.head;
+    const output = [];
+    let counter = 1;
+
+    while (currNode) {
+      output.push({
+        latency: currNode.latency,
+        key: currNode.key,
+        num: currNode.num,
+      });
+      currNode = currNode.next;
+      counter++;
+    }
+    return output;
+  };
   //initalizes a new eviction queue (linked list) for the server
   const queue = new EvictionQueue();
   //keeps track of the current group size
@@ -45,7 +61,8 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
       queue.updateRecencyOfExistingCache(cacheKey);
       // if cache contains the requested data return data from the cache.
       const parsedValue = JSON.parse(valueFromCache);
-      res.json({ data: parsedValue, queue });
+      const listArray = traverse(queue);
+      res.send({ data: parsedValue, queue: listArray, currGroupSize });
     } else {
       const start = performance.now();
       fetch(endpoint, {
@@ -58,6 +75,7 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log('uncached', data);
           const end = performance.now();
           const latency = end - start;
 
@@ -66,9 +84,10 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
             : (cacheMoneyCache[cacheKey] = JSON.stringify(data));
 
           queue.add(cacheKey, latency);
+          let removedNode = { latency: 0, num: 0 };
           if (queue.length > capacity) {
-            const removedQueryKey =
-              queue.removeSmallestLatencyFromGroup(currGroupSize).key;
+            removedNode = queue.removeSmallestLatencyFromGroup(currGroupSize);
+            const removedQueryKey = removedNode.key;
 
             redisClient
               ? redisClient.del(removedQueryKey)
@@ -77,7 +96,17 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
             currGroupSize -= 1;
             if (currGroupSize <= 0) currGroupSize = groupSize;
           }
-          res.json({ data, queue });
+          const listArray = traverse(queue);
+          console.log('GROUP', currGroupSize);
+          res.json({
+            data,
+            queue: listArray,
+            removedNode: {
+              latency: removedNode.latency,
+              num: removedNode.num,
+            },
+            currGroupSize,
+          });
         })
         .catch((err) => {
           next({
