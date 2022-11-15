@@ -1,0 +1,11 @@
+.Eviction {
+  text-align: center;
+}
+
+.queueContainer {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
