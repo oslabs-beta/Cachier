@@ -12,17 +12,26 @@ import '../styles/Demo.scss';
 
 const Demo = () => {
   // const [queryData, setQueryData] = useState([]);
+
+  //state for the GraphQL query result once the fetch is down
   const [queryResult, setQueryResult] = useState('');
+
+  //query string that is displayed in GraphQL format
   const [queryString, setQueryString] = useState('');
+
+  //Array storing the linkedlist data use to display our linked list
   const [llData, setLLData] = useState([]);
+
   const [removedNode, setRemovedNode] = useState({ num: 0, latency: 0 });
-  const [currGroupSize, setCurrGroupSize] = useState(2);
+  const [currGroupSize, setCurrGroupSize] = useState(0);
 
   const [queryGraphQLString, setQueryGraphQLString] = useState(
     '{ clients { id name email phone } }'
   );
   const [queryTime, setQueryTime] = useState(0);
-  const [queryTimeArray, setQueryTimeArray] = useState([]);
+  const [queryTimeArray, setQueryTimeArray] = useState([
+    { latency: 0, cached: false },
+  ]);
 
   const [clientChecked, setClientChecked] = useState(false);
   const [clientIdChecked, setClientIdChecked] = useState(true);
@@ -35,7 +44,7 @@ const Demo = () => {
     datasets: [
       {
         label: 'Query Time in Milliseconds',
-        data: queryTimeArray,
+        data: queryTimeArray.latency,
         backgroundColor: ['blue'],
         borderColor: 'black',
         borderWidth: 2,
@@ -62,17 +71,26 @@ const Demo = () => {
     clientPhoneChecked,
   ]);
 
+  const chartLatency = () => {
+    let latencyArray = queryTimeArray.map((el) => el.latency);
+    let result = latencyArray.slice(1);
+    return result;
+  };
+
   useEffect(() => {
     let arr = [];
+
     setChartData({
-      labels: queryTimeArray.map((data, i) => {
-        return i === 0 ? 'Uncached query time' : `Cached query ${i}`;
-      }),
+      labels: queryTimeArray
+        .map((data, i) => {
+          return !data.cached ? 'Uncached Query' : `Cached Query`;
+        })
+        .slice(1),
       datasets: [
         {
           axis: 'y',
           label: 'Query Time in Milliseconds',
-          data: queryTimeArray,
+          data: chartLatency(),
           fill: true,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -93,7 +111,6 @@ const Demo = () => {
 
   const fetchData = async () => {
     const startTime = performance.now();
-    console.log(queryGraphQLString);
     await fetch('http://localhost:3000/cacheMoney', {
       method: 'POST',
       headers: {
@@ -108,17 +125,19 @@ const Demo = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
         setLLData(data.queue); // updates state linked list object
         if (data.removedNode) {
           setRemovedNode(data.removedNode);
-        } else {
-          setRemovedNode({ num: 0, latency: 0 });
         }
         setCurrGroupSize(data.currGroupSize);
         setQueryTime(endTime);
-        setQueryTimeArray([...queryTimeArray, endTime]); // updates data points for charts
+        //setQueryTime(data.latency.toFixed(2));
+
+        setQueryTimeArray([
+          ...queryTimeArray,
+          { latency: endTime, cached: data.cached },
+        ]); // updates data points for charts
         setQueryResult(JSON.stringify(data.data, null, 2));
       });
   };
@@ -130,7 +149,7 @@ const Demo = () => {
   };
   const displayQueryTimeArray = () => {
     return queryTimeArray.map((item, i) => {
-      return <div key={i}>{item}</div>;
+      return <div key={i}>{item.latency}</div>;
     });
   };
 
@@ -169,19 +188,10 @@ const Demo = () => {
 
   return (
     <div className='demoDiv'>
-      <h2>{queryGraphQLString}</h2>
-      {
-        //   <Typography variant='h4'>
-        //     Query Time Array
-        //     {displayQueryTimeArray()}
-        //   </Typography>
-      }
-
       <Grid container spacing={5} alignItems='center' justifyContent='center'>
         <Grid item>
           <Box display='flex' flexDirection='column' sx={{ gap: 3 }}>
             <Container id='queryString'>
-              <h2>Query String</h2>
               <input
                 type='checkbox'
                 onChange={() =>
@@ -193,7 +203,7 @@ const Demo = () => {
                 name='clients'
                 value='clients'
               />
-              <label for='clients'> Clients</label>
+              <label htmlFor='clients'> Clients</label>
               <Container>
                 {clientChecked === true && (
                   <div>
@@ -209,7 +219,7 @@ const Demo = () => {
                       name='clientId'
                       value='clientId'
                     />
-                    <label for='clientId'> ID</label>
+                    <label htmlFor='clientId'> ID</label>
                     <input
                       type='checkbox'
                       onChange={() =>
@@ -222,7 +232,7 @@ const Demo = () => {
                       name='clientName'
                       value='clientName'
                     />
-                    <label for='clientName'> Name</label>
+                    <label htmlFor='clientName'> Name</label>
                     <input
                       type='checkbox'
                       onChange={() =>
@@ -235,7 +245,7 @@ const Demo = () => {
                       name='clientEmail'
                       value='clientEmail'
                     />
-                    <label for='clientEmail'> Email</label>
+                    <label htmlFor='clientEmail'> Email</label>
                     <input
                       type='checkbox'
                       onChange={() =>
@@ -248,7 +258,7 @@ const Demo = () => {
                       name='clientPhone'
                       value='clientPhone'
                     />
-                    <label for='clientPhone'> Phone</label>
+                    <label htmlFor='clientPhone'> Phone</label>
                   </div>
                 )}
               </Container>
@@ -322,10 +332,7 @@ const Demo = () => {
       >
         <Grid item>
           <Box justifyContent='center' sx={{ width: 500 }}>
-            <Typography variant='h4'>
-              Uncached Time: {queryTimeArray[0] ? queryTimeArray[0] : 0}ms{' '}
-            </Typography>
-            <Typography variant='h4'>Cached Time: {queryTime}ms</Typography>
+            <Typography variant='h4'>Query Time: {queryTime}ms</Typography>
           </Box>
         </Grid>
 
@@ -335,11 +342,11 @@ const Demo = () => {
           </Box>
         </Grid>
 
-        <Grid item sx={{ width: 700 }}>
+        {/* <Grid item sx={{ width: 700 }}>
           <Box className='lineChartContainer' justifyContent='center'>
             <LineChart style={{ width: 600 }} chartData={chartData} />
           </Box>
-        </Grid>
+        </Grid> */}
       </Grid>
       <QueueVisualizer
         queue={llData}

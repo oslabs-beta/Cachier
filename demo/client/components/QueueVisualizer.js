@@ -7,14 +7,11 @@ import RemovedLLNode from './RemovedLLNode';
 const QueueVisualizer = (props) => {
   const { queue } = props;
 
-  console.log(props.currGroupSize);
-
   const traverse = (list) => {
     let count = 4 - props.currGroupSize;
     const output = [];
     let index = 0;
     while (index < list.length) {
-      console.log('count', count);
       if (index < count) {
         output.push(
           <LLNode
