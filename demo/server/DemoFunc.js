@@ -19,10 +19,10 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
     return output;
   };
   //initalizes a new eviction queue (linked list) for the server
-  const queue = new EvictionQueue();
+  let queue = new EvictionQueue();
   //keeps track of the current group size
   let currGroupSize = groupSize;
-  const cacheMoneyCache = {};
+  let cacheMoneyCache = {};
 
   if (capacity < 1 || groupSize < 1 || groupSize > capacity) {
     throw new Error(
@@ -58,11 +58,18 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
 
     if (valueFromCache) {
       // update recency of the accessed cacheKey by moving it to the front of the linked list.
+
       queue.updateRecencyOfExistingCache(cacheKey);
       // if cache contains the requested data return data from the cache.
       const parsedValue = JSON.parse(valueFromCache);
       const listArray = traverse(queue);
-      res.send({ data: parsedValue, queue: listArray, currGroupSize });
+
+      res.send({
+        data: parsedValue,
+        queue: listArray,
+        currGroupSize,
+        cached: true,
+      });
     } else {
       const start = performance.now();
       fetch(endpoint, {
@@ -75,7 +82,6 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('uncached', data);
           const end = performance.now();
           const latency = end - start;
 
@@ -106,6 +112,7 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
               num: removedNode.num,
             },
             currGroupSize,
+            cached: false,
           });
         })
         .catch((err) => {
