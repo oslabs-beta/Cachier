@@ -2,11 +2,27 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
+  const traverse = (list) => {
+    let currNode = list.head;
+    const output = [];
+    let counter = 1;
+
+    while (currNode) {
+      output.push({
+        latency: currNode.latency,
+        key: currNode.key,
+        num: currNode.num,
+      });
+      currNode = currNode.next;
+      counter++;
+    }
+    return output;
+  };
   //initalizes a new eviction queue (linked list) for the server
-  const queue = new EvictionQueue();
+  let queue = new EvictionQueue();
   //keeps track of the current group size
   let currGroupSize = groupSize;
-  const cacheMoneyCache = {};
+  let cacheMoneyCache = {};
 
   if (capacity < 1 || groupSize < 1 || groupSize > capacity) {
     throw new Error(
@@ -41,10 +57,19 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
     }
 
     if (valueFromCache) {
-      // if cache contains the requested data return data from the cache.
-      res.send(valueFromCache);
       // update recency of the accessed cacheKey by moving it to the front of the linked list.
+
       queue.updateRecencyOfExistingCache(cacheKey);
+      // if cache contains the requested data return data from the cache.
+      const parsedValue = JSON.parse(valueFromCache);
+      const listArray = traverse(queue);
+
+      res.send({
+        data: parsedValue,
+        queue: listArray,
+        currGroupSize,
+        cached: true,
+      });
     } else {
       const start = performance.now();
       fetch(endpoint, {
@@ -57,19 +82,18 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('uncached', data);
           const end = performance.now();
           const latency = end - start;
-          res.json(data);
 
           redisClient
             ? redisClient.set(cacheKey, JSON.stringify(data))
             : (cacheMoneyCache[cacheKey] = JSON.stringify(data));
 
           queue.add(cacheKey, latency);
+          let removedNode = { latency: 0, num: 0 };
           if (queue.length > capacity) {
-            const removedQueryKey =
-              queue.removeSmallestLatencyFromGroup(currGroupSize).key;
+            removedNode = queue.removeSmallestLatencyFromGroup(currGroupSize);
+            const removedQueryKey = removedNode.key;
 
             redisClient
               ? redisClient.del(removedQueryKey)
@@ -78,6 +102,18 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
             currGroupSize -= 1;
             if (currGroupSize <= 0) currGroupSize = groupSize;
           }
+          const listArray = traverse(queue);
+          console.log('GROUP', currGroupSize);
+          res.json({
+            data,
+            queue: listArray,
+            removedNode: {
+              latency: removedNode.latency,
+              num: removedNode.num,
+            },
+            currGroupSize,
+            cached: false,
+          });
         })
         .catch((err) => {
           next({
@@ -90,11 +126,12 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
 
 //Node constructor for our doubly linkedlist;
 class Node {
-  constructor(key, latency) {
+  constructor(key, latency, num) {
     this.key = key;
     this.latency = latency;
     this.next = null;
     this.prev = null;
+    this.num = num;
   }
 }
 
@@ -109,12 +146,13 @@ class EvictionQueue {
     this.length = 0;
     //Keeps all nodes of linkedlist in a hashmap associated with their redis keys to allow O(1) updates to node positions in the queue.
     this.cache = {};
+    this.nodeNum = 1;
   }
 
   //adds a node to the queue.
   add(cacheKey, latency) {
     //creates a new Node containing the latency of the query and its key in the cache.
-    const newNode = new Node(cacheKey, latency);
+    const newNode = new Node(cacheKey, latency, this.nodeNum++);
     this.cache[cacheKey] = newNode;
     //accounts for if the queue is empty.
     if (this.head === null && this.tail === null) {

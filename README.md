@@ -14,6 +14,14 @@ First, install the Redis package for Node.js
 `npm install redis`
 
 Then install our npm package.
+`npm install _______`
+1. Install Redis
+- MacOS users: [Redis installation for MacOS](https://redis.io/docs/getting-started/installation/install-redis-on-mac-os/)
+- Linux users: [Redis installation for Linux](https://redis.io/docs/getting-started/installation/install-redis-on-linux/)
+- Windows users: 
+1. Redis is not officially supported on Windows, so you must have a [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
+2. Once you have WSL, follow [Redis installation for Windows](https://redis.io/docs/getting-started/installation/install-redis-on-windows/)
+
 
 ## Tech stack used
 Node - Express - React - Material-UI - ChartJS - Redis - GraphQL - TypeScript - Jest - Supertest - AWS RDS - Webpack

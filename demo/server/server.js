@@ -7,6 +7,7 @@ const expressGraphQL = require('express-graphql').graphqlHTTP;
 const schema = require('./schema.js');
 // Jonathan's Linked List
 const cacheMoney = require('./cacheMoney.js');
+const demoFunc = require('./DemoFunc');
 
 const cors = require('cors');
 const Redis = require('redis');
@@ -28,10 +29,7 @@ client.connect();
 
 app.use(express.static(path.resolve(__dirname, '../client')));
 
-app.use(
-  '/cacheMoney',
-  cacheMoney('http://localhost:3000/graphql', 50, 5)
-);
+app.use('/cacheMoney', demoFunc('http://localhost:3000/graphql', 4, 2));
 
 app.use(
   '/graphql',
