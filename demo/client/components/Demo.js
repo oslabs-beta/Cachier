@@ -103,7 +103,7 @@ const Demo = () => {
             'rgba(153, 102, 255, 0.2)',
             'rgba(201, 203, 207, 0.2)',
           ],
-          //backgroundColor: ['blue'],
+
           borderColor: 'black',
           borderWidth: 2,
         },
@@ -127,7 +127,6 @@ const Demo = () => {
         return res.json();
       })
       .then((data) => {
-        console.log("AAAAAAA", queryTimeArray[queryTimeArray.length - 1].cached);
         const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
         setLLData(data.queue); // updates state linked list object
         if (data.removedNode) {
@@ -141,6 +140,7 @@ const Demo = () => {
           ...queryTimeArray,
           { latency: endTime, cached: data.cached },
         ]); // updates data points for charts
+        console.log(JSON.stringify(data.data, null, 2));
         setQueryResult(JSON.stringify(data.data, null, 2));
       });
   };
@@ -167,24 +167,27 @@ const Demo = () => {
   const testQuery = () => {
     if (clientChecked) {
       return (
-        <div>
-          <p style={{ margin: 0, paddingTop: 20 }}>&#123;</p>
+        <Container>
+          <span style={{ margin: 0, paddingTop: 20 }}>&#123;</span>
+          <br></br>
           <span>&nbsp;&nbsp;clients &#123;</span>
+          <br></br>
           {clientIdChecked && (
-            <p style={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;id</p>
+            <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;id<br></br></span>
           )}
           {clientNameChecked && (
-            <p style={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;name</p>
+            <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;name<br></br></span>
           )}
           {clientEmailChecked && (
-            <p style={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;email</p>
+            <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;email<br></br></span>
           )}
           {clientPhoneChecked && (
-            <p style={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;phone</p>
+            <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;phone<br></br></span>
           )}
-          <p style={{ margin: 0 }}>&nbsp;&nbsp; &#125;</p>
-          <p style={{ margin: 0 }}>&#125;</p>
-        </div>
+          <span sx={{ margin: 0 }}>&nbsp;&nbsp; &#125;</span>
+          <br></br>
+          <span sx={{ margin: 0 }}>&#125;</span>
+        </Container>
       );
     }
   };
@@ -278,10 +281,9 @@ const Demo = () => {
                 color: '#9C528B',
                 
               }}
-              className='queryDisplayStringContainer'
             >
-              {/* {displayQueryFields()} */}
-              <p style={{fontSize: 20}}> {testQuery()} </p>
+        
+              <Typography style={{fontSize: 20}}> {testQuery()} </Typography>
             </Container>
             {/* <Button
               variant='contained'
@@ -311,19 +313,18 @@ const Demo = () => {
               sx={{
                 overflow: 'auto',
                 height: 300,
-                width: 500,
+                width: 600,
                 backgroundColor: 'black',
                 display: 'flex',
                 justifyContent: 'flex-start',
                 borderRadius: 5,
-                boxShadow: 3,
               }}
               className='queryResult'
             >
-              <pre style={{ fontWeight: 700, color: 'white', fontSize: 18 }}>
+              <p style={{ fontWeight: 700, color: 'white', fontSize: 18 }}>
                 {' '}
                 {queryResult}{' '}
-              </pre>
+              </p>
             </Container>
             <Box sx={{paddingTop: 1, display: 'flex', justifyContent: 'space-between'}}>
               <Typography variant='span' sx={{fontFamily: 'Georgia, serif', fontSize: 25, paddingLeft: 3}}>Query Time:</Typography>

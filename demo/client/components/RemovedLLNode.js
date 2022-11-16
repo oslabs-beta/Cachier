@@ -16,7 +16,7 @@ const RemovedLLNode = (props) => {
         {props.num === 0 ? <h2>None Evicted Yet</h2> : <h2>Last Evicted</h2>}
         {props.num !== 0 && <h3> {`Query ${props.num}`}</h3>}
         {props.num !== 0 && (
-          <p className='latency'>{`${Math.floor(props.latency)}ms`} </p>
+          <span className='latency'>{`${Math.floor(props.latency)}ms`} </span>
         )}
       </div>
     </div>
