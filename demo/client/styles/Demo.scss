@@ -1,9 +1,13 @@
 @use './variables' as *;
 
 body {
-  background: linear-gradient($primary-color, $tertiary-color);
+  //background: linear-gradient(rgb(195, 196, 199), rgb(18, 31, 60));
+  //@error: linear-gradient(to right, #abbaab, #ffffff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  //@extend: linear-gradient(to left, #5d4157, #a8caba); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to left, #e1e1e1, #d7dde8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
-demoDiv {
-  margin-top: 100px;
-}
+// body {
+//   background-color: rgb(245, 245, 245);
+// }

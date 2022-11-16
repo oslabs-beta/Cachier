@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import LLNode from './LLNode';
+import { Typography } from '@mui/material';
 import '../styles/QueueVisualizer.css';
 import RemovedLLNode from './RemovedLLNode';
 
@@ -37,8 +38,8 @@ const QueueVisualizer = (props) => {
   };
 
   return (
-    <div className='Eviction'>
-      <h1>Eviction Policy Visualizer</h1>
+    <div className='Eviction' style={{margin: 'auto', maxWidth: 1200, marginTop: 40, border: 'black 1px solid', borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor: 'white', paddingBottom: 40, color: '#121F4E', boxShadow: 24}}>
+      <Typography variant='h3' sx={{fontFamily: 'Georgia, serif', padding:2}}>Eviction Policy Visualizer</Typography>
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <div className='queueContainer'>{traverse(queue)}</div>
 
