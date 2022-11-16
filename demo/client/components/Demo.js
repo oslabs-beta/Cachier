@@ -367,6 +367,7 @@ const Demo = () => {
         justifyContent='center'
         flex
         sx={{ pt: 5 }}
+
       >
         {/* <Grid item>
           <Box justifyContent='center' sx={{ width: 500 }}>
@@ -374,7 +375,7 @@ const Demo = () => {
           </Box>
         </Grid> */}
         
-        <Grid item sx={{ width: 900, border: 'black 1px solid', borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor: 'white', padding:2, color: '#121F4E', boxShadow: 24}}>
+        <Grid item sx={{ border: 'black 1px solid', borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor: 'white', padding:2, color: '#121F4E', boxShadow: 24}}>
           <Typography variant='h3' sx={{fontFamily: 'Georgia, serif', textAlign: 'center'}}> Query Cache Performance Chart </Typography>
           <Box className='barChartContainer' justifyContent='center'>
             <BarChart style={{ width: 600 }} chartData={chartData} />
