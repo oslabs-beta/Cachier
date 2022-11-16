@@ -13,8 +13,6 @@ import { shadows } from '@mui/system';
 import '../styles/Demo.scss';
 
 const Demo = () => {
-  // const [queryData, setQueryData] = useState([]);
-
   //state for the GraphQL query result once the fetch is down
   const [queryResult, setQueryResult] = useState('');
 
@@ -80,6 +78,10 @@ const Demo = () => {
   };
 
   useEffect(() => {
+    console.log(queryResult);
+  }, [queryResult])
+
+  useEffect(() => {
     let arr = [];
 
     setChartData({
@@ -140,16 +142,11 @@ const Demo = () => {
           ...queryTimeArray,
           { latency: endTime, cached: data.cached },
         ]); // updates data points for charts
-        console.log(JSON.stringify(data.data, null, 2));
         setQueryResult(JSON.stringify(data.data, null, 2));
       });
   };
 
-  const displayData = () => {
-    return queryData.map((item, i) => {
-      return <div key={i}>{JSON.stringify(item)}</div>;
-    });
-  };
+
   const displayQueryTimeArray = () => {
     return queryTimeArray.map((item, i) => {
       return <div key={i}>{item.latency}</div>;
@@ -167,30 +164,55 @@ const Demo = () => {
   const testQuery = () => {
     if (clientChecked) {
       return (
-        <Container>
-          <span style={{ margin: 0, paddingTop: 20 }}>&#123;</span>
-          <br></br>
+        <div>
+          <p style={{ margin: 0, paddingTop: 20 }}>&#123;</p>
           <span>&nbsp;&nbsp;clients &#123;</span>
-          <br></br>
           {clientIdChecked && (
-            <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;id<br></br></span>
+            <p style={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;id</p>
           )}
           {clientNameChecked && (
-            <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;name<br></br></span>
+            <p style={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;name</p>
           )}
           {clientEmailChecked && (
-            <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;email<br></br></span>
+            <p style={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;email</p>
           )}
           {clientPhoneChecked && (
-            <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;phone<br></br></span>
+            <p style={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;phone</p>
           )}
-          <span sx={{ margin: 0 }}>&nbsp;&nbsp; &#125;</span>
-          <br></br>
-          <span sx={{ margin: 0 }}>&#125;</span>
-        </Container>
+          <p style={{ margin: 0 }}>&nbsp;&nbsp; &#125;</p>
+          <p style={{ margin: 0 }}>&#125;</p>
+        </div>
       );
     }
   };
+
+  // const testQuery = () => {
+  //   if (clientChecked) {
+  //     return (
+  //       <Container>
+  //         <span style={{ margin: 0, paddingTop: 20 }}>&#123;</span>
+  //         <br></br>
+  //         <span>&nbsp;&nbsp;clients &#123;</span>
+  //         <br></br>
+  //         {clientIdChecked && (
+  //           <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;id<br></br></span>
+  //         )}
+  //         {clientNameChecked && (
+  //           <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;name<br></br></span>
+  //         )}
+  //         {clientEmailChecked && (
+  //           <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;email<br></br></span>
+  //         )}
+  //         {clientPhoneChecked && (
+  //           <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;phone<br></br></span>
+  //         )}
+  //         <span sx={{ margin: 0 }}>&nbsp;&nbsp; &#125;</span>
+  //         <br></br>
+  //         <span sx={{ margin: 0 }}>&#125;</span>
+  //       </Container>
+  //     );
+  //   }
+  // };
 
   return (
 
@@ -283,7 +305,7 @@ const Demo = () => {
               }}
             >
         
-              <Typography style={{fontSize: 20}}> {testQuery()} </Typography>
+              <Container style={{fontSize: 20}}> {testQuery()} </Container>
             </Container>
             {/* <Button
               variant='contained'
@@ -321,7 +343,7 @@ const Demo = () => {
               }}
               className='queryResult'
             >
-              <p style={{ fontWeight: 700, color: 'white', fontSize: 18 }}>
+              <p style={{ fontWeight: 700, color: 'white', fontSize: 14 }}>
                 {' '}
                 {queryResult}{' '}
               </p>
