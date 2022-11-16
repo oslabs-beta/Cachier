@@ -186,33 +186,8 @@ const Demo = () => {
     }
   };
 
-  // const testQuery = () => {
-  //   if (clientChecked) {
-  //     return (
-  //       <Container>
-  //         <span style={{ margin: 0, paddingTop: 20 }}>&#123;</span>
-  //         <br></br>
-  //         <span>&nbsp;&nbsp;clients &#123;</span>
-  //         <br></br>
-  //         {clientIdChecked && (
-  //           <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;id<br></br></span>
-  //         )}
-  //         {clientNameChecked && (
-  //           <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;name<br></br></span>
-  //         )}
-  //         {clientEmailChecked && (
-  //           <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;email<br></br></span>
-  //         )}
-  //         {clientPhoneChecked && (
-  //           <span sx={{ margin: 0 }}>&nbsp;&nbsp;&nbsp;&nbsp;phone<br></br></span>
-  //         )}
-  //         <span sx={{ margin: 0 }}>&nbsp;&nbsp; &#125;</span>
-  //         <br></br>
-  //         <span sx={{ margin: 0 }}>&#125;</span>
-  //       </Container>
-  //     );
-  //   }
-  // };
+  // const elem = document.getElementById('canvas1');
+  // elem.remove();
 
   return (
 
