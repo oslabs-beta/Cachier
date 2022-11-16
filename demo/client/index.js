@@ -2,18 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.js';
 import { BrowserRouter, NavLink } from 'react-router-dom';
+import './style.css';
 
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(
 
-<div className='NavBar'>
+<div>
   <React.StrictMode>
     <BrowserRouter>
 
-  <nav className='nav'>
+  <nav className='NavBar'>
     <ul>
-      <li><NavLink to={'/'}>Demo</NavLink></li>
-      <li><NavLink to={'/landing'}>Landing</NavLink></li>
+      <li><a><NavLink to={'/'}>Home</NavLink></a></li>
+      <li><a><NavLink to={'/demo'}>Demo</NavLink></a></li>
+      <li><a><NavLink to={'/documentation'}>Docs</NavLink></a></li>
+      <li><a><NavLink to={'/about'}>About</NavLink></a></li>
     </ul>
   </nav>
 

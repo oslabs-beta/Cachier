@@ -1,0 +1,37 @@
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 5vh;
+    overflow: hidden;
+    /* position: -webkit-sticky; Safari */
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: darkcyan;
+    border-style: none;
+}
+
+li {
+    float: left;
+
+}
+
+li a {
+ display: block;
+ color: white;
+ text-align: center;
+ padding: 14px 16px;
+ text-decoration: none;
+}
+
+li a:not(.active):hover {
+    border-radius: 10%;
+    background-color: #111;
+}
+
+li a .active {
+    background-color: aquamarine;
+}
+

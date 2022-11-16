@@ -6,9 +6,10 @@ const Landing = () => {
 
   return (
     <div>
+      {/* <canvas id="canvas1"></canvas> */}
 
       <Physics />
-      <p>Lorem ipsum</p>
+      
     </div>
   );
 }

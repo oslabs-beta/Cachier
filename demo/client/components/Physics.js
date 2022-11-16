@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 
 const Physics = () => {
     
-
-    
-const canvas = document.getElementById(/*replace with id of your canvas element in your DOM*/"canvas2");
+const canvas = document.getElementById(/*replace with id of your canvas element in your DOM*/"canvas1");
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -32,7 +30,7 @@ window.addEventListener('mousemove', function (event) {
 
 //the content and font-style for the 'structure' particles
 ctx.fillStyle = 'white';
-ctx.font = '14px Verdana';
+ctx.font = '12px Verdana';
 ctx.fillText('Cache Money', 0, 30);
 
 

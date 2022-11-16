@@ -1,3 +1,20 @@
+/* @description 
+
+Queries to /cacheMoney endpoint (from frontend) reach here. Locally stored linked list tracks what is in Redis cache. 
+The doubly linked list ("EvictionQueue") has a head that tracks the newest query, and a tail which tracks the oldest (least recently accessed) query.
+A locally stored object cache (cache) stores queries for O(1) look up.
+When a query reaches the backend, Redis (server-side) cache is queried for that key. If it is living in the Redis cache, the query result is returned 
+= Cached Result. If a query is non-existent in Redis cache, the database (URI provided via the parameter "endpoint") is queried and returned = Uncached Result
+That query result is stored in Redis, and at the head of our linked list. 
+Optionally, developers can choose to store the cache fully locally, simply by not providing a "redisClient" parameter. In this case, "cacheMoneyCache" 
+stores queries in object form, just like Redis.
+The parameters "capacity" and "groupSize" determine the max capacity of the cache and the amount of queries in that cache that will be selected for 
+eviction scrutiny, respectively. Ex: capacity = 50, groupSize = 5 -> whenever cache capacity is reached (50 unique queries have been made anc cached), 
+the 5 least recently accessed queries are selected, and the one with the highest latency (time delay) is evicted from the Redis cache, local cache and linked list.
+This custom eviction policy accounts for both query recency and latency.
+
+*/
+
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
@@ -135,21 +152,21 @@ class Node {
   }
 }
 
-//Doubly linked list to keep track of our eviction order.
+//Doubly linked list to keep track of our eviction order
 class EvictionQueue {
   constructor() {
-    //keeps track of front of queue.
+    // tracks front of queue (where newest queries go)
     this.head = null;
-    //keeps track of back of queue.
+    // tracks back of queue (oldest accessed query)
     this.tail = null;
-    //keeps track of the number of nodes in the queue.
+    //keeps track of the number of nodes in the queue
     this.length = 0;
-    //Keeps all nodes of linkedlist in a hashmap associated with their redis keys to allow O(1) updates to node positions in the queue.
+    //Keeps all nodes of linkedlist in a hashmap associated with their redis keys to allow O(1) updates to node positions in the queue
     this.cache = {};
     this.nodeNum = 1;
   }
 
-  //adds a node to the queue.
+  //adds a node to the queue (at the head).
   add(cacheKey, latency) {
     //creates a new Node containing the latency of the query and its key in the cache.
     const newNode = new Node(cacheKey, latency, this.nodeNum++);

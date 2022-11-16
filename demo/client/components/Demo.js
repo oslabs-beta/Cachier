@@ -186,6 +186,9 @@ const Demo = () => {
     }
   };
 
+  // const elem = document.getElementById('canvas1');
+  // elem.remove();
+
   return (
     <div className='demoDiv'>
       <Grid container spacing={5} alignItems='center' justifyContent='center'>
