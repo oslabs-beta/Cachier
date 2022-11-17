@@ -53,7 +53,7 @@ const QueueVisualizer = (props) => {
     >
       <Typography
         variant='h3'
-        sx={{ fontFamily: 'Georgia, serif', padding: 2 }}
+        sx={{ fontFamily: 'Georgia, serif', padding: 2, fontSize: '2vw' }}
       >
         Eviction Policy Visualizer
       </Typography>
