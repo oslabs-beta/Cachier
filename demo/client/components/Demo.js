@@ -210,7 +210,7 @@ const Demo = () => {
                 border: 'black 2px',
                 borderTopLeftRadius: 10,
                 borderTopRightRadius: 10,
-                backgroundColor: '#121F4E',
+                backgroundColor: '#245594',
                 paddingLeft: 0,
                 paddingRight: 0,
                 color: 'white',
@@ -223,6 +223,7 @@ const Demo = () => {
                   justifyContent: 'center',
                   padding: 1,
                   display: 'flex',
+                  color: '#ffd240',
                 }}
               >
                 Query Result
@@ -234,13 +235,13 @@ const Demo = () => {
                   backgroundColor: 'black',
                   display: 'flex',
                   justifyContent: 'flex-start',
-                  borderRadius: 5,
                   boxShadow: 3,
+                  fontFamily: 'Roboto","Helvetica","Arial",sans-serif'
                 }}
                 className='queryResult'
               >
                 <pre
-                  style={{ fontWeight: 700, color: 'white', fontSize: '1vw' }}
+                  style={{ color: 'white', fontSize: '1vw', fontFamily:'Georgia,serif' }}
                 >
                   {' '}
                   {queryResult}{' '}
@@ -251,6 +252,7 @@ const Demo = () => {
                   paddingTop: 1,
                   display: 'flex',
                   justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}
               >
                 <Typography
@@ -259,6 +261,7 @@ const Demo = () => {
                     fontFamily: 'Georgia, serif',
                     fontSize: '1.1vw',
                     paddingLeft: '1.1vw',
+                    color: '#ffd240'
                   }}
                 >
                   Query Time:
@@ -269,7 +272,7 @@ const Demo = () => {
                     fontFamily: 'Georgia, serif',
                     fontSize: '1.7vw',
                     paddingRight: '1.5vw',
-                    color: 'red',
+                    color: '#ff4c4c',
                   }}
                 >
                   {queryTime}
@@ -285,7 +288,8 @@ const Demo = () => {
               >
                 <Typography
                   variant='span'
-                  sx={{ fontFamily: 'Georgia, serif', fontSize: '1.1vw' }}
+                  sx={{ fontFamily: 'Georgia, serif', fontSize: '1.1vw', color: '#ffd240', }}
+                  
                 >
                   Cache Hit:
                 </Typography>
@@ -294,7 +298,7 @@ const Demo = () => {
                   sx={{
                     fontFamily: 'Georgia, serif',
                     fontSize: 25,
-                    color: 'red',
+                    color: '#ff4c4c',
                   }}
                 >
                   {queryTimeArray[queryTimeArray.length - 1].cached
@@ -312,9 +316,10 @@ const Demo = () => {
                   border: 'black 2px',
                   borderTopLeftRadius: 10,
                   borderTopRightRadius: 10,
-                  backgroundColor: '#121F4E',
+                  backgroundColor: '#245594',
                   padding: 2,
-                  color: '#F0F3BD',
+                  fontFamily: 'Georgia,serif',
+                  color: '#ffd240',
                 }}
               >
                 <input
@@ -417,7 +422,7 @@ const Demo = () => {
                 size='large'
                 id='queryButton'
                 onClick={handleQuery}
-                sx={{ backgroundColor: '#121F4E' }}
+                sx={{ backgroundColor: '#245594', color:'#ffd240' }}
               >
                 Run Query
               </Button>
