@@ -41,11 +41,22 @@ const config = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.png|svg|jpg|gif$/,
+        test: /\.png|jpg|gif$/,
         use: ['file-loader'],
       },
+      {
+        test: /\.svg$/,
+        use: [{ loader: 'babel-loader' },
+      {
+        loader: 'react-svg-loader',
+        options: {
+          jsx: true,
+        }
+      }
     ],
-  },
+  }
+  ],
+},
   resolve: { extensions: ['*', '.js', '.jsx'] },
   plugins: [new HtmlWebpackPlugin({ template: './demo/client/index.html' })],
 };
