@@ -58,7 +58,7 @@ const QueueVisualizer = (props) => {
           color: 'black',
         }}
       >
-        Eviction Policy Visualizer
+        LRU-SLFR Eviction Policy Visualizer
       </Typography>
       <div
         style={{
