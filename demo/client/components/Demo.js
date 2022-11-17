@@ -238,7 +238,9 @@ const Demo = () => {
                 }}
                 className='queryResult'
               >
-                <pre style={{ fontWeight: 700, color: 'white', fontSize: 18 }}>
+                <pre
+                  style={{ fontWeight: 700, color: 'white', fontSize: '1vw' }}
+                >
                   {' '}
                   {queryResult}{' '}
                 </pre>
@@ -254,8 +256,8 @@ const Demo = () => {
                   variant='span'
                   sx={{
                     fontFamily: 'Georgia, serif',
-                    fontSize: 25,
-                    paddingLeft: 3,
+                    fontSize: '1.1vw',
+                    paddingLeft: '1.1vw',
                   }}
                 >
                   Query Time:
@@ -264,13 +266,13 @@ const Demo = () => {
                   variant='span'
                   sx={{
                     fontFamily: 'Georgia, serif',
-                    fontSize: 25,
-                    paddingRight: 3,
+                    fontSize: '1.7vw',
+                    paddingRight: '1.5vw',
                     color: 'red',
                   }}
                 >
                   {queryTime}
-                  <span style={{ fontSize: 15 }}>ms</span>
+                  <span style={{ fontSize: '0.7vw' }}>ms</span>
                 </Typography>
               </Box>
               <Container
@@ -282,7 +284,7 @@ const Demo = () => {
               >
                 <Typography
                   variant='span'
-                  sx={{ fontFamily: 'Georgia, serif', fontSize: 25 }}
+                  sx={{ fontFamily: 'Georgia, serif', fontSize: '1.1vw' }}
                 >
                   Cache Hit:
                 </Typography>
@@ -398,7 +400,7 @@ const Demo = () => {
                 className='queryDisplayStringContainer'
               >
                 {/* {displayQueryFields()} */}
-                <p style={{ fontSize: 20 }}> {testQuery()} </p>
+                <p style={{ fontSize: '1.2vw' }}> {testQuery()} </p>
               </Container>
               {/* <Button
               variant='contained'
@@ -452,7 +454,11 @@ const Demo = () => {
           >
             <Typography
               variant='h3'
-              sx={{ fontFamily: 'Georgia, serif', textAlign: 'center' }}
+              sx={{
+                fontFamily: 'Georgia, serif',
+                textAlign: 'center',
+                fontSize: '2vw',
+              }}
             >
               {' '}
               Query Cache Performance Chart{' '}
