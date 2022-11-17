@@ -9,12 +9,13 @@ import Box from '@mui/material/Box';
 import { Navigate } from 'react-router-dom';
 import QueueVisualizer from './QueueVisualizer';
 import { shadows } from '@mui/system';
-import { clientSideCache } from "../../../clientSideCache"
 import '../styles/Demo.css';
 
 import '../styles/Demo.scss';
 
 const Demo = () => {
+  // const [queryData, setQueryData] = useState([]);
+
   //state for the GraphQL query result once the fetch is down
   const [queryResult, setQueryResult] = useState('');
 
@@ -40,8 +41,6 @@ const Demo = () => {
   const [clientNameChecked, setClientNameChecked] = useState(true);
   const [clientEmailChecked, setClientEmailChecked] = useState(true);
   const [clientPhoneChecked, setClientPhoneChecked] = useState(true);
-
-
 
   const [chartData, setChartData] = useState({
     labels: [],
@@ -105,7 +104,7 @@ const Demo = () => {
             'rgba(153, 102, 255, 0.2)',
             'rgba(201, 203, 207, 0.2)',
           ],
-
+          //backgroundColor: ['blue'],
           borderColor: 'black',
           borderWidth: 2,
         },
@@ -114,9 +113,6 @@ const Demo = () => {
   }, [queryTimeArray]);
 
   const fetchData = async () => {
-    const client = clientSideCache(4,2);
-    const clientResult = await client('http://localhost:3000/cacheMoney', {query: queryGraphQLString, variables : '' })
-    console.log(clientResult)
     const startTime = performance.now();
     await fetch('http://localhost:3000/cacheMoney', {
       method: 'POST',
@@ -132,7 +128,10 @@ const Demo = () => {
         return res.json();
       })
       .then((data) => {
-        
+        console.log(
+          'AAAAAAA',
+          queryTimeArray[queryTimeArray.length - 1].cached
+        );
         const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
         setLLData(data.queue); // updates state linked list object
         if (data.removedNode) {
@@ -150,7 +149,11 @@ const Demo = () => {
       });
   };
 
-
+  const displayData = () => {
+    return queryData.map((item, i) => {
+      return <div key={i}>{JSON.stringify(item)}</div>;
+    });
+  };
   const displayQueryTimeArray = () => {
     return queryTimeArray.map((item, i) => {
       return <div key={i}>{item.latency}</div>;
@@ -225,8 +228,8 @@ const Demo = () => {
               </Typography>
               <Container
                 sx={{
-                  height: 300,
-                  width: 500,
+                  height: '15vw',
+                  width: '23vw',
                   backgroundColor: 'black',
                   display: 'flex',
                   justifyContent: 'flex-start',
@@ -384,9 +387,9 @@ const Demo = () => {
               </Container>
               <Container
                 sx={{
-                  'overflow-x': 'hidden',
-                  height: 300,
-                  width: 500,
+                  overflowX: 'hidden',
+                  height: '15vw',
+                  width: '23vw',
                   backgroundColor: 'white',
                   display: 'flex',
                   justifyContent: 'flex-start',
@@ -420,7 +423,7 @@ const Demo = () => {
         </div>
       </Grid>
 
-      <Container className='Visualizers' maxHeight='md' maxWidth='md'>
+      <div className='Visualizers'>
         <Grid
           container
           alignItems='center'
@@ -436,10 +439,8 @@ const Demo = () => {
 
           <Grid
             item
-
-            maxWidth='md'
             sx={{
-              width: 900,
+              width: '45vw',
               border: 'black 1px solid',
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
@@ -457,7 +458,7 @@ const Demo = () => {
               Query Cache Performance Chart{' '}
             </Typography>
             <Box className='barChartContainer' justifyContent='center'>
-              <BarChart style={{ width: 600 }} chartData={chartData} />
+              <BarChart style={{ width: '27vw' }} chartData={chartData} />
             </Box>
           </Grid>
 
@@ -472,7 +473,7 @@ const Demo = () => {
           removedNode={removedNode}
           currGroupSize={currGroupSize}
         />
-      </Container>
+      </div>
     </div>
   );
 };

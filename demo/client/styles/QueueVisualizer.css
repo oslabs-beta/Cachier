@@ -3,12 +3,12 @@
 }
 
 .queueContainer {
-  width: 500px;
-  height: 200px;
+  width: 23vw;
+  height: 9vw;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 17px;
+  margin-top: 2.1vw;
 }
 
 .Evicted {
@@ -16,7 +16,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 0;
-  margin-bottom: 30px;
-  margin-left: 80px;
+  margin-bottom: 1.5vw;
+  margin-left: 3vw;
 }

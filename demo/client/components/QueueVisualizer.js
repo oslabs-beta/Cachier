@@ -41,14 +41,12 @@ const QueueVisualizer = (props) => {
     <div
       className='Eviction'
       style={{
-        margin: 'auto',
-        maxWidth: 1200,
-        marginTop: 40,
+        marginTop: '2vw',
         border: 'black 1px solid',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         backgroundColor: 'white',
-        paddingBottom: 40,
+        paddingBottom: '1vw',
         color: '#121F4E',
         boxShadow: 24,
       }}
@@ -59,7 +57,13 @@ const QueueVisualizer = (props) => {
       >
         Eviction Policy Visualizer
       </Typography>
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+        }}
+      >
         <div className='queueContainer'>{traverse(queue)}</div>
         <div className='Evicted'>
           <h2>Last Evicted</h2>
