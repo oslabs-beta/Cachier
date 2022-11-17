@@ -2,11 +2,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8vw;
+  gap: 5vw;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
 
 .Visualizers {
-  margin-bottom: 2vw;
+  margin-bottom: 2.1vw;
 }
 
 .query {

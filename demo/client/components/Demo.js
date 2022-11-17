@@ -209,7 +209,7 @@ const Demo = () => {
                 border: 'black 2px',
                 borderTopLeftRadius: 10,
                 borderTopRightRadius: 10,
-                backgroundColor: '#121F4E',
+                backgroundColor: '#245594',
                 paddingLeft: 0,
                 paddingRight: 0,
                 color: 'white',
@@ -233,13 +233,13 @@ const Demo = () => {
                   backgroundColor: 'black',
                   display: 'flex',
                   justifyContent: 'flex-start',
-                  borderRadius: 5,
                   boxShadow: 3,
+                  fontFamily: 'Roboto","Helvetica","Arial",sans-serif'
                 }}
                 className='queryResult'
               >
                 <pre
-                  style={{ fontWeight: 700, color: 'white', fontSize: '1vw' }}
+                  style={{ fontWeight: 700, color: 'white', fontSize: '1vw', fontFamily:'Georgia,serif' }}
                 >
                   {' '}
                   {queryResult}{' '}
@@ -250,6 +250,7 @@ const Demo = () => {
                   paddingTop: 1,
                   display: 'flex',
                   justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}
               >
                 <Typography
@@ -311,8 +312,9 @@ const Demo = () => {
                   border: 'black 2px',
                   borderTopLeftRadius: 10,
                   borderTopRightRadius: 10,
-                  backgroundColor: '#121F4E',
+                  backgroundColor: '#245594',
                   padding: 2,
+                  fontFamily: 'Georgia,serif',
                   color: '#F0F3BD',
                 }}
               >
@@ -416,7 +418,7 @@ const Demo = () => {
                 size='large'
                 id='queryButton'
                 onClick={handleQuery}
-                sx={{ backgroundColor: '#121F4E' }}
+                sx={{ backgroundColor: '#245594' }}
               >
                 Run Query
               </Button>
