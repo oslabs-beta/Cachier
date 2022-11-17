@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 const RemovedLLNode = (props) => {
   return (
     <div className='LastEvictedBox'>
-      <div className='node' style={{ backgroundColor: 'orange' }}>
+      <div className='node' style={{ backgroundColor: '#ffd240' }}>
         {props.num !== 0 ? <h1> {`Query ${props.num}`}</h1> : <h1>Query</h1>}
         {props.num !== 0 ? (
           <p className='latency'>{`${Math.floor(props.latency)}ms`} </p>
