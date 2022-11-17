@@ -222,6 +222,7 @@ const Demo = () => {
                   justifyContent: 'center',
                   padding: 1,
                   display: 'flex',
+                  color: '#ffd240',
                 }}
               >
                 Query Result
@@ -259,6 +260,7 @@ const Demo = () => {
                     fontFamily: 'Georgia, serif',
                     fontSize: '1.1vw',
                     paddingLeft: '1.1vw',
+                    color: '#ffd240'
                   }}
                 >
                   Query Time:
@@ -269,7 +271,7 @@ const Demo = () => {
                     fontFamily: 'Georgia, serif',
                     fontSize: '1.7vw',
                     paddingRight: '1.5vw',
-                    color: 'red',
+                    color: '#ff4c4c',
                   }}
                 >
                   {queryTime}
@@ -285,7 +287,8 @@ const Demo = () => {
               >
                 <Typography
                   variant='span'
-                  sx={{ fontFamily: 'Georgia, serif', fontSize: '1.1vw' }}
+                  sx={{ fontFamily: 'Georgia, serif', fontSize: '1.1vw', color: '#ffd240', }}
+                  
                 >
                   Cache Hit:
                 </Typography>
@@ -294,7 +297,7 @@ const Demo = () => {
                   sx={{
                     fontFamily: 'Georgia, serif',
                     fontSize: 25,
-                    color: 'red',
+                    color: '#ff4c4c',
                   }}
                 >
                   {queryTimeArray[queryTimeArray.length - 1].cached
@@ -315,7 +318,7 @@ const Demo = () => {
                   backgroundColor: '#245594',
                   padding: 2,
                   fontFamily: 'Georgia,serif',
-                  color: '#F0F3BD',
+                  color: '#ffd240',
                 }}
               >
                 <input
@@ -418,7 +421,7 @@ const Demo = () => {
                 size='large'
                 id='queryButton'
                 onClick={handleQuery}
-                sx={{ backgroundColor: '#245594' }}
+                sx={{ backgroundColor: '#245594', color:'#ffd240' }}
               >
                 Run Query
               </Button>
