@@ -3,9 +3,20 @@
 }
 
 .queueContainer {
-  width: auto;
-  height: auto;
+  width: 500px;
+  height: 200px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin-top: 17px;
+}
+
+.Evicted {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 30px;
+  margin-left: 80px;
 }

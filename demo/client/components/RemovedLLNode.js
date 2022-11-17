@@ -4,19 +4,13 @@ import { Navigate } from 'react-router-dom';
 
 const RemovedLLNode = (props) => {
   return (
-    <div
-      style={{
-        border: 'black 3px solid',
-        borderRadius: 10,
-        padding: 3,
-        backgroundColor: 'White',
-      }}
-    >
-      <div>
-        {props.num === 0 ? <h2>None Evicted Yet</h2> : <h2>Last Evicted</h2>}
-        {props.num !== 0 && <h3> {`Query ${props.num}`}</h3>}
-        {props.num !== 0 && (
-          <span className='latency'>{`${Math.floor(props.latency)}ms`} </span>
+    <div className='LastEvictedBox'>
+      <div className='node' style={{ backgroundColor: 'orange' }}>
+        {props.num !== 0 ? <h1> {`Query ${props.num}`}</h1> : <h1>Query</h1>}
+        {props.num !== 0 ? (
+          <p className='latency'>{`${Math.floor(props.latency)}ms`} </p>
+        ) : (
+          <p className='latency'>null</p>
         )}
       </div>
     </div>
