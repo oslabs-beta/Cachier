@@ -239,7 +239,7 @@ const Demo = () => {
                 className='queryResult'
               >
                 <pre
-                  style={{ fontWeight: 700, color: 'white', fontSize: '1vw', fontFamily:'Georgia,serif' }}
+                  style={{ color: 'white', fontSize: '1vw', fontFamily:'Georgia,serif' }}
                 >
                   {' '}
                   {queryResult}{' '}
