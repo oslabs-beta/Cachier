@@ -48,8 +48,10 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
   }
 
   return async function checkCache(req, res, next) {
-    const { query } = req.body;
+    const query = req.body.query.trim();
     let { variables } = req.body;
+
+    const isMutation = query.startsWith('mutation');
 
     //accounts for if client did not include a variables object in the body of the post.
     if (!variables) {
@@ -99,38 +101,42 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
       })
         .then((response) => response.json())
         .then((data) => {
-          const end = performance.now();
-          const latency = end - start;
-
-          redisClient
-            ? redisClient.set(cacheKey, JSON.stringify(data))
-            : (cacheMoneyCache[cacheKey] = JSON.stringify(data));
-
-          queue.add(cacheKey, latency);
-          let removedNode = { latency: 0, num: 0 };
-          if (queue.length > capacity) {
-            removedNode = queue.removeSmallestLatencyFromGroup(currGroupSize);
-            const removedQueryKey = removedNode.key;
+          if (!isMutation) {
+            const end = performance.now();
+            const latency = end - start;
 
             redisClient
-              ? redisClient.del(removedQueryKey)
-              : delete cacheMoneyCache[removedQueryKey];
+              ? redisClient.set(cacheKey, JSON.stringify(data))
+              : (cacheMoneyCache[cacheKey] = JSON.stringify(data));
 
-            currGroupSize -= 1;
-            if (currGroupSize <= 0) currGroupSize = groupSize;
+            queue.add(cacheKey, latency);
+            let removedNode = { latency: 0, num: 0 };
+            if (queue.length > capacity) {
+              removedNode = queue.removeSmallestLatencyFromGroup(currGroupSize);
+              const removedQueryKey = removedNode.key;
+
+              redisClient
+                ? redisClient.del(removedQueryKey)
+                : delete cacheMoneyCache[removedQueryKey];
+
+              currGroupSize -= 1;
+              if (currGroupSize <= 0) currGroupSize = groupSize;
+            }
+            const listArray = traverse(queue);
+            console.log('GROUP', currGroupSize);
+            res.json({
+              data,
+              queue: listArray,
+              removedNode: {
+                latency: removedNode.latency,
+                num: removedNode.num,
+              },
+              currGroupSize,
+              cached: false,
+            });
+          } else {
+            return res.json(data);
           }
-          const listArray = traverse(queue);
-          console.log('GROUP', currGroupSize);
-          res.json({
-            data,
-            queue: listArray,
-            removedNode: {
-              latency: removedNode.latency,
-              num: removedNode.num,
-            },
-            currGroupSize,
-            cached: false,
-          });
         })
         .catch((err) => {
           next({

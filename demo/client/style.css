@@ -1,55 +1,57 @@
 .NavBar {
-    background-color: #245594;
-    font-family: Georgia,serif;
-    font-size: 1.3vw;
-    display: flex;
-    justify-content: space-around;
+  background-color: #245594;
+  font-family: Georgia, serif;
+  font-size: 1.1vw;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  height: 10%;
 }
 
 .BodyDiv {
-    background-color: #121F4E;
+  background-color: #d4ecf0;
 }
 
 .logo {
-    width : 9vw;
-    height : 7vw;
+  width: 6vw;
+  height: 4vw;
+  margin-left: 2vw;
 }
 
 .listDiv {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-ul {
-    list-style-type: none;
-    overflow: hidden;
-    position: sticky;
-    top: 0;
-    width: 100%;
-    background-color: #245594;
-    border-style: none;
-    display: flex;
-    align-items: center;
-    padding: 0px;
-    margin: 0px;
+.list {
+  list-style-type: none;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: #245594;
+  border-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+  margin-right: 1.5vw;
 }
 
 li {
-    float: left;
-
+  float: left;
 }
 
 li a {
- display: block;
- color: #ffd240;
- text-align: center;
- padding: 14px 16px;
- text-decoration: none;
+  display: block;
+  color: #ffd240;
+  text-align: center;
+  text-decoration: none;
 }
 
-li a:not(.active):hover {
-    border-radius: 10%;
-    background-color: #111;
+li a:hover {
+  border-radius: 10%;
+  font-size: 1.3vw;
+  color: #fab120;
 }
-
-

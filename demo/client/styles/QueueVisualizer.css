@@ -1,9 +1,10 @@
 .Eviction {
   text-align: center;
+  background-color: transparent;
 }
 
 .queueContainer {
-  width: 23vw;
+  width: 22vw;
   height: 9vw;
   display: flex;
   justify-content: flex-start;

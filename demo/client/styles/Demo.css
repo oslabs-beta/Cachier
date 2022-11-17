@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   gap: 5vw;
-  padding-top: 3vw;
+  padding-top: 4vw;
 }
 
 body {
@@ -12,13 +12,13 @@ body {
 }
 
 .Visualizers {
-  margin-bottom: 2.1vw;
+  margin-bottom: 1vw;
 }
 
 .query {
   display: flex;
   flex-direction: column;
-  gap: 3vw;
+  gap: 1vw;
 }
 
 .queryResult {

@@ -46,17 +46,18 @@ const config = {
       },
       {
         test: /\.svg$/,
-        use: [{ loader: 'babel-loader' },
-      {
-        loader: 'react-svg-loader',
-        options: {
-          jsx: true,
-        }
-      }
+        use: [
+          { loader: 'babel-loader' },
+          {
+            loader: 'react-svg-loader',
+            options: {
+              jsx: true,
+            },
+          },
+        ],
+      },
     ],
-  }
-  ],
-},
+  },
   resolve: { extensions: ['*', '.js', '.jsx'] },
   plugins: [new HtmlWebpackPlugin({ template: './demo/client/index.html' })],
 };
