@@ -1,6 +1,6 @@
 {
   "name": "cache-money",
-  "description": "",
+  "description": "Welcome to Cache-MoneyQL, a lightweight GraphQL caching tool that is configured specifically for GraphQL to reduce load times and minimize data fetching.",
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {
@@ -19,7 +19,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
-    "graphql": "^16.6.0",
     "mongoose": "^6.7.2",
     "node": "^19.0.1",
     "node-fetch": "^3.3.0",
@@ -45,6 +44,18 @@
     "style-loader": "^3.3.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^4.10.0",
+    "webpack-dashboard": "^3.3.7",
     "webpack-dev-server": "^4.11.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/Cache-MoneyQL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/Cache-MoneyQL/issues"
+  },
+  "homepage": "https://github.com/oslabs-beta/Cache-MoneyQL#readme"
 }

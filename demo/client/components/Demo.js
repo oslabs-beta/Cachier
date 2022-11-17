@@ -4,6 +4,7 @@ import LineChart from './LineChart';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { SvgIcon } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Navigate } from 'react-router-dom';

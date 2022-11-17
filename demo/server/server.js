@@ -2,8 +2,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
-//const graphqlHTTP = require('express-graphql').graphqlHTTP;
-
+const graphql = require('graphql');
 const schema = require('./schema.js');
 // Jonathan's Linked List
 const cacheMoney = require('./cacheMoney.js');
@@ -24,8 +23,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const client = Redis.createClient(REDIS_PORT);
-client.connect();
+// const client = Redis.createClient(REDIS_PORT);
+// client.connect();
 
 app.use(express.static(path.resolve(__dirname, '../client')));
 
