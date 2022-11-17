@@ -236,12 +236,16 @@ const Demo = () => {
                   display: 'flex',
                   justifyContent: 'flex-start',
                   boxShadow: 3,
-                  fontFamily: 'Roboto","Helvetica","Arial",sans-serif'
+                  fontFamily: 'Roboto","Helvetica","Arial",sans-serif',
                 }}
                 className='queryResult'
               >
                 <pre
-                  style={{ color: 'white', fontSize: '1vw', fontFamily:'Georgia,serif' }}
+                  style={{
+                    color: 'white',
+                    fontSize: '1vw',
+                    fontFamily: 'Georgia,serif',
+                  }}
                 >
                   {' '}
                   {queryResult}{' '}
@@ -261,7 +265,7 @@ const Demo = () => {
                     fontFamily: 'Georgia, serif',
                     fontSize: '1.1vw',
                     paddingLeft: '1.1vw',
-                    color: '#ffd240'
+                    color: '#ffd240',
                   }}
                 >
                   Query Time:
@@ -288,8 +292,11 @@ const Demo = () => {
               >
                 <Typography
                   variant='span'
-                  sx={{ fontFamily: 'Georgia, serif', fontSize: '1.1vw', color: '#ffd240', }}
-                  
+                  sx={{
+                    fontFamily: 'Georgia, serif',
+                    fontSize: '1.1vw',
+                    color: '#ffd240',
+                  }}
                 >
                   Cache Hit:
                 </Typography>
@@ -422,7 +429,7 @@ const Demo = () => {
                 size='large'
                 id='queryButton'
                 onClick={handleQuery}
-                sx={{ backgroundColor: '#245594', color:'#ffd240' }}
+                sx={{ backgroundColor: '#245594', color: '#ffd240' }}
               >
                 Run Query
               </Button>
