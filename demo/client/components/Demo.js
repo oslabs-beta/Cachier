@@ -228,8 +228,8 @@ const Demo = () => {
               </Typography>
               <Container
                 sx={{
-                  height: 300,
-                  width: 500,
+                  height: '15vw',
+                  width: '23vw',
                   backgroundColor: 'black',
                   display: 'flex',
                   justifyContent: 'flex-start',
@@ -387,9 +387,9 @@ const Demo = () => {
               </Container>
               <Container
                 sx={{
-                  'overflow-x': 'hidden',
-                  height: 300,
-                  width: 500,
+                  overflowX: 'hidden',
+                  height: '15vw',
+                  width: '23vw',
                   backgroundColor: 'white',
                   display: 'flex',
                   justifyContent: 'flex-start',
@@ -440,7 +440,7 @@ const Demo = () => {
           <Grid
             item
             sx={{
-              width: 900,
+              width: '45vw',
               border: 'black 1px solid',
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
@@ -458,7 +458,7 @@ const Demo = () => {
               Query Cache Performance Chart{' '}
             </Typography>
             <Box className='barChartContainer' justifyContent='center'>
-              <BarChart style={{ width: 600 }} chartData={chartData} />
+              <BarChart style={{ width: '27vw' }} chartData={chartData} />
             </Box>
           </Grid>
 
