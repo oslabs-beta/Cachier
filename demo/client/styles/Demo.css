@@ -1,0 +1,27 @@
+.demoDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 150px;
+  margin-top: 50px;
+}
+
+.Visualizers {
+  margin-bottom: 40px;
+}
+
+.query {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.queryResult {
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align: start;
+}
+
+::-webkit-scrollbar {
+  background-color: black;
+}
