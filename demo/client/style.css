@@ -15,6 +15,11 @@
     height : 7vw;
 }
 
+.listDiv {
+    display: flex;
+    align-items: center;
+}
+
 ul {
     list-style-type: none;
     overflow: hidden;
@@ -36,7 +41,7 @@ li {
 
 li a {
  display: block;
- color: white;
+ color: #ffd240;
  text-align: center;
  padding: 14px 16px;
  text-decoration: none;

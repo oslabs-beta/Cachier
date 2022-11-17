@@ -16,7 +16,7 @@ root.render(
         <div>
             <img className='logo' src={logo}></img>
         </div>
-        <div>
+        <div className='listDiv'>
           <ul>
             <li><a><NavLink to={'/'}>Home</NavLink></a></li>
             <li><a><NavLink to={'/demo'}>Demo</NavLink></a></li>
