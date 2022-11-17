@@ -1,5 +1,3 @@
-import React, { useEffect } from "react";
-
 const Physics = () => {
     
 const canvas = document.getElementById(/*replace with id of your canvas element in your DOM*/"canvas1");
