@@ -1,3 +1,16 @@
+.NavBar {
+    background-color: #245594;
+    font-family: Georgia,serif;
+    font-size: 1vw;
+}
+
+.BodyDiv {
+    background-color: #121F4E;
+}
+
+#canvas1 {
+    background-color: #121F4E;
+}
 
 ul {
     list-style-type: none;
@@ -5,11 +18,10 @@ ul {
     margin-top: 0;
     margin-bottom: 5vh;
     overflow: hidden;
-    /* position: -webkit-sticky; Safari */
     position: sticky;
     top: 0;
     width: 100%;
-    background-color: darkcyan;
+    background-color: #245594;
     border-style: none;
 }
 
@@ -31,7 +43,4 @@ li a:not(.active):hover {
     background-color: #111;
 }
 
-li a .active {
-    background-color: aquamarine;
-}
 
