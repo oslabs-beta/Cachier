@@ -11,11 +11,14 @@ import { Navigate } from 'react-router-dom';
 import QueueVisualizer from './QueueVisualizer';
 import { shadows } from '@mui/system';
 import '../styles/Demo.css';
-
+import { clientSideCache } from '../../../clientSideCache';
 import '../styles/Demo.scss';
+
+const cachierFetch = clientSideCache(4, 2);
 
 const Demo = () => {
   // const [queryData, setQueryData] = useState([]);
+  const [clientSideTime, setClientSideTime] = useState(0);
 
   //state for the GraphQL query result once the fetch is down
   const [queryResult, setQueryResult] = useState('');
@@ -115,7 +118,21 @@ const Demo = () => {
 
   const fetchData = async () => {
     const startTime = performance.now();
-    await fetch('http://localhost:3000/cacheMoney', {
+    cachierFetch('http://localhost:3000/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: queryGraphQLString,
+      }),
+    }).then((data) => {
+      setClientSideTime((performance.now() - startTime).toFixed(2));
+      console.log('DATA', data);
+    });
+
+    fetch('http://localhost:3000/cacheMoney', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -268,13 +285,13 @@ const Demo = () => {
                     color: '#ffd240',
                   }}
                 >
-                  Query Time:
+                  Server Side:
                 </Typography>
                 <Typography
                   variant='span'
                   sx={{
                     fontFamily: 'Georgia, serif',
-                    fontSize: '1.7vw',
+                    fontSize: '1.4vw',
                     paddingRight: '1.5vw',
                     color: '#ff4c4c',
                   }}
@@ -283,6 +300,38 @@ const Demo = () => {
                   <span style={{ fontSize: '0.7vw' }}>ms</span>
                 </Typography>
               </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography
+                  variant='span'
+                  sx={{
+                    fontFamily: 'Georgia, serif',
+                    fontSize: '1.1vw',
+                    paddingLeft: '1.1vw',
+                    color: '#ffd240',
+                  }}
+                >
+                  Client Side:
+                </Typography>
+                <Typography
+                  variant='span'
+                  sx={{
+                    fontFamily: 'Georgia, serif',
+                    fontSize: '1.4vw',
+                    paddingRight: '1.5vw',
+                    color: '#ff4c4c',
+                  }}
+                >
+                  {clientSideTime}
+                  <span style={{ fontSize: '0.7vw' }}>ms</span>
+                </Typography>
+              </Box>
+
               <Container
                 sx={{
                   paddingBottom: 1,

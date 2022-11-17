@@ -25,7 +25,6 @@ export function clientSideCache(capacity, groupSize) {
 
     if (valueFromCache) {
       queue.updateRecencyOfExistingCache(cacheKey);
-
       return JSON.parse(valueFromCache);
     } else {
       const start = performance.now();

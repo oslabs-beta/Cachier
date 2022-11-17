@@ -11,7 +11,7 @@ root.render(
     <React.StrictMode>
       <BrowserRouter>
         <nav className='NavBar'>
-          <div>
+          <div className='logoDiv'>
             <img className='logo' src={logo}></img>
           </div>
           <div className='listDiv'>
