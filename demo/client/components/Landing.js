@@ -8,8 +8,9 @@ const Landing = () => {
     <div>
       {/* <canvas id="canvas1"></canvas> */}
 
-      <Physics />
-      
+      {/* <Physics /> */}
+      <h1>Welcome to Cachier</h1>
+
     </div>
   );
 }
