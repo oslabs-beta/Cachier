@@ -35,7 +35,7 @@ body {
   background-color: black;
   display: flex;
   justify-content: flex-start;
-  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -53,7 +53,9 @@ body {
   border-radius: 10px;
   background-color: #245594;
   color: 'white';
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .queryResultHeading {
@@ -68,13 +70,13 @@ body {
 
 .code {
   color: white !important;
-  font-size: 1vw; 
-  font-family: Georgia,serif;
+  font-size: 1vw;
+  font-family: Georgia, serif;
   padding-left: 1vw;
 }
 
 .queryResultMetrics {
-  padding-top: .4vw;
+  padding-top: 0.4vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -118,9 +120,11 @@ body {
 }
 
 .queryContainer {
-  display:flex;
-  flex-direction:column;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .queryString {
@@ -128,7 +132,7 @@ body {
   border-radius: 10px;
   background-color: #245594;
   padding: 1vw;
-  font-family: Georgia,serif;
+  font-family: Georgia, serif;
   color: #ffd240;
 }
 
@@ -139,8 +143,8 @@ body {
   background-color: white;
   display: flex;
   justify-content: flex-start;
-  color: #9C528B;
-  padding-left:1vw;
+  color: #9c528b;
+  padding-left: 1vw;
 }
 
 .testQuery {
@@ -149,7 +153,7 @@ body {
 
 .queryButton {
   background-color: #245594;
-  color:#ffd240;
+  color: #ffd240;
   padding: 0.6vw;
   font-size: 1vw;
 }
@@ -167,6 +171,8 @@ body {
   border-radius: 10px;
   background-color: white;
   padding: 1vw;
-  color: #121F4E;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  color: #121f4e;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }

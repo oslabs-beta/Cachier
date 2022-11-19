@@ -10,9 +10,10 @@ root.render(
   <div className='BodyDiv'>
     <React.StrictMode>
       <BrowserRouter>
-        <div className='navbar bg-base-100'>
+        <div className='navbar bg-base-100 sticky top-0 z-50'>
           <div className='flex-1'>
-            <a className='btn btn-ghost normal-case text-xl'>daisyUI</a>
+            <img className='h-16 w-18' src={logo}></img>
+            <a className='btn btn-ghost normal-case text-xl '>Cachier</a>
           </div>
           <div className='flex-none'>
             <ul className='menu menu-horizontal p-0'>
@@ -23,7 +24,7 @@ root.render(
               </li>
               <li tabIndex={0}>
                 <a>
-                  Parent
+                  Product
                   <svg
                     className='fill-current'
                     xmlns='http://www.w3.org/2000/svg'
@@ -36,48 +37,19 @@ root.render(
                 </a>
                 <ul className='p-2 bg-base-100'>
                   <li>
-                    <a>Submenu 1</a>
+                    <NavLink to={'/demo'}>Demo</NavLink>
                   </li>
                   <li>
-                    <a>Submenu 2</a>
+                    <NavLink to={'/documentation'}>Docs</NavLink>
                   </li>
                 </ul>
               </li>
               <li>
-                <a>Item 3</a>
+                <NavLink to={'/about'}>Developers</NavLink>
               </li>
             </ul>
           </div>
         </div>
-        <nav className='NavBar'>
-          <div className='logoDiv'>
-            <img className='logo' src={logo}></img>
-          </div>
-          <div className='listDiv'>
-            <ul className='list'>
-              <li>
-                <a>
-                  <NavLink to={'/'}>Home</NavLink>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <NavLink to={'/demo'}>Demo</NavLink>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <NavLink to={'/documentation'}>Docs</NavLink>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <NavLink to={'/about'}>About</NavLink>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
 
         <App />
       </BrowserRouter>
