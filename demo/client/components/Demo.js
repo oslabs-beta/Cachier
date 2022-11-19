@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
-import LineChart from './LineChart';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import { SvgIcon } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import { Navigate } from 'react-router-dom';
 import QueueVisualizer from './QueueVisualizer';
-import { shadows } from '@mui/system';
 import '../styles/Demo.css';
 import { clientSideCache } from '../../../clientSideCache';
-import '../styles/Demo.scss';
 
+import '../styles/Demo.scss';
 const cachierFetch = clientSideCache(4, 2);
 
 const Demo = () => {
@@ -216,168 +207,62 @@ const Demo = () => {
 
   return (
     <div className='demoDiv'>
-      <Grid>
+      <div className='demoLeftContainer'>
         <div className='query'>
-          <Grid item sx={{ padding: 0 }}>
-            <Container
-              sx={{
-                boxShadow: 24,
-                margin: 0,
-                padding: '0px !important',
-                border: 'black 2px',
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-                backgroundColor: '#245594',
-                paddingLeft: 0,
-                paddingRight: 0,
-                color: 'white',
-              }}
-            >
-              <Typography
-                variant='h4'
-                sx={{
-                  fontFamily: 'Georgia, serif',
-                  justifyContent: 'center',
-                  padding: 1,
-                  display: 'flex',
-                  color: '#ffd240',
-                }}
-              >
+          <div className='padding0'>
+            <div className='queryResultContainer'>
+              <p className='queryResultHeading'>
                 Query Result
-              </Typography>
-              <Container
-                sx={{
-                  height: '15vw',
-                  width: '23vw',
-                  backgroundColor: 'black',
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  boxShadow: 3,
-                  fontFamily: 'Roboto","Helvetica","Arial",sans-serif',
-                }}
-                className='queryResult'
-              >
-                <pre
-                  style={{
-                    color: 'white',
-                    fontSize: '1vw',
-                    fontFamily: 'Georgia,serif',
-                  }}
-                >
+              </p>
+              <div className='queryResult'>
+                <pre className='code'>
                   {' '}
                   {queryResult}{' '}
                 </pre>
-              </Container>
-              <Box
-                sx={{
-                  paddingTop: 1,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography
-                  variant='span'
-                  sx={{
-                    fontFamily: 'Georgia, serif',
-                    fontSize: '1.1vw',
-                    paddingLeft: '1.1vw',
-                    color: '#ffd240',
-                  }}
-                >
+              </div>
+              <div className='queryResultMetrics'>
+                <span className='serverSide'>
                   Server Side:
-                </Typography>
-                <Typography
-                  variant='span'
-                  sx={{
-                    fontFamily: 'Georgia, serif',
-                    fontSize: '1.4vw',
-                    paddingRight: '1.5vw',
-                    color: '#ff4c4c',
-                  }}
-                >
+                </span>
+                <span className='metrics'>
                   {queryTime}
-                  <span style={{ fontSize: '0.7vw' }}>ms</span>
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography
-                  variant='span'
-                  sx={{
-                    fontFamily: 'Georgia, serif',
-                    fontSize: '1.1vw',
-                    paddingLeft: '1.1vw',
-                    color: '#ffd240',
-                  }}
-                >
+                  <span className='ms'>ms</span>
+                </span>
+              </div>
+              <div className='queryResultMetricsDiv'>
+                <span className='serverSide'>
                   Client Side:
-                </Typography>
-                <Typography
-                  variant='span'
-                  sx={{
-                    fontFamily: 'Georgia, serif',
-                    fontSize: '1.4vw',
-                    paddingRight: '1.5vw',
-                    color: '#ff4c4c',
-                  }}
-                >
+                </span>
+                <span className='metrics'>
                   {clientSideTime}
-                  <span style={{ fontSize: '0.7vw' }}>ms</span>
-                </Typography>
-              </Box>
+                  <span className='ms'>ms</span>
+                </span>
+              </div>
 
-              <Container
-                sx={{
-                  paddingBottom: 1,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <Typography
-                  variant='span'
-                  sx={{
-                    fontFamily: 'Georgia, serif',
-                    fontSize: '1.1vw',
-                    color: '#ffd240',
-                  }}
+              <div className='cacheHitDiv'>
+                <span className='serverSide'
                 >
                   Cache Hit:
-                </Typography>
-                <Typography
-                  variant='span'
-                  sx={{
+                </span>
+                <span className='cacheHitMetric'
+                  style={{
                     fontFamily: 'Georgia, serif',
                     fontSize: 25,
                     color: '#ff4c4c',
+                    paddingRight: '1.5vw'
                   }}
                 >
                   {queryTimeArray[queryTimeArray.length - 1].cached
                     ? 'Hit'
                     : 'Miss'}
-                </Typography>
-              </Container>
-            </Container>
-          </Grid>
-          <Grid item>
-            <Box display='flex' flexDirection='column' sx={{ boxShadow: 24 }}>
-              <Container
-                id='queryString'
-                sx={{
-                  border: 'black 2px',
-                  borderTopLeftRadius: 10,
-                  borderTopRightRadius: 10,
-                  backgroundColor: '#245594',
-                  padding: 2,
-                  fontFamily: 'Georgia,serif',
-                  color: '#ffd240',
-                }}
-              >
+                </span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className='queryContainer'>
+              <div
+                className='queryString'>
                 <input
                   type='checkbox'
                   onChange={() =>
@@ -390,9 +275,9 @@ const Demo = () => {
                   value='clients'
                 />
                 <label htmlFor='clients'> Clients</label>
-                <Container>
+                <div>
                   {clientChecked === true && (
-                    <div>
+                    <div className="clientFields">
                       <input
                         type='checkbox'
                         onChange={() =>
@@ -447,95 +332,42 @@ const Demo = () => {
                       <label htmlFor='clientPhone'> Phone</label>
                     </div>
                   )}
-                </Container>
-              </Container>
-              <Container
-                sx={{
-                  overflowX: 'hidden',
-                  height: '15vw',
-                  width: '23vw',
-                  backgroundColor: 'white',
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  color: '#9C528B',
-                }}
-                className='queryDisplayStringContainer'
-              >
-                {/* {displayQueryFields()} */}
-                <p style={{ fontSize: '1.2vw' }}> {testQuery()} </p>
-              </Container>
-              {/* <Button
-              variant='contained'
-              color='info'
-              size='medium'
-              id='uploadButton'
-              onClick={handleUpload}
-            >
-              Upload Query
-            </Button> */}
-              <Button
-                variant='contained'
-                size='large'
-                id='queryButton'
+                </div>
+              </div>
+              <div className='queryDisplayStringContainer'>
+                <p className='testQuery'> {testQuery()} </p>
+              </div>
+          
+              <button
+                className='queryButton'
                 onClick={handleQuery}
-                sx={{ backgroundColor: '#245594', color: '#ffd240' }}
               >
                 Run Query
-              </Button>
-            </Box>
-          </Grid>
+              </button>
+            </div>
+          </div>
         </div>
-      </Grid>
+      </div>
 
       <div className='Visualizers'>
-        <Grid
-          container
-          alignItems='center'
-          justifyContent='center'
-          flex
-          sx={{ pt: 5 }}
-        >
-          {/* <Grid item>
-          <Box justifyContent='center' sx={{ width: 500 }}>
-            <Typography variant='h4'>Query Time: {queryTime}ms</Typography>
-          </Box>
-        </Grid> */}
-
-          <Grid
-            item
-            sx={{
-              width: '45vw',
-              border: 'black 1px solid',
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-              backgroundColor: 'white',
-              padding: 2,
-              color: '#121F4E',
-              boxShadow: 24,
-            }}
-          >
-            <Typography
-              variant='h3'
-              sx={{
+        <div className='visualizersDiv'>
+          <div className='barChart'>
+            <p
+              style={{
                 fontFamily: 'Georgia, serif',
                 textAlign: 'center',
                 fontSize: '2vw',
+                margin: '.7vw'
               }}
             >
               {' '}
               Query Cache Performance Chart{' '}
-            </Typography>
-            <Box className='barChartContainer' justifyContent='center'>
-              <BarChart style={{ width: '27vw' }} chartData={chartData} />
-            </Box>
-          </Grid>
-
-          {/* <Grid item sx={{ width: 700 }}>
-          <Box className='lineChartContainer' justifyContent='center'>
-            <LineChart style={{ width: 600 }} chartData={chartData} />
-          </Box>
-        </Grid> */}
-        </Grid>
+            </p>
+            <div className='barChartContainer'>
+              <BarChart chartData={chartData} />
+            </div>
+          </div>
+        </div>
         <QueueVisualizer
           queue={llData}
           removedNode={removedNode}
