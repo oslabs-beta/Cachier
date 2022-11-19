@@ -137,10 +137,6 @@ const Demo = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(
-          'AAAAAAA',
-          queryTimeArray[queryTimeArray.length - 1].cached
-        );
         const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
         setLLData(data.queue); // updates state linked list object
         if (data.removedNode) {
@@ -211,28 +207,19 @@ const Demo = () => {
         <div className='query'>
           <div className='padding0'>
             <div className='queryResultContainer'>
-              <p className='queryResultHeading'>
-                Query Result
-              </p>
+              <p className='queryResultHeading'>Query Result</p>
               <div className='queryResult'>
-                <pre className='code'>
-                  {' '}
-                  {queryResult}{' '}
-                </pre>
+                <pre className='code'> {queryResult} </pre>
               </div>
               <div className='queryResultMetrics'>
-                <span className='serverSide'>
-                  Server Side:
-                </span>
+                <span className='serverSide'>Server Side:</span>
                 <span className='metrics'>
                   {queryTime}
                   <span className='ms'>ms</span>
                 </span>
               </div>
               <div className='queryResultMetricsDiv'>
-                <span className='serverSide'>
-                  Client Side:
-                </span>
+                <span className='serverSide'>Client Side:</span>
                 <span className='metrics'>
                   {clientSideTime}
                   <span className='ms'>ms</span>
@@ -240,16 +227,14 @@ const Demo = () => {
               </div>
 
               <div className='cacheHitDiv'>
-                <span className='serverSide'
-                >
-                  Cache Hit:
-                </span>
-                <span className='cacheHitMetric'
+                <span className='serverSide'>Cache Hit:</span>
+                <span
+                  className='cacheHitMetric'
                   style={{
                     fontFamily: 'Georgia, serif',
                     fontSize: 25,
                     color: '#ff4c4c',
-                    paddingRight: '1.5vw'
+                    paddingRight: '1.5vw',
                   }}
                 >
                   {queryTimeArray[queryTimeArray.length - 1].cached
@@ -261,8 +246,7 @@ const Demo = () => {
           </div>
           <div>
             <div className='queryContainer'>
-              <div
-                className='queryString'>
+              <div className='queryString'>
                 <input
                   type='checkbox'
                   onChange={() =>
@@ -277,7 +261,7 @@ const Demo = () => {
                 <label htmlFor='clients'> Clients</label>
                 <div>
                   {clientChecked === true && (
-                    <div className="clientFields">
+                    <div className='clientFields'>
                       <input
                         type='checkbox'
                         onChange={() =>
@@ -337,11 +321,8 @@ const Demo = () => {
               <div className='queryDisplayStringContainer'>
                 <p className='testQuery'> {testQuery()} </p>
               </div>
-          
-              <button
-                className='queryButton'
-                onClick={handleQuery}
-              >
+
+              <button className='queryButton' onClick={handleQuery}>
                 Run Query
               </button>
             </div>
@@ -357,7 +338,7 @@ const Demo = () => {
                 fontFamily: 'Georgia, serif',
                 textAlign: 'center',
                 fontSize: '2vw',
-                margin: '.7vw'
+                margin: '.7vw',
               }}
             >
               {' '}
