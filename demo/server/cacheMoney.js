@@ -59,6 +59,7 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
       })
         .then((response) => response.json())
         .then((data) => {
+          //if query is a mutation do not cache
           if (!isMutation) {
             const end = performance.now();
             const latency = end - start;
