@@ -1,4 +1,8 @@
-.NavBar {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .NavBar {
   background-color: #245594;
   font-family: Georgia, serif;
   font-size: 1.1vw;
@@ -54,4 +58,4 @@ li a:hover {
   border-radius: 10%;
   font-size: 1.3vw;
   color: #fab120;
-}
+} */

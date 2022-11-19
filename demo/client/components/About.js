@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { ReactDOM } from 'react';
+import React from 'react';
+import TeamMemberCard from './TeamMemberCard';
 
 const About = () => {
   return (
     <div>
-      <h1>ABOUT PAGE</h1>
+      <TeamMemberCard
+        img={
+          'https://www.meme-arsenal.com/memes/18a3373dd7ab767f3cf1ad96b5cbc204.jpg'
+        }
+      />
     </div>
   );
 };
