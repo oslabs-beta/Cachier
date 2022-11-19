@@ -10,7 +10,7 @@ root.render(
   <div className='BodyDiv'>
     <React.StrictMode>
       <BrowserRouter>
-        <div className='navbar bg-base-100 sticky top-0 z-50'>
+        <div className='navbar bg-neutral text-neutral-content sticky top-0 '>
           <div className='flex-1'>
             <img className='h-16 w-18' src={logo}></img>
             <a className='btn btn-ghost normal-case text-xl '>Cachier</a>
