@@ -1,0 +1,22 @@
+.Eviction {
+  text-align: center;
+  background-color: transparent;
+}
+
+.queueContainer {
+  width: 22vw;
+  height: 9vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 2.1vw;
+}
+
+.Evicted {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1.5vw;
+  margin-left: 3vw;
+}

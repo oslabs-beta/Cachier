@@ -1,0 +1,26 @@
+.link {
+  display: flex;
+}
+
+.node {
+  font-size: 0.5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 5vw;
+  height: 5vw;
+
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+}
+
+.latency {
+  font-size: 0.8vw;
+  margin: 0;
+}
+
+.arrow {
+  width: 3vw;
+  height: auto;
+}
