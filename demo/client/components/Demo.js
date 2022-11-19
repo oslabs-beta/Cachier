@@ -4,7 +4,6 @@ import QueueVisualizer from './QueueVisualizer';
 import '../styles/Demo.css';
 import { clientSideCache } from '../../../clientSideCache';
 
-import '../styles/Demo.scss';
 const cachierFetch = clientSideCache(4, 2);
 
 const Demo = () => {
