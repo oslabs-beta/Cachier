@@ -15,14 +15,16 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
   }
 
   return async function checkCache(req, res, next) {
-    const { query } = req.body;
+    const query = req.body.query.trim();
     let { variables } = req.body;
+
+    //checks if query is a mutation.
+    const isMutation = query.startsWith('mutation');
 
     //accounts for if client did not include a variables object in the body of the post.
     if (!variables) {
       variables = {};
     }
-
     //Stringifies variables and concats with queryStr to form a unique key in the cache.
     const variablesStr = JSON.stringify(variables);
     const cacheKey = JSON.stringify(`${query}${variablesStr}`);
@@ -57,26 +59,29 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('uncached', data);
-          const end = performance.now();
-          const latency = end - start;
-          res.json(data);
-
-          redisClient
-            ? redisClient.set(cacheKey, JSON.stringify(data))
-            : (cacheMoneyCache[cacheKey] = JSON.stringify(data));
-
-          queue.add(cacheKey, latency);
-          if (queue.length > capacity) {
-            const removedQueryKey =
-              queue.removeSmallestLatencyFromGroup(currGroupSize).key;
+          if (!isMutation) {
+            const end = performance.now();
+            const latency = end - start;
+            res.json(data);
 
             redisClient
-              ? redisClient.del(removedQueryKey)
-              : delete cacheMoneyCache[removedQueryKey];
+              ? redisClient.set(cacheKey, JSON.stringify(data))
+              : (cacheMoneyCache[cacheKey] = JSON.stringify(data));
 
-            currGroupSize -= 1;
-            if (currGroupSize <= 0) currGroupSize = groupSize;
+            queue.add(cacheKey, latency);
+            if (queue.length > capacity) {
+              const removedQueryKey =
+                queue.removeSmallestLatencyFromGroup(currGroupSize).key;
+
+              redisClient
+                ? redisClient.del(removedQueryKey)
+                : delete cacheMoneyCache[removedQueryKey];
+
+              currGroupSize -= 1;
+              if (currGroupSize <= 0) currGroupSize = groupSize;
+            }
+          } else {
+            return res.json(data);
           }
         })
         .catch((err) => {

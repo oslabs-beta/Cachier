@@ -42,20 +42,23 @@ const QueueVisualizer = (props) => {
       className='Eviction'
       style={{
         marginTop: '2vw',
-        border: 'black 1px solid',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        backgroundColor: 'white',
         paddingBottom: '1vw',
-        color: '#121F4E',
+        color: 'black',
         boxShadow: 24,
       }}
     >
       <Typography
         variant='h3'
-        sx={{ fontFamily: 'Georgia, serif', padding: 2, fontSize: '2vw' }}
+        sx={{
+          fontFamily: 'Georgia, serif',
+          padding: 2,
+          fontSize: '2vw',
+          color: 'black',
+        }}
       >
-        Eviction Policy Visualizer
+        LRU-SLFR Eviction Policy Visualizer
       </Typography>
       <div
         style={{
