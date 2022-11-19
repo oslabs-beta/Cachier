@@ -120,5 +120,6 @@ class EvictionQueue {
 }
 
 const queue = new EvictionQueue();
+);
 
 export { queue };
