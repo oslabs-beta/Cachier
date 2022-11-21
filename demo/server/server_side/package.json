@@ -1,0 +1,18 @@
+{
+  "name": "@cachier/server-side",
+  "version": "1.0.2",
+  "description": "A server-side cache for GraphQL applications running on Node.js and Express",
+  "main": "DemoFunc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "GraphQL",
+    "cache"
+  ],
+  "author": "Jonathan Chen, Andy Zheng, Kaju Sarkar, Dhruv Thota, Roman Darker",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  }
+}

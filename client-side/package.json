@@ -1,0 +1,12 @@
+{
+  "name": "@cachier/client-side",
+  "version": "1.0.4",
+  "description": "a client-side caching solution for GraphQL applications",
+  "main": "clientSideCache.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["GraphQL", "cache", "client-side"],
+  "author": "Jonathan Chen, Andy Zheng, Kaju Sarkar, Dhruv Thota, Roman Darker",
+  "license": "ISC"
+}
