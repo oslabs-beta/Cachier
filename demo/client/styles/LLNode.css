@@ -20,7 +20,8 @@
   margin: 0;
 }
 
-.arrow {
-  width: 3vw;
-  height: auto;
+.arrowDiv {
+  display: flex;
+  align-items: center;
+  padding: 1vw;
 }

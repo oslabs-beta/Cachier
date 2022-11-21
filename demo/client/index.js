@@ -13,7 +13,7 @@ root.render(
         <div className='navbar bg-neutral text-neutral-content sticky top-0 '>
           <div className='flex-1'>
             <img className='h-16 w-18' src={logo}></img>
-            <a className='btn btn-ghost normal-case text-xl '>Cachier</a>
+            <a className='btn btn-ghost normal-case text-xl'>Cachier</a>
           </div>
           <div className='flex-none'>
             <ul className='menu menu-horizontal p-0'>
