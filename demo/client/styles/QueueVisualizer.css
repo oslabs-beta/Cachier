@@ -4,12 +4,9 @@
 }
 
 .queueContainer {
-  width: 22vw;
-  height: 9vw;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 2.1vw;
 }
 
 .Evicted {

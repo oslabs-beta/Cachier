@@ -10,8 +10,8 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'google.com',
-      linkedin: 'google.com',
+      github: 'https://www.google.com/',
+      linkedin: 'https://www.google.com/',
     },
     {
       name: 'Dhruv Thota',
@@ -20,8 +20,8 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'google.com',
-      linkedin: 'google.com',
+      github: 'https://www.google.com/',
+      linkedin: 'https://www.google.com/',
     },
     {
       name: 'Andy Zheng',
@@ -30,8 +30,8 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'google.com',
-      linkedin: 'google.com',
+      github: 'https://www.google.com/',
+      linkedin: 'https://www.google.com/',
     },
     {
       name: 'Roman Darker',
@@ -40,8 +40,8 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'google.com',
-      linkedin: 'google.com',
+      github: 'https://www.google.com/',
+      linkedin: 'https://www.google.com/',
     },
     {
       name: 'Jonathan Chen',
@@ -50,15 +50,15 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'google.com',
-      linkedin: 'google.com',
+      github: 'https://www.google.com/',
+      linkedin: 'https://www.google.com/',
     },
   ];
 
   return (
-    <div className='grid grid-cols-5'>
+    <div className='about grid grid-cols-5 mt-56 gap-2 justify-items-center'>
       {team.map((member) => {
-        return <TeamMemberCard info={member} />;
+        return <TeamMemberCard key={member.name} info={member} />;
       })}
     </div>
   );
