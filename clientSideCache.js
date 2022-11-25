@@ -1,5 +1,9 @@
 import { queue } from './Evictions';
 
+//check if the clientSideCache capacity and groupSize are >1
+// if they are < 1 , throw error because that is not possible
+// if they are > 1, then set currGrouroupSize to groupSize
+// 
 export function clientSideCache(capacity, groupSize) {
   let currGroupSize = groupSize;
 
