@@ -1,0 +1,74 @@
+CACHE-MONEY file structure:
+
+cacheMoney_npmPackage
+cacheMoney_npmPackage/package.json
+
+*************************************************
+****************Cache-MoneyQL/demo***************
+*************************************************
+
+                   demo/client
+
+ demo/client/components >>>
+	  demo/client/components/BarChart.js
+	  demo/client/components/Demo.js
+	  demo/client/components/Landing.js
+	  demo/client/components/LineChart.js
+	  demo/client/components/LLNode.js
+	  demo/client/components/QueueVisualizer.js
+	  demo/client/components/RemovedLLNode.js
+
+************************************************
+ 
+ demo/client/styles>>>
+   demo/client/styles/_mixins.scss
+   demo/client/styles/arrow.png
+   demo/client/styles/Demo.scss
+   demo/client/styles/LLNode.css
+   demo/client/styles/QueueVisualizer.css
+   demo/client/styles/QueueVisualizer.css
+
+************************************************
+>>>
+ demo/client/App.js
+ demo/client/index.html
+ demo/client/index.js
+ demo/styles.css
+
+**************************************************
+****************Cache-MoneyQL/server**************
+**************************************************
+
+                    demo/server 
+
+ demo/server/config >>>
+	  demo/server/config/db.js done
+
+**************************************************
+
+demo/server/models>>>
+	  demo/server/models/Client.js done
+	  demo/server/models/Project.js done
+
+**************************************************
+
+>>>
+   demo/server/cacheMoney.js
+   demo/server/DemoFunc.js
+   demo/server/schema.js
+   demo/server/server.js
+
+***************************************************
+
+.env
+.gitignore
+clientSideCache.js
+docstash.txt
+jsonComments.txt
+package-lock.json
+package.json
+webpack.config.js
+
+
+
+
