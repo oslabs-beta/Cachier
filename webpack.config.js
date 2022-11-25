@@ -58,7 +58,7 @@ const config = {
       },
     ],
   },
-  resolve: { extensions: ['*', '.js', '.jsx'] },
+  resolve: { extensions: ['*', '.js', '.jsx', '.ts', '.tsx'] },
   plugins: [new HtmlWebpackPlugin({ template: './demo/client/index.html' })],
 };
 

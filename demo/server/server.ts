@@ -1,18 +1,20 @@
+import { Request, Response, NextFunction } from "express";
+
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 const graphql = require('graphql');
 const schema = require('./schema.js');
-// Jonathan's Linked List
+
+// Linked List
 const cacheMoney = require('./cacheMoney.js');
 const demoFunc = require('./DemoFunc');
 
 const cors = require('cors');
 const Redis = require('redis');
 const REDIS_PORT = 6379;
-// Changing port variable
-// const PORT = 3000;
+
 const connectDB = require('./config/db');
 const port = process.env.PORT || 3000;
 const app = express();
@@ -38,7 +40,7 @@ app.use(
   })
 );
 
-app.get('/*', (req, res) => {
+app.get('/*', (req: Request, res: Response) => {
   return res.sendFile(
     path.resolve(__dirname, '../client/index.html'),
     function (err) {

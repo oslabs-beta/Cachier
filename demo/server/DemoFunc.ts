@@ -14,15 +14,16 @@ the 5 least recently accessed queries are selected, and the one with the highest
 This custom eviction policy accounts for both query recency and latency.
 
 */
+import { EvictionQueue, Node, removedQueryKey } from "../types";
+import { Request, Response, NextFunction } from "express";
+const fetch = (...args: any) =>
+import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args));
-
-function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
-  const traverse = (list) => {
+function CacheMoney(endpoint: string, capacity: number, groupSize: number, redisClient: any = null) {
+  const traverse = (list: EvictionQueue) => {
     let currNode = list.head;
     const output = [];
-    let counter = 1;
+    let counter:number = 1;
 
     while (currNode) {
       output.push({
@@ -39,7 +40,7 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
   let queue = new EvictionQueue();
   //keeps track of the current group size
   let currGroupSize = groupSize;
-  let cacheMoneyCache = {};
+  let cacheMoneyCache:any = {};
 
   if (capacity < 1 || groupSize < 1 || groupSize > capacity) {
     throw new Error(
@@ -47,7 +48,7 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
     );
   }
 
-  return async function checkCache(req, res, next) {
+  return async function checkCache(req: Request, res: Response, next: NextFunction) {
     const query = req.body.query.trim();
     let { variables } = req.body;
 
@@ -60,7 +61,7 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
 
     //Stringifies variables and concats with queryStr to form a unique key in the cache.
     const variablesStr = JSON.stringify(variables);
-    const cacheKey = JSON.stringify(`${query}${variablesStr}`);
+    const cacheKey:string = JSON.stringify(`${query}${variablesStr}`);
     let valueFromCache;
 
     //checks if query is already in our redis cache or cacheMoneyCache if redis is not being used.
@@ -102,18 +103,18 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
         .then((response) => response.json())
         .then((data) => {
           if (!isMutation) {
-            const end = performance.now();
-            const latency = end - start;
+            const end: number = performance.now();
+            const latency: number = end - start;
 
             redisClient
               ? redisClient.set(cacheKey, JSON.stringify(data))
               : (cacheMoneyCache[cacheKey] = JSON.stringify(data));
 
             queue.add(cacheKey, latency);
-            let removedNode = { latency: 0, num: 0 };
+            let removedNode: any = { latency: 0, num: 0 };
             if (queue.length > capacity) {
               removedNode = queue.removeSmallestLatencyFromGroup(currGroupSize);
-              const removedQueryKey = removedNode.key;
+              const removedQueryKey: any = removedNode.key;
 
               redisClient
                 ? redisClient.del(removedQueryKey)
@@ -149,7 +150,14 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
 
 //Node constructor for our doubly linkedlist;
 class Node {
-  constructor(key, latency, num) {
+
+  public key: any;
+  public latency: number;
+  public next: any;
+  public prev: any;
+  public num: number;
+
+  constructor(key: string, latency: number, num: number) {
     this.key = key;
     this.latency = latency;
     this.next = null;
@@ -160,6 +168,13 @@ class Node {
 
 //Doubly linked list to keep track of our eviction order
 class EvictionQueue {
+
+  public head: any;
+  public tail: any;
+  public length: number;
+  public cache: any;
+  public nodeNum: number;
+
   constructor() {
     // tracks front of queue (where newest queries go)
     this.head = null;
@@ -173,7 +188,7 @@ class EvictionQueue {
   }
 
   //adds a node to the queue (at the head).
-  add(cacheKey, latency) {
+  add(cacheKey: string, latency: number) {
     //creates a new Node containing the latency of the query and its key in the cache.
     const newNode = new Node(cacheKey, latency, this.nodeNum++);
     this.cache[cacheKey] = newNode;
@@ -194,7 +209,7 @@ class EvictionQueue {
     this.length += 1;
   }
 
-  removeSmallestLatencyFromGroup(groupSize) {
+  removeSmallestLatencyFromGroup(groupSize: number) {
     if (this.tail === null) return undefined;
 
     //keeps track of smallest latency node.
@@ -246,7 +261,7 @@ class EvictionQueue {
   }
 
   //Moves node to front of the linkedList if its cache is accessed again inorder to update recency.
-  updateRecencyOfExistingCache(cacheKey) {
+  updateRecencyOfExistingCache(cacheKey: string) {
     const node = this.cache[cacheKey];
     //if node being updated is already at the head of list, we can just return since it is already in the most recent position.
     if (this.head === node) {
@@ -263,7 +278,7 @@ class EvictionQueue {
       node.prev.next = node.next;
     }
 
-    //move node to the head of the queue inorder to update the recency.
+    //move node to the head of the queue in order to update the recency.
     this.head.prev = node;
     node.next = this.head;
     this.head = node;

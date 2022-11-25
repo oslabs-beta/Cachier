@@ -1,7 +1,7 @@
 {
   "name": "cache-money",
   "version": "1.0.0",
-  "description": "a cache for queries to GraphQL APIs and including customizable eviction policies as well as built-in latency tracking for queries",
+  "description": "A cache for queries to GraphQL APIs including customizable eviction policies as well as built-in latency tracking for queries",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node demo/server/server.js",
     "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack-dev-server --open & nodemon demo/server/server.js"
+    "dev": "NODE_ENV=development webpack-dev-server --open & nodemon demo/server/server.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -32,7 +32,9 @@
     "react-router-dom": "^6.4.3",
     "redis": "^4.5.0",
     "sass": "^1.56.1",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "ts-loader": "^9.4.1",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
