@@ -5,9 +5,12 @@ const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 const schema = require('./schema.js');
-// Jonathan's Linked List
+
+// Eviction Queue Linked List
 const cacheMoney = require('@cachier/server-side');
-const demoFunc = require('./DemoFunc');
+// const demoFunc = require('./DemoFunc.js');
+const demoFunc = require('./DemoFunc.ts');
+
 
 const cors = require('cors');
 const Redis = require('redis');
