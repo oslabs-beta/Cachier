@@ -8,8 +8,8 @@ const schema = require('./schema.js');
 
 // Eviction Queue Linked List
 const cacheMoney = require('@cachier/server-side');
-// const demoFunc = require('./DemoFunc.js');
-const demoFunc = require('./DemoFunc.ts');
+const demoFunc = require('./DemoFunc.js');
+// const demoFunc = require('./DemoFunc.ts');
 
 
 const cors = require('cors');

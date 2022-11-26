@@ -17,8 +17,8 @@ This custom eviction policy accounts for both query recency and latency.
 import { EvQ, Nde, removedQueryKey } from "../types";
 import { Request, Response, NextFunction } from "express";
 import { string } from "prop-types";
-const fetch:any = (...args: [string, any]) =>
-import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const fetch:any = (endpoint: string, options: any) =>
+import('node-fetch').then(({ default: fetch }) => fetch(endpoint, options));
 
 function CacheMoney(endpoint: string, capacity: number, groupSize: number, redisClient: any = null) {
   const traverse = (list: EvQ) => {
