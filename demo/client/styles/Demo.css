@@ -164,7 +164,13 @@ body {
   padding-top: 1vw;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   display: flex;
+}
+
+.loadingDiv{
+  padding-bottom: 1vw;
+  height: 5vw;
 }
 
 .barChart {
