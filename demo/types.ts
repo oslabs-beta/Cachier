@@ -4,7 +4,7 @@ export type GlobalServerError = {
     message: { err: string };
 }
 
-export type Node = {
+export type Nde = {
     key: any;
     latency: number;
     next: any;
@@ -12,12 +12,15 @@ export type Node = {
     num: number;
 }
 
-export type EvictionQueue = {
+export type EvQ = {
     head: any;
     tail: any;
     length: number;
     cache: any;
     nodeNum: number;
+    add: any;
+    removeSmallestLatencyFromGroup: any;
+    updateRecencyOfExistingCache: any;
 }
 
 export type removedQueryKey = {

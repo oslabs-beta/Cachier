@@ -14,13 +14,14 @@ the 5 least recently accessed queries are selected, and the one with the highest
 This custom eviction policy accounts for both query recency and latency.
 
 */
-import { EvictionQueue, Node, removedQueryKey } from "../types";
+import { EvQ, Nde, removedQueryKey } from "../types";
 import { Request, Response, NextFunction } from "express";
-const fetch = (...args: any) =>
+import { string } from "prop-types";
+const fetch = (...args: [string, any]) =>
 import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 function CacheMoney(endpoint: string, capacity: number, groupSize: number, redisClient: any = null) {
-  const traverse = (list: EvictionQueue) => {
+  const traverse = (list: EvQ) => {
     let currNode = list.head;
     const output = [];
     let counter:number = 1;
@@ -37,7 +38,7 @@ function CacheMoney(endpoint: string, capacity: number, groupSize: number, redis
     return output;
   };
   //initalizes a new eviction queue (linked list) for the server
-  let queue = new EvictionQueue();
+  let queue: EvQ = new EvictionQueue();
   //keeps track of the current group size
   let currGroupSize = groupSize;
   let cacheMoneyCache:any = {};
@@ -209,7 +210,7 @@ class EvictionQueue {
     this.length += 1;
   }
 
-  removeSmallestLatencyFromGroup(groupSize: number) {
+  removeSmallestLatencyFromGroup(groupSize: number): void {
     if (this.tail === null) return undefined;
 
     //keeps track of smallest latency node.
