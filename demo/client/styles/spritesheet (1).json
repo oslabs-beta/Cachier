@@ -1,0 +1,235 @@
+{
+	"frames": {
+		"Demo.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 512,
+				"h": 512
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 512,
+				"h": 512
+			},
+			"sourceSize": {
+				"w": 512,
+				"h": 512
+			}
+		},
+		"DocsIcon.png": {
+			"frame": {
+				"x": 515,
+				"y": 1,
+				"w": 640,
+				"h": 640
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 640,
+				"h": 640
+			},
+			"sourceSize": {
+				"w": 640,
+				"h": 640
+			}
+		},
+		"GithubLogo.png": {
+			"frame": {
+				"x": 1157,
+				"y": 1,
+				"w": 225,
+				"h": 225
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 225,
+				"h": 225
+			},
+			"sourceSize": {
+				"w": 225,
+				"h": 225
+			}
+		},
+		"Logo.png": {
+			"frame": {
+				"x": 1157,
+				"y": 228,
+				"w": 464,
+				"h": 639
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 464,
+				"h": 639
+			},
+			"sourceSize": {
+				"w": 464,
+				"h": 639
+			}
+		},
+		"background.png": {
+			"frame": {
+				"x": 1,
+				"y": 643,
+				"w": 1065,
+				"h": 1004
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 1065,
+				"h": 1004
+			},
+			"sourceSize": {
+				"w": 1065,
+				"h": 1004
+			}
+		},
+		"customizableIcon.png": {
+			"frame": {
+				"x": 1384,
+				"y": 1,
+				"w": 200,
+				"h": 200
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 200,
+				"h": 200
+			},
+			"sourceSize": {
+				"w": 200,
+				"h": 200
+			}
+		},
+		"download.png": {
+			"frame": {
+				"x": 1068,
+				"y": 869,
+				"w": 348,
+				"h": 348
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 348,
+				"h": 348
+			},
+			"sourceSize": {
+				"w": 348,
+				"h": 348
+			}
+		},
+		"installIcon.png": {
+			"frame": {
+				"x": 1418,
+				"y": 869,
+				"w": 256,
+				"h": 256
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 256,
+				"h": 256
+			},
+			"sourceSize": {
+				"w": 256,
+				"h": 256
+			}
+		},
+		"memoryIcon.png": {
+			"frame": {
+				"x": 1623,
+				"y": 1,
+				"w": 512,
+				"h": 512
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 512,
+				"h": 512
+			},
+			"sourceSize": {
+				"w": 512,
+				"h": 512
+			}
+		},
+		"speedIcon.png": {
+			"frame": {
+				"x": 1623,
+				"y": 515,
+				"w": 348,
+				"h": 348
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 348,
+				"h": 348
+			},
+			"sourceSize": {
+				"w": 348,
+				"h": 348
+			}
+		},
+		"storageIcon.png": {
+			"frame": {
+				"x": 1676,
+				"y": 865,
+				"w": 512,
+				"h": 512
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 512,
+				"h": 512
+			},
+			"sourceSize": {
+				"w": 512,
+				"h": 512
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 2189,
+			"h": 1648
+		},
+		"scale": "1"
+	}
+}
