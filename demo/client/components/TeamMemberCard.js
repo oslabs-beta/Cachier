@@ -1,22 +1,39 @@
 import React from 'react';
+import github from '../styles/github.png';
+import linkedin from '../styles/linkedin.png';
 
 const TeamMemberCard = (props) => {
   return (
     <div>
-      <div className='card w-96 bg-base-100 shadow-xl'>
+      <div className='card w-80 bg-base-100 shadow-xl'>
         <figure>
-          <img
-            src='https://www.meme-arsenal.com/memes/18a3373dd7ab767f3cf1ad96b5cbc204.jpg'
-            alt='img'
-          />
+          <img className='w-80 h-80' src={props.img} alt='img' />
         </figure>
         <div className='card-body'>
-          <h2 className='card-title'>{props.name}</h2>
-          <p>{props.description}</p>
+          <h2 className='card-title'>{props.info.name}</h2>
+          <p>{props.info.description}</p>
           <div className='card-actions justify-center'>
             <div className='btn-group'>
-              <button className='btn btn-active'>Github</button>
-              <button className='btn'>Linkedin</button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.href = props.info.github;
+                }}
+                className='btn btn-active'
+              >
+                Github
+                <img className='w-6 h-6 mx-1' src={github} />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.href = props.info.linkedin;
+                }}
+                className='btn'
+              >
+                Linkedin
+                <img className='w-6 h-6 ml-2' src={linkedin} />
+              </button>
             </div>
           </div>
         </div>

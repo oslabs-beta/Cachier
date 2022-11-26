@@ -7,9 +7,15 @@ const LLNode = (props) => {
     <div className='link'>
       <div className='node' style={{ backgroundColor: `${props.color}` }}>
         <h1> {`Query ${props.num}`}</h1>
-        <p className='latency'>{`${Math.floor(props.latency)}ms`} </p>
+        <div className='latency'>{`${Math.floor(props.latency)}ms`} </div>
       </div>
-      <img className='arrow' src='../styles/arrow.png' />
+      <div className='arrowDiv'>
+        <img
+          style={{ width: '2vw', height: '1vw' }}
+          className='arrow'
+          src='../styles/arrow.png'
+        />
+      </div>
     </div>
   );
 };

@@ -1,15 +1,17 @@
 .Eviction {
   text-align: center;
   background-color: transparent;
+  margin-top: 2vw;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10;
+  padding-bottom: 1vw;
+  color: black;
 }
 
 .queueContainer {
-  width: 22vw;
-  height: 9vw;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 2.1vw;
 }
 
 .Evicted {
@@ -19,4 +21,22 @@
   align-items: center;
   margin-bottom: 1.5vw;
   margin-left: 3vw;
+}
+
+.EvictionHeading {
+  font-family: Georgia, serif;
+  padding: 2;
+  font-size: 2vw;
+  color: #245594;
+}
+
+.queueContainerDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1.5vw;
+}
+
+.NavBarContainer {
+  z-index: 1;
 }

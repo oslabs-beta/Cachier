@@ -4,11 +4,9 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
-const graphql = require('graphql');
 const schema = require('./schema.js');
-
-// Linked List
-const cacheMoney = require('./cacheMoney.js');
+// Jonathan's Linked List
+const cacheMoney = require('@cachier/server-side');
 const demoFunc = require('./DemoFunc');
 
 const cors = require('cors');
@@ -16,6 +14,7 @@ const Redis = require('redis');
 const REDIS_PORT = 6379;
 
 const connectDB = require('./config/db');
+const { cache } = require('webpack');
 const port = process.env.PORT || 3000;
 const app = express();
 

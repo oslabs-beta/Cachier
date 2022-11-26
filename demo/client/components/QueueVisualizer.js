@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import React from 'react';
 import LLNode from './LLNode';
-import { Typography } from '@mui/material';
 import '../styles/QueueVisualizer.css';
 import RemovedLLNode from './RemovedLLNode';
 
@@ -40,36 +38,16 @@ const QueueVisualizer = (props) => {
   return (
     <div
       className='Eviction'
-      style={{
-        marginTop: '2vw',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        paddingBottom: '1vw',
-        color: 'black',
-        boxShadow: 24,
-      }}
     >
-      <Typography
-        variant='h3'
-        sx={{
-          fontFamily: 'Georgia, serif',
-          padding: 2,
-          fontSize: '2vw',
-          color: 'black',
-        }}
+      <div className='EvictionHeading'
       >
         LRU-SLFR Eviction Policy Visualizer
-      </Typography>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-        }}
+      </div>
+      <div className='queueContainerDiv'
       >
         <div className='queueContainer'>{traverse(queue)}</div>
         <div className='Evicted'>
-          <h2>Last Evicted</h2>
+          <h2 className='evictedText'>Last Evicted</h2>
           {props.removedNode && (
             <RemovedLLNode
               num={props.removedNode.num}

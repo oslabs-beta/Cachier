@@ -332,14 +332,7 @@ const Demo = () => {
       <div className='Visualizers'>
         <div className='visualizersDiv'>
           <div className='barChart'>
-            <p
-              style={{
-                fontFamily: 'Georgia, serif',
-                textAlign: 'center',
-                fontSize: '2vw',
-                margin: '.7vw',
-              }}
-            >
+            <p className='barChartHeading'>
               {' '}
               Query Cache Performance Chart{' '}
             </p>

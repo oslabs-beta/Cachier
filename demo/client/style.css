@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.welcomeBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(210, 240, 251);
+  padding: 200px;
+  color: #0a405f;
+}
+
+.welcome {
+  font-size: 4vw;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.productDescription {
+  text-align: center;
+  font-size: 1.1vw;
+}
