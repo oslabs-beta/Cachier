@@ -6,6 +6,7 @@ import './style.css';
 import logo from '../client/styles/logo.png';
 import Footer from './components/Footer.js';
 
+
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(
   <div className='BodyDiv'>
