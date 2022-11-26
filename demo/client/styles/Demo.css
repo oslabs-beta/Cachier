@@ -5,6 +5,7 @@
   gap: 5vw;
   padding-top: 6vw;
   padding-bottom: 2vw;
+  background-color: rgb(210, 240, 251);
 }
 .clientFields {
   padding-left: 1vw;
@@ -179,9 +180,16 @@ body {
 }
 
 .evictedText {
-  color: white;
+  color: #245594;
 }
 
 .demoLeftContainer {
   width: 25vw;
+}
+
+.barChartHeading {
+  font-family: 'Georgia, serif';
+  text-align: center;
+  font-size: 2vw;
+  margin: .7vw;
 }

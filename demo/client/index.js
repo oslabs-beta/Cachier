@@ -4,13 +4,15 @@ import App from './App.js';
 import { BrowserRouter, NavLink } from 'react-router-dom';
 import './style.css';
 import logo from '../client/styles/logo.png';
+import Footer from './components/Footer.js';
+
 
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(
   <div className='BodyDiv'>
     <React.StrictMode>
       <BrowserRouter>
-        <div className='navbar bg-neutral text-neutral-content sticky top-0 '>
+        <div className='navbar bg-neutral text-neutral-content sticky top-0 NavBarContainer'>
           <div className='flex-1'>
             <img className='h-16 w-18' src={logo}></img>
             <a className='btn btn-ghost normal-case text-xl'>Cachier</a>
@@ -50,8 +52,9 @@ root.render(
             </ul>
           </div>
         </div>
-
+        
         <App />
+        <Footer />
       </BrowserRouter>
     </React.StrictMode>
   </div>
