@@ -1,17 +1,21 @@
+import { Request, Response, NextFunction } from "express";
+
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 const schema = require('./schema.js');
-// Jonathan's Linked List
+
+// Eviction Queue Linked List
 const cacheMoney = require('@cachier/server-side');
-const demoFunc = require('./DemoFunc');
+const demoFunc = require('./DemoFunc.js');
+// const demoFunc = require('./DemoFunc.ts');
+
 
 const cors = require('cors');
 const Redis = require('redis');
 const REDIS_PORT = 6379;
-// Changing port variable
-// const PORT = 3000;
+
 const connectDB = require('./config/db');
 const { cache } = require('webpack');
 const port = process.env.PORT || 3000;
@@ -38,7 +42,7 @@ app.use(
   })
 );
 
-app.get('/*', (req, res) => {
+app.get('/*', (req: Request, res: Response) => {
   return res.sendFile(
     path.resolve(__dirname, '../client/index.html'),
     function (err) {
