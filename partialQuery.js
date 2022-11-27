@@ -3,9 +3,7 @@ const fetch = (...args) =>
 
 const singleQuery = `{
   historiesResult {
-    __typename
     data {
-      __typename
       id
       links {
         article
@@ -16,9 +14,10 @@ const singleQuery = `{
     }
   }
 }
+
 `;
 
-const uniques = { launches: 'id', data: 'id', mission: 'flight' };
+const uniques = { data: 'id' };
 
 function addTypenameField(query) {
   let newQuery = '';
@@ -93,7 +92,7 @@ function checkVariable(query) {
   while (query[++index] !== ')') {
     value += query[index];
   }
-  variables[key] = value.slice(1);
+  variables[key] = value.slice(1, -1);
 
   return variables;
 }
@@ -131,11 +130,6 @@ function seperateInnerQueries(query) {
         bracketCount--;
         index++;
       }
-      if (query[index] === '{') {
-        bracketCount++;
-        console.log('hi');
-        index++;
-      }
 
       while (query[index] === ' ' || query.charCodeAt(index) === 10) {
         ++index;
@@ -160,7 +154,9 @@ function seperateInnerQueries(query) {
 
         while (bracketCount >= 1) {
           let nestStr = '';
-          if (query[index] === '}') bracketCount--;
+          if (query[index] === '}') {
+            bracketCount--;
+          }
           while (
             query[index] !== ' ' &&
             query.charCodeAt(index) !== 10 &&
@@ -173,6 +169,8 @@ function seperateInnerQueries(query) {
           }
 
           if (query[index + 1] === '{') {
+            bracketCount++;
+
             currArray.push({});
             currArray[currArray.length - 1][nestStr] = [];
             currArray = currArray[currArray.length - 1][nestStr];
@@ -182,12 +180,14 @@ function seperateInnerQueries(query) {
           }
           index++;
         }
+        // }
       }
       if (tempStr !== '') {
         resultArr.push(tempStr);
         tempStr = '';
       }
     }
+
     index++;
   };
   helper();
@@ -220,6 +220,7 @@ console.log(queryNormalizer(singleQuery).typesArr);
 console.log(queryNormalizer(singleQuery).cacheKeysArr);
 console.log(queryNormalizer(singleQuery).fieldsArr);
 
+console.log('QUERY', queryNormalizer(singleQuery));
 const data = {
   data: {
     historiesResult: {
@@ -229,6 +230,7 @@ const data = {
           __typename: 'History',
           id: '7',
           links: {
+            __typename: 'Link',
             article:
               'http://spacenews.com/37740spacex-retires-grasshopper-new-test-rig-to-fly-in-december/',
           },
@@ -237,6 +239,7 @@ const data = {
           __typename: 'History',
           id: '16',
           links: {
+            __typename: 'Link',
             article:
               'https://spaceflightnow.com/2017/03/31/spacex-flies-rocket-for-second-time-in-historic-test-of-cost-cutting-technology/',
           },
@@ -245,6 +248,7 @@ const data = {
           __typename: 'History',
           id: '14',
           links: {
+            __typename: 'Link',
             article:
               'https://spaceflightnow.com/2015/12/22/round-trip-rocket-flight-gives-spacex-a-trifecta-of-successes/',
           },
@@ -253,6 +257,7 @@ const data = {
           __typename: 'History',
           id: '17',
           links: {
+            __typename: 'Link',
             article:
               'https://spaceflightnow.com/2017/06/03/reused-dragon-cargo-capsule-launched-on-journey-to-space-station/',
           },
@@ -261,6 +266,7 @@ const data = {
           __typename: 'History',
           id: '9',
           links: {
+            __typename: 'Link',
             article:
               'https://www.space.com/25562-spacex-falcon-9-reusable-rocket-test.html',
           },
@@ -269,6 +275,7 @@ const data = {
           __typename: 'History',
           id: '8',
           links: {
+            __typename: 'Link',
             article:
               'http://www.newspacejournal.com/2013/03/27/after-dragon-spacexs-focus-returns-to-falcon/',
           },
@@ -277,6 +284,7 @@ const data = {
           __typename: 'History',
           id: '12',
           links: {
+            __typename: 'Link',
             article:
               'https://spaceflightnow.com/2015/01/10/dragon-successfully-launched-rocket-recovery-demo-crash-lands/',
           },
@@ -285,6 +293,7 @@ const data = {
           __typename: 'History',
           id: '11',
           links: {
+            __typename: 'Link',
             article:
               'https://www.washingtonpost.com/news/the-switch/wp/2014/09/16/nasa-awards-space-contract-to-boeing-and-spacex/?utm_term=.d6388390d071',
           },
@@ -293,6 +302,7 @@ const data = {
           __typename: 'History',
           id: '15',
           links: {
+            __typename: 'Link',
             article:
               'https://spaceflightnow.com/2016/04/08/spacex-lands-rocket-on-floating-platform-after-station-resupply-launch/',
           },
@@ -301,6 +311,7 @@ const data = {
           __typename: 'History',
           id: '6',
           links: {
+            __typename: 'Link',
             article: 'http://thespacereview.com/article/2168/1',
           },
         },
@@ -308,6 +319,7 @@ const data = {
           __typename: 'History',
           id: '18',
           links: {
+            __typename: 'Link',
             article:
               'https://spaceflightnow.com/2018/02/07/spacex-debuts-worlds-most-powerful-rocket-sends-tesla-toward-the-asteroid-belt/',
           },
@@ -316,6 +328,7 @@ const data = {
           __typename: 'History',
           id: '20',
           links: {
+            __typename: 'Link',
             article:
               'https://spaceflightnow.com/2018/08/07/indonesian-communications-satellite-deployed-in-orbit-by-spacex/',
           },
@@ -324,6 +337,7 @@ const data = {
           __typename: 'History',
           id: '5',
           links: {
+            __typename: 'Link',
             article: 'http://www.cnn.com/2010/US/12/08/space.flight/index.html',
           },
         },
@@ -331,6 +345,7 @@ const data = {
           __typename: 'History',
           id: '19',
           links: {
+            __typename: 'Link',
             article:
               'https://spaceflightnow.com/2018/05/11/spacex-debuts-an-improved-human-rated-model-of-the-falcon-9-rocket/',
           },
@@ -339,6 +354,7 @@ const data = {
           __typename: 'History',
           id: '10',
           links: {
+            __typename: 'Link',
             article:
               'http://www.parabolicarc.com/2014/05/02/falcon-9-reusable-vehicle-flies-1000-meters/',
           },
@@ -347,6 +363,7 @@ const data = {
           __typename: 'History',
           id: '13',
           links: {
+            __typename: 'Link',
             article:
               'https://spaceflightnow.com/2015/04/21/dragon-pad-abort-test-set-for-early-may/',
           },
@@ -355,6 +372,7 @@ const data = {
           __typename: 'History',
           id: '1',
           links: {
+            __typename: 'Link',
             article:
               'http://www.spacex.com/news/2013/02/11/flight-4-launch-update-0',
           },
@@ -363,6 +381,7 @@ const data = {
           __typename: 'History',
           id: '4',
           links: {
+            __typename: 'Link',
             article: 'http://www.bbc.com/news/10209704',
           },
         },
@@ -370,6 +389,7 @@ const data = {
           __typename: 'History',
           id: '3',
           links: {
+            __typename: 'Link',
             article: 'http://www.spacex.com/news/2013/02/12/falcon-1-flight-5',
           },
         },
@@ -377,17 +397,74 @@ const data = {
           __typename: 'History',
           id: '2',
           links: {
+            __typename: 'Link',
             article:
               'https://www.nasaspaceflight.com/2008/12/spacex-and-orbital-win-huge-crs-contract-from-nasa/',
           },
         },
       ],
       result: {
+        __typename: 'Result',
         totalCount: 20,
       },
     },
   },
 };
+
+const testCache = {};
+
+function iterateFieldsArr(fieldArr, currCacheKey, data, dataKey, currCache) {
+  let currDepthObj = {};
+  currCache[currCacheKey] = currDepthObj;
+
+  for (let j = 0; j < fieldArr.length; j++) {
+    if (Array.isArray(data[dataKey])) {
+      const tempArr = [];
+      let index = 0;
+
+      data[dataKey].forEach((obj) => {
+        // may need to edge case check in future to have error in case user forgets to insert a unique id.
+        const unique = uniques[currCacheKey] || 'id';
+        const uniqueKey = `${obj.__typename}:${obj[unique]}`;
+
+        tempArr.push(uniqueKey);
+        currCache[uniqueKey] = iterateFieldsArr(
+          fieldArr,
+          index,
+          data[dataKey],
+          index,
+          currCache[currCacheKey]
+        );
+        index++;
+      });
+      currCache[currCacheKey] = tempArr;
+    } else if (typeof fieldArr[j] === 'string') {
+      currDepthObj[fieldArr[j]] = data[dataKey][fieldArr[j]];
+    } else {
+      const currNestedFieldName = Object.keys(fieldArr[j])[0];
+      const innerField = fieldArr[j][currNestedFieldName];
+      iterateFieldsArr(
+        innerField,
+        currNestedFieldName,
+        data[dataKey],
+        currNestedFieldName,
+        currCache[currCacheKey]
+      );
+    }
+  }
+  return currDepthObj;
+}
+
+function cacheNewData(normalizedQuery, data, cache) {
+  const { typesArr, cacheKeysArr, fieldsArr } = normalizedQuery;
+  const currData = data.data;
+  for (let i = 0; i < fieldsArr.length; i++) {
+    let currCacheKey = cacheKeysArr[i];
+    iterateFieldsArr(fieldsArr[i], currCacheKey, currData, currCacheKey, cache);
+  }
+  console.log('CACHE', testCache);
+}
+cacheNewData(queryNormalizer(singleQuery), data, testCache);
 
 // function cacheNewData(normalizedQuery, data, cache) {
 //   const innerData = data.data;
