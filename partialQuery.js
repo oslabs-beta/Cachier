@@ -14,8 +14,15 @@ const singleQuery = `{
     }
   }
 }
-
 `;
+
+const testPartialQuery = `{
+  historiesResult {
+    data {
+      id
+    }
+  }
+}`;
 
 const uniques = { data: 'id' };
 
@@ -411,8 +418,6 @@ const data = {
   },
 };
 
-const testCache = {};
-
 function iterateFieldsArr(fieldArr, currCacheKey, data, dataKey, currCache) {
   let currDepthObj = {};
   currCache[currCacheKey] = currDepthObj;
@@ -423,6 +428,7 @@ function iterateFieldsArr(fieldArr, currCacheKey, data, dataKey, currCache) {
       let index = 0;
 
       data[dataKey].forEach((obj) => {
+        console.log(data[dataKey][index]);
         // may need to edge case check in future to have error in case user forgets to insert a unique id.
         const unique = uniques[currCacheKey] || 'id';
         const uniqueKey = `${obj.__typename}:${obj[unique]}`;
@@ -464,267 +470,70 @@ function cacheNewData(normalizedQuery, data, cache) {
   }
   console.log('CACHE', testCache);
 }
+
+const testCache = {};
 cacheNewData(queryNormalizer(singleQuery), data, testCache);
 
-// function cacheNewData(normalizedQuery, data, cache) {
-//   const innerData = data.data;
-//   let currFullCacheKey = '';
-//   console.log(normalizedQuery);
-//   for (let i = 0; i < normalizedQuery.typesArr.length; i++) {
-//     let currType = normalizedQuery.typesArr[i];
-//     let currCacheKey = normalizedQuery.cacheKeysArr[i];
-//     console.log(currCacheKey);
-//     let currFieldsArr = normalizedQuery.fieldsArr[i];
-//     console.log(currFieldsArr);
-//     if (Array.isArray(innerData[currType])) {
-//       const refArr = [];
-//       const uniqueID = uniques[currType];
-//       innerData[currType].forEach((obj) => {
-//         const cacheKey = `${obj.__typename}:${obj[uniqueID]}`;
-//         console.log(cacheKey);
-//         refArr.push(cacheKey);
-//         cache[cacheKey] = {};
-//         ///////////////
-//         for (let field of currFieldsArr) {
-//           if (typeof field === 'object') {
-//             const nestedFieldObj = {};
-//             const nestedData = obj;
+function iterateCache(fieldArr, currCacheKey, currReturnData, currCache) {
+  const currDepthObj = {};
+  currReturnData[currCacheKey] = currDepthObj;
+  console.log(currCache[currCacheKey]);
+  for (let j = 0; j < fieldArr.length; j++) {
+    if (currCache[currCacheKey] === undefined) {
+      return false;
+    } else {
+      if (Array.isArray(currCache[currCacheKey])) {
+        const tempArr = [];
+        let index = 0;
+        console.log(currCache);
+        currCache[currCacheKey].forEach((key) => {
+          console.log(currCache[currCacheKey][index]);
+          tempArr.push(
+            iterateCache(
+              fieldArr,
+              currCache[currCacheKey][index],
+              currReturnData[currCacheKey],
+              currCache
+            )
+          );
+          currCache[key];
+          index++;
+        });
+        currReturnData[currCacheKey] = tempArr;
+      } else if (typeof fieldArr[j] === 'string') {
+        console.log(fieldArr[j]);
+        console.log(currCache[currCacheKey]);
+        console.log(currCache);
+        if (currCache[currCacheKey][fieldArr[j]] === undefined) return false;
+        currDepthObj[fieldArr[j]] = currCache[currCacheKey][fieldArr[j]];
+      } else {
+        const currNestedFieldName = Object.keys(fieldArr[j])[0];
+        const innerField = fieldArr[j][currNestedFieldName];
+        iterateCache(
+          innerField,
+          currNestedFieldName,
+          currDepthObj,
+          currCache[currCacheKey]
+        );
+      }
+    }
+  }
+  return currDepthObj;
+}
 
-//             function cacheNestedObj(obj) {
-//               const tempKey = Object.keys(obj)[0];
-//               currFullCacheKey += tempKey;
-//               // nestedFieldObj[tempKey] = {};
-//               for (let nestedField of obj[tempKey]) {
-//                 if (typeof nestedField === 'object') {
-//                   cacheNestedObj(nestedField[Object.keys(nestedField)[0]]);
-//                 } else {
-//                   nestedFieldObj[tempKey] = nestedData[tempKey];
-//                   console.log(nestedFieldObj[tempKey]);
-//                 }
-//               }
-//               return nestedFieldObj;
-//             }
-//             cache[cacheKey][Object.keys(field)[0]] =
-//               cacheNestedObj(field)[Object.keys(field)[0]];
-//           } else {
-//             cache[cacheKey][field] = obj[field];
-//           }
-//         }
-//         cache[currType] = refArr;
-//       });
-//     } else {
-//       cache[currCacheKey] = {};
-//       currFullCacheKey += currCacheKey;
-//       for (let field of currFieldsArr) {
-//         console.log(field);
-//         if (typeof field === 'object') {
-//           const nestedFieldObj = {};
-//           const nestedData = innerData[currType];
-//           console.log();
-
-//           function cacheNestedObj(obj) {
-//             const tempKey = Object.keys(obj)[0];
-//             currFullCacheKey += `:${tempKey}`;
-//             console.log(currFullCacheKey);
-//             //nestedFieldObj[tempKey] = {};
-//             console.log(obj[tempKey]);
-//             for (let nestedField of obj[tempKey]) {
-//               if (typeof nestedField === 'object') {
-//                 cacheNestedObj(nestedField);
-//               } else {
-//                 console.log(nestedData[tempKey]);
-//                 if (Array.isArray(nestedData[tempKey])) {
-//                   const refArr = [];
-//                   const uniqueID = uniques[tempKey];
-//                   console.log(uniqueID);
-//                   console.log(nestedData[tempKey]);
-//                   nestedData[tempKey].forEach((obj) => {
-//                     const cacheKey = `${currFullCacheKey}:${obj[uniqueID]}`;
-//                     console.log(currFullCacheKey);
-//                     cache[cacheKey] = {};
-//                     refArr.push(cacheKey);
-//                     field[Object.keys(field)[0]].forEach((subField) => {
-//                       console.log(subField);
-//                       if (typeof subField === 'object') {
-//                         console.log(subField);
-//                         console.log(cacheKey);
-//                         cacheNestedObj(subField);
-//                       } else {
-//                         cache[cacheKey][subField] = obj[subField];
-//                         console.log(obj[subField]);
-//                       }
-//                     });
-//                   });
-//                   console.log(refArr);
-//                   console.log(nestedFieldObj);
-//                   cache[currCacheKey][tempKey] = refArr;
-//                   console.log(nestedFieldObj);
-//                 } else {
-//                   ///////////////////////////////////
-//                   if (nestedData[tempKey] !== undefined)
-//                     nestedFieldObj[tempKey] = nestedData[tempKey];
-//                 }
-//               }
-//             }
-
-//             console.log(nestedFieldObj);
-//             currFullCacheKey = '';
-//             return nestedFieldObj;
-//           }
-//           console.log(currCacheKey);
-//           cacheNestedObj(field);
-//         } else {
-//           console.log();
-//           cache[currCacheKey][field] = innerData[currType][field];
-//         }
-//       }
-//     }
-//   }
-
-//   return cache;
-// }
-
-// const flattenedQuery = queryNormalizer(singleQuery);
-// const testCache = {};
-// console.log(
-//   'FADSFSAGGSAD',
-//   seperateOuterQueries(singleQuery).map((query) => {
-//     return seperateInnerQueries(query);
-//   })
-// );
-// cacheNewData(flattenedQuery, data, testCache);
-// console.log('CACHE2', testCache);
-
-// const partialSingleQuery = `
-// {
-//   historiesResult {
-//     __typename
-//     data {
-//       __typename
-//       id
-//     }
-//   }
-// }
-// `;
-
-// const partialSingleQueryData = {
-//   data: {
-//     dragons: [
-//       {
-//         __typename: 'Dragon',
-//         first_flight: '2019-03-02',
-//         return_payload_vol: {
-//           __typename: 'Volume',
-//           cubic_feet: 388,
-//         },
-//       },
-//       {
-//         __typename: 'Dragon',
-//         first_flight: '2010-12-08',
-//         return_payload_vol: {
-//           __typename: 'Volume',
-//           cubic_feet: 388,
-//         },
-//       },
-//     ],
-//   },
-// };
-// // function checkCache(query, cache) {
-// //   const data = { data: {} };
-// //   const innerData = data.data;
-// //   const normalizedQuery = queryNormalizer(query);
-// //   for (let i = 0; i < normalizedQuery.cacheKeysArr.length; i++) {
-// //     const partialCacheData = cache[normalizedQuery.cacheKeysArr[i]];
-
-// //     console.log(partialCacheData);
-// //     innerData[normalizedQuery.cacheKeysArr[i]] = {};
-// //     console.log(innerData);
-// //     function resolveNestedCacheData(partialCacheData, innerData) {
-// //       if (partialCacheData === undefined) {
-// //         return false;
-// //       }
-// //       console.log(partialCacheData);
-// //       if (Array.isArray(partialCacheData)) {
-// //         if (typeof partialCacheData[0] === 'string') {
-// //           const resolvedArr = [];
-// //           for (let j = 0; j < partialCacheData.length; j++) {
-// //             console.log(partialCacheData);
-// //             const currPartialData = cache[partialCacheData[j]];
-// //             const partialObj = {};
-// //             for (let k = 0; k < normalizedQuery.fieldsArr[i].length; k++) {
-// //               console.log(normalizedQuery.fieldsArr);
-// //               if (typeof normalizedQuery.fieldsArr[i][k] === 'object') {
-// //                 // const obj = {};
-// //                 function nestedDataFromCacheIterator(field, data, obj) {
-// //                   const key = Object.keys(field)[0];
-// //                   const currObj = (obj[key] = {});
-
-// //                   const nestedPartialData = data[key];
-// //                   for (let nestedField of field[key]) {
-// //                     if (nestedField === 'object') {
-// //                       nestedDataFromCacheIterator(
-// //                         nestedField,
-// //                         nestedPartialData,
-// //                         currObj
-// //                       );
-// //                     } else {
-// //                       console.log(nestedField);
-// //                       currObj[nestedField] = nestedPartialData[nestedField];
-// //                     }
-// //                   }
-// //                 }
-// //                 nestedDataFromCacheIterator(
-// //                   normalizedQuery.fieldsArr[i][k],
-// //                   currPartialData,
-// //                   partialObj
-// //                 );
-// //               } else if (
-// //                 currPartialData[normalizedQuery.fieldsArr[i][k]] === undefined
-// //               ) {
-// //                 return false;
-// //               } else {
-// //                 partialObj[normalizedQuery.fieldsArr[i][k]] =
-// //                   currPartialData[normalizedQuery.fieldsArr[i][k]];
-// //               }
-// //             }
-// //             resolvedArr.push(partialObj);
-// //           }
-// //           innerData[normalizedQuery.cacheKeysArr[i]] = resolvedArr;
-// //         }
-// //       } else if (typeof partialCacheData === 'object') {
-// //         console.log(partialCacheData);
-// //         console.log(innerData);
-// //         Object.keys(partialCacheData).forEach((key) => {
-// //           console.log(key);
-// //           const newInnerData = innerData[Object.keys(innerData)];
-// //           console.log(newInnerData);
-// //           if (!Array.isArray(partialCacheData[key])) {
-// //             newInnerData[key] = partialCacheData[key];
-// //           } else {
-// //             console.log(key);
-// //             newInnerData[key] = {};
-// //             console.log(newInnerData);
-// //             console.log(innerData);
-// //             console.log(partialCacheData[key]);
-// //             for (let k = 0; k < normalizedQuery.fieldsArr[i].length; k++) {
-// //               console.log(normalizedQuery.fieldsArr[i][k]);
-// //               if()
-// //             }
-// //           }
-// //         });
-
-// //         //resolveNestedCacheData(partialCacheData[key], innerData[key]);
-// //       } else {
-// //         console.log(normalizedQuery);
-// //         innerData[normalizedQuery.cacheKeysArr[i]] = partialCacheData;
-// //       }
-// //     }
-// //     resolveNestedCacheData(partialCacheData, innerData);
-// //   }
-// //   console.log('DATA', data);
-// // }
-
-// // checkCache(partialSingleQuery, testCache);
+function checkCache(normalizedQuery, cache) {
+  const { typesArr, cacheKeysArr, fieldsArr } = normalizedQuery;
+  const resultData = { data: {} };
+  const currData = resultData.data;
+  console.log(typesArr, cacheKeysArr, fieldsArr);
+  for (let i = 0; i < fieldsArr.length; i++) {
+    let currCacheKey = cacheKeysArr[i];
+    console.log(iterateCache(fieldsArr[i], currCacheKey, currData, cache));
+  }
+  console.log('RESULTDATA', resultData);
+  return resultData;
+}
+checkCache(queryNormalizer(testPartialQuery), testCache);
 
 // function partialQueryCache(endpoint) {
 //   const cache = {};
