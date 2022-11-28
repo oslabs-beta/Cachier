@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
 import QueueVisualizer from './QueueVisualizer';
+import TextQuery from './TextQuery';
 import '../styles/Demo.css';
 import { clientSideCache } from '../../../clientSideCache';
 
@@ -171,8 +172,11 @@ const Demo = () => {
     fetchData();
   };
 
-  const handleUpload = () => {
+  const handleUploadAndQuery = () => {
+    console.log('querying from text query field');
     setQueryString(`{ clients { id name email phone } }`);
+    setLoading(true);
+    fetchData();
   };
 
   const testQuery = () => {
@@ -199,9 +203,6 @@ const Demo = () => {
       );
     }
   };
-
-  // const elem = document.getElementById('canvas1');
-  // elem.remove();
 
   return (
     <div className='demoDiv'>
@@ -330,7 +331,9 @@ const Demo = () => {
             </div>
           </div>
         </div>
+        <TextQuery handleUploadAndQuery={handleUploadAndQuery} loading={loading}/>
       </div>
+
 
       <div className='Visualizers'>
         <div className='visualizersDiv'>
