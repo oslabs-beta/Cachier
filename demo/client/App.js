@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Demo from './components/Demo';
-import Landing from './components/Landing.js';
-import Docs from './components/Docs';
-import About from './components/About';
+import Demo from './pages/Demo';
+import Landing from './pages/Landing.js';
+import Docs from './pages/Docs';
+import About from './pages/About';
 
 const App = () => {
   return (

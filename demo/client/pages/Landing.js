@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ReactDOM } from 'react';
-import LandingContent from './LandingContent';
-import Physics from './Physics';
-import Testimonials from './Testimonials';
+import LandingContent from '../components/LandingContent';
+import Testimonials from '../components/Testimonials';
 import { useNavigate } from "react-router-dom";
 
 
