@@ -4,6 +4,7 @@ import LandingContent from './LandingContent';
 import Physics from './Physics';
 import Testimonials from './Testimonials';
 import { useNavigate } from "react-router-dom";
+import LandingContent2 from './LandingContent2';
 
 
 
@@ -69,6 +70,7 @@ const Landing = () => {
           </div>
         </div>
       </div>
+      <LandingContent2 />
       <LandingContent />
       <Testimonials />
     </div>
