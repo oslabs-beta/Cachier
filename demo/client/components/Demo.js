@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
 import QueueVisualizer from './QueueVisualizer';
+import TextQuery from './TextQuery';
 import '../styles/Demo.css';
 import { clientSideCache } from '../../../clientSideCache';
 
@@ -199,9 +200,6 @@ const Demo = () => {
       );
     }
   };
-
-  // const elem = document.getElementById('canvas1');
-  // elem.remove();
 
   return (
     <div className='demoDiv'>
