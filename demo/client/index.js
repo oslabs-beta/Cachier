@@ -5,6 +5,7 @@ import { BrowserRouter, NavLink } from 'react-router-dom';
 import './style.css';
 import logo from '../client/styles/logo.png';
 import Footer from './components/Footer.js';
+import cachierlogo from '../client/styles/cachierlogo.png'
 
 
 const root = ReactDOM.createRoot(document.querySelector('#root'));
@@ -14,8 +15,8 @@ root.render(
       <BrowserRouter>
         <div className='navbar bg-neutral text-neutral-content sticky top-0 NavBarContainer'>
           <div className='flex-1'>
-            <img className='h-16 w-18' src={logo}></img>
-            <a className='btn btn-ghost normal-case text-xl'>Cachier</a>
+            <img className='h-20 w-18' src={cachierlogo}></img>
+            {/* <a className='btn btn-ghost normal-case text-xl'>Cachier</a> */}
           </div>
           <div className='flex-none'>
             <ul className='menu menu-horizontal p-0'>
