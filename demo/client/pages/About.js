@@ -1,5 +1,5 @@
 import React from 'react';
-import TeamMemberCard from './TeamMemberCard';
+import TeamMemberCard from '../components/TeamMemberCard';
 import andy from '../styles/andy.png'
 import dhruv from '../styles/dhruv.png'
 import kaju from '../styles/kaju.png'
@@ -15,8 +15,8 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'https://www.google.com/',
-      linkedin: 'https://www.google.com/',
+      github: 'https://github.com/kajusarkar',
+      linkedin: 'https://www.linkedin.com/in/kaju-sarkar-a6329862/',
     },
     {
       name: 'Dhruv Thota',
@@ -25,8 +25,8 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'https://www.google.com/',
-      linkedin: 'https://www.google.com/',
+      github: 'https://github.com/L05Dhruv',
+      linkedin: 'https://www.linkedin.com/in/dhruv-thota/',
     },
     {
       name: 'Andy Zheng',
@@ -35,8 +35,8 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'https://www.google.com/',
-      linkedin: 'https://www.google.com/',
+      github: 'https://github.com/andy5313',
+      linkedin: 'https://www.linkedin.com/in/andyzheng5313/',
     },
     {
       name: 'Roman Darker',
@@ -45,8 +45,8 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'https://www.google.com/',
-      linkedin: 'https://www.google.com/',
+      github: 'https://github.com/romanjamesd',
+      linkedin: 'https://www.linkedin.com/in/roman-darker-707147175/',
     },
     {
       name: 'Jonathan Chen',
@@ -55,8 +55,8 @@ const About = () => {
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
   vestibulum.`,
-      github: 'https://www.google.com/',
-      linkedin: 'https://www.google.com/',
+      github: 'https://github.com/jchen0903i',
+      linkedin: 'https://www.linkedin.com/in/jonathan-chen3/',
     },
   ];
 

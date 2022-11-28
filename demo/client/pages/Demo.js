@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import BarChart from './BarChart';
-import QueueVisualizer from './QueueVisualizer';
-import TextQuery from './TextQuery';
+import BarChart from '../components/BarChart';
+import QueueVisualizer from '../components/QueueVisualizer';
+import TextQuery from '../components/TextQuery';
 import '../styles/Demo.css';
 import { clientSideCache } from '../../../clientSideCache';
 
