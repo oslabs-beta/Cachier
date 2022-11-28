@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ReactDOM } from 'react';
-import LandingContent from './LandingContent';
-import Physics from './Physics';
-import Testimonials from './Testimonials';
+import LandingContent from '../components/LandingContent';
+//import Physics from './Physics';
+import Testimonials from '../components/Testimonials';
 import { useNavigate } from "react-router-dom";
-import LandingContent2 from './LandingContent2';
-
+import LandingContent2 from '../components/LandingContent2';
 
 
 const Landing = () => {
