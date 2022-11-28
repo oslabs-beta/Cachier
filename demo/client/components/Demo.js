@@ -172,8 +172,11 @@ const Demo = () => {
     fetchData();
   };
 
-  const handleUpload = () => {
+  const handleUploadAndQuery = () => {
+    console.log('querying from text query field');
     setQueryString(`{ clients { id name email phone } }`);
+    setLoading(true);
+    fetchData();
   };
 
   const testQuery = () => {
@@ -328,7 +331,9 @@ const Demo = () => {
             </div>
           </div>
         </div>
+        <TextQuery handleUploadAndQuery={handleUploadAndQuery} loading={loading}/>
       </div>
+
 
       <div className='Visualizers'>
         <div className='visualizersDiv'>

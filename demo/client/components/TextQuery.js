@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Demo.css';
 
-const TextQuery = () => {
+const TextQuery = (props) => {
 
+    const { handleUploadAndQuery, loading } = props;
     const string = `{ clients { id name email phone } }`;
-    function handleTextQuery(){
-        console.log('TextQueryBtn clicked');
+    function handleClick(){
+        const str = document.getElementsByClassName('textarea textarea-bordered h-24')[0].value;
+        console.log('text field: ', str);
+        handleUploadAndQuery();
     }
 
 
@@ -15,8 +18,7 @@ const TextQuery = () => {
                 <label className="queryTextInputField">
                     <span className="label-text">Type Query here</span>
                 </label>
-                <textarea className="textarea textarea-bordered h-24" placeholder="
-{
+                <textarea className="textarea textarea-bordered h-24" placeholder="{
 clients {      
 id
 name
@@ -27,10 +29,9 @@ phone
 "></textarea>
                 <label className="label">
                     <span className="label-text-alt">Type a GraphQL query as you would in your code. Can handle only queries for now, no mutations.</span>
-                    <span className="label-text-alt">Alt label</span>
                 </label>
             </div>
-            <button className='queryButton' onClick={handleTextQuery}>
+            <button className='queryButton' onClick={handleClick}>
                 Run Query
             </button>
         </div>

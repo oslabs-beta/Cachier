@@ -199,3 +199,31 @@ body {
   font-size: 2vw;
   margin: .7vw;
 }
+
+.queryTextInput{
+  margin-top: 30px;
+}
+
+span.label-text {
+  color: grey;
+}
+
+span.label-text-alt {
+  color: grey;
+}
+
+.quertyTextInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+textarea.textarea.textarea-bordered.h-24{
+  background-color: midnightblue;
+  width: auto;
+  height: auto;
+  min-width: 175px;
+  min-height: 225px;
+
+}
