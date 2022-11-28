@@ -1,30 +1,46 @@
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-const singleQuery = `{
-  historiesResult {
-    data {
-      id
-      links {
-        article
+const singleQuery = `query Query {
+  allFilms {
+    films {
+      title
+      director
+      releaseDate
+      speciesConnection {
+        species {
+          name
+          classification
+          homeworld {
+            name
+          }
+        }
       }
-    }
-    result {
-      totalCount
     }
   }
 }
 `;
 
-const testPartialQuery = `{
-  historiesResult {
-    data {
-      id
+const testPartialQuery = `query Query {
+  allFilms {
+    films {
+      title
+      director
+      releaseDate
+      speciesConnection {
+        species {
+          name
+          classification
+          homeworld {
+            name
+          }
+        }
+      }
     }
   }
 }`;
 
-const uniques = { data: 'id' };
+const uniques = { films: 'title', species: 'id' };
 
 function addTypenameField(query) {
   let newQuery = '';
@@ -42,6 +58,7 @@ function addTypenameField(query) {
     if (query[index] === '{') newQuery += ' __typename';
     index++;
   }
+  console.log(newQuery);
   return newQuery;
 }
 
@@ -97,9 +114,12 @@ function checkVariable(query) {
     key += query[index];
   }
   while (query[++index] !== ')') {
-    value += query[index];
+    if (query[index] !== '"' && query[index] !== "'" && query[index] !== ' ') {
+      value += query[index];
+    }
   }
-  variables[key] = value.slice(1, -1);
+  key = key.toLowerCase().trim();
+  variables[key] = value.trim();
 
   return variables;
 }
@@ -209,8 +229,10 @@ function createKeyForVariableQuery(query) {
   return `${type}:${id}`;
 }
 
-function queryNormalizer(query) {
-  query = addTypenameField(query);
+function queryNormalizer(query, addType = true) {
+  if (addType) {
+    query = addTypenameField(query);
+  }
   const outerQueryArr = seperateOuterQueries(query);
   const normalizedQueryObj = {};
   normalizedQueryObj.typesArr = outerQueryArr.map((query) => checkType(query));
@@ -230,194 +252,789 @@ console.log(queryNormalizer(singleQuery).fieldsArr);
 console.log('QUERY', queryNormalizer(singleQuery));
 const data = {
   data: {
-    historiesResult: {
-      __typename: 'HistoriesResult',
-      data: [
+    __typename: 'Root',
+    allFilms: {
+      __typename: 'FilmsConnection',
+      films: [
         {
-          __typename: 'History',
-          id: '7',
-          links: {
-            __typename: 'Link',
-            article:
-              'http://spacenews.com/37740spacex-retires-grasshopper-new-test-rig-to-fly-in-december/',
+          __typename: 'Film',
+          title: 'A New Hope',
+          director: 'George Lucas',
+          releaseDate: '1977-05-25',
+          speciesConnection: {
+            __typename: 'FilmSpeciesConnection',
+            species: [
+              {
+                id: 'c3BlY2llczox',
+                __typename: 'Species',
+                name: 'Human',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Coruscant',
+                },
+              },
+              {
+                id: 'c3BlY2llczoy',
+                __typename: 'Species',
+                name: 'Droid',
+                classification: 'artificial',
+                homeworld: null,
+              },
+              {
+                id: 'c3BlY2llczoz',
+                __typename: 'Species',
+                name: 'Wookie',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Kashyyyk',
+                },
+              },
+              {
+                id: 'c3BlY2llczo0',
+                __typename: 'Species',
+                name: 'Rodian',
+                classification: 'sentient',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Rodia',
+                },
+              },
+              {
+                id: 'c3BlY2llczo1',
+                __typename: 'Species',
+                name: 'Hutt',
+                classification: 'gastropod',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Nal Hutta',
+                },
+              },
+            ],
           },
         },
         {
-          __typename: 'History',
-          id: '16',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://spaceflightnow.com/2017/03/31/spacex-flies-rocket-for-second-time-in-historic-test-of-cost-cutting-technology/',
+          __typename: 'Film',
+          title: 'The Empire Strikes Back',
+          director: 'Irvin Kershner',
+          releaseDate: '1980-05-17',
+          speciesConnection: {
+            __typename: 'FilmSpeciesConnection',
+            species: [
+              {
+                id: 'c3BlY2llczox',
+                __typename: 'Species',
+                name: 'Human',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Coruscant',
+                },
+              },
+              {
+                id: 'c3BlY2llczoy',
+                __typename: 'Species',
+                name: 'Droid',
+                classification: 'artificial',
+                homeworld: null,
+              },
+              {
+                id: 'c3BlY2llczoz',
+                __typename: 'Species',
+                name: 'Wookie',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Kashyyyk',
+                },
+              },
+              {
+                id: 'c3BlY2llczo2',
+                __typename: 'Species',
+                name: "Yoda's species",
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'unknown',
+                },
+              },
+              {
+                id: 'c3BlY2llczo3',
+                __typename: 'Species',
+                name: 'Trandoshan',
+                classification: 'reptile',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Trandosha',
+                },
+              },
+            ],
           },
         },
         {
-          __typename: 'History',
-          id: '14',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://spaceflightnow.com/2015/12/22/round-trip-rocket-flight-gives-spacex-a-trifecta-of-successes/',
+          __typename: 'Film',
+          title: 'Return of the Jedi',
+          director: 'Richard Marquand',
+          releaseDate: '1983-05-25',
+          speciesConnection: {
+            __typename: 'FilmSpeciesConnection',
+            species: [
+              {
+                id: 'c3BlY2llczox',
+                __typename: 'Species',
+                name: 'Human',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Coruscant',
+                },
+              },
+              {
+                id: 'c3BlY2llczoy',
+                __typename: 'Species',
+                name: 'Droid',
+                classification: 'artificial',
+                homeworld: null,
+              },
+              {
+                id: 'c3BlY2llczoz',
+                __typename: 'Species',
+                name: 'Wookie',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Kashyyyk',
+                },
+              },
+              {
+                id: 'c3BlY2llczo1',
+                __typename: 'Species',
+                name: 'Hutt',
+                classification: 'gastropod',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Nal Hutta',
+                },
+              },
+              {
+                id: 'c3BlY2llczo2',
+                __typename: 'Species',
+                name: "Yoda's species",
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'unknown',
+                },
+              },
+              {
+                id: 'c3BlY2llczo4',
+                __typename: 'Species',
+                name: 'Mon Calamari',
+                classification: 'amphibian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Mon Cala',
+                },
+              },
+              {
+                id: 'c3BlY2llczo5',
+                __typename: 'Species',
+                name: 'Ewok',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Endor',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxMA==',
+                __typename: 'Species',
+                name: 'Sullustan',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Sullust',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxNQ==',
+                __typename: 'Species',
+                name: "Twi'lek",
+                classification: 'mammals',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Ryloth',
+                },
+              },
+            ],
           },
         },
         {
-          __typename: 'History',
-          id: '17',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://spaceflightnow.com/2017/06/03/reused-dragon-cargo-capsule-launched-on-journey-to-space-station/',
+          __typename: 'Film',
+          title: 'The Phantom Menace',
+          director: 'George Lucas',
+          releaseDate: '1999-05-19',
+          speciesConnection: {
+            __typename: 'FilmSpeciesConnection',
+            species: [
+              {
+                id: 'c3BlY2llczox',
+                __typename: 'Species',
+                name: 'Human',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Coruscant',
+                },
+              },
+              {
+                id: 'c3BlY2llczoy',
+                __typename: 'Species',
+                name: 'Droid',
+                classification: 'artificial',
+                homeworld: null,
+              },
+              {
+                id: 'c3BlY2llczo2',
+                __typename: 'Species',
+                name: "Yoda's species",
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'unknown',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxMQ==',
+                __typename: 'Species',
+                name: 'Neimodian',
+                classification: 'unknown',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Cato Neimoidia',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxMg==',
+                __typename: 'Species',
+                name: 'Gungan',
+                classification: 'amphibian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Naboo',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxMw==',
+                __typename: 'Species',
+                name: 'Toydarian',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Toydaria',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxNA==',
+                __typename: 'Species',
+                name: 'Dug',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Malastare',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxNQ==',
+                __typename: 'Species',
+                name: "Twi'lek",
+                classification: 'mammals',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Ryloth',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxNg==',
+                __typename: 'Species',
+                name: 'Aleena',
+                classification: 'reptile',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Aleen Minor',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxNw==',
+                __typename: 'Species',
+                name: 'Vulptereen',
+                classification: 'unknown',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Vulpter',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxOA==',
+                __typename: 'Species',
+                name: 'Xexto',
+                classification: 'unknown',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Troiken',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxOQ==',
+                __typename: 'Species',
+                name: 'Toong',
+                classification: 'unknown',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Tund',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyMA==',
+                __typename: 'Species',
+                name: 'Cerean',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Cerea',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyMQ==',
+                __typename: 'Species',
+                name: 'Nautolan',
+                classification: 'amphibian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Glee Anselm',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyMg==',
+                __typename: 'Species',
+                name: 'Zabrak',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Iridonia',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyMw==',
+                __typename: 'Species',
+                name: 'Tholothian',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Tholoth',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyNA==',
+                __typename: 'Species',
+                name: 'Iktotchi',
+                classification: 'unknown',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Iktotch',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyNQ==',
+                __typename: 'Species',
+                name: 'Quermian',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Quermia',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyNg==',
+                __typename: 'Species',
+                name: 'Kel Dor',
+                classification: 'unknown',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Dorin',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyNw==',
+                __typename: 'Species',
+                name: 'Chagrian',
+                classification: 'amphibian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Champala',
+                },
+              },
+            ],
           },
         },
         {
-          __typename: 'History',
-          id: '9',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://www.space.com/25562-spacex-falcon-9-reusable-rocket-test.html',
+          __typename: 'Film',
+          title: 'Attack of the Clones',
+          director: 'George Lucas',
+          releaseDate: '2002-05-16',
+          speciesConnection: {
+            __typename: 'FilmSpeciesConnection',
+            species: [
+              {
+                id: 'c3BlY2llczox',
+                __typename: 'Species',
+                name: 'Human',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Coruscant',
+                },
+              },
+              {
+                id: 'c3BlY2llczoy',
+                __typename: 'Species',
+                name: 'Droid',
+                classification: 'artificial',
+                homeworld: null,
+              },
+              {
+                id: 'c3BlY2llczo2',
+                __typename: 'Species',
+                name: "Yoda's species",
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'unknown',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxMg==',
+                __typename: 'Species',
+                name: 'Gungan',
+                classification: 'amphibian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Naboo',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxMw==',
+                __typename: 'Species',
+                name: 'Toydarian',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Toydaria',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxNQ==',
+                __typename: 'Species',
+                name: "Twi'lek",
+                classification: 'mammals',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Ryloth',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyOA==',
+                __typename: 'Species',
+                name: 'Geonosian',
+                classification: 'insectoid',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Geonosis',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyOQ==',
+                __typename: 'Species',
+                name: 'Mirialan',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Mirial',
+                },
+              },
+              {
+                id: 'c3BlY2llczozMA==',
+                __typename: 'Species',
+                name: 'Clawdite',
+                classification: 'reptilian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Zolan',
+                },
+              },
+              {
+                id: 'c3BlY2llczozMQ==',
+                __typename: 'Species',
+                name: 'Besalisk',
+                classification: 'amphibian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Ojom',
+                },
+              },
+              {
+                id: 'c3BlY2llczozMg==',
+                __typename: 'Species',
+                name: 'Kaminoan',
+                classification: 'amphibian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Kamino',
+                },
+              },
+              {
+                id: 'c3BlY2llczozMw==',
+                __typename: 'Species',
+                name: 'Skakoan',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Skako',
+                },
+              },
+              {
+                id: 'c3BlY2llczozNA==',
+                __typename: 'Species',
+                name: 'Muun',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Muunilinst',
+                },
+              },
+              {
+                id: 'c3BlY2llczozNQ==',
+                __typename: 'Species',
+                name: 'Togruta',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Shili',
+                },
+              },
+            ],
           },
         },
         {
-          __typename: 'History',
-          id: '8',
-          links: {
-            __typename: 'Link',
-            article:
-              'http://www.newspacejournal.com/2013/03/27/after-dragon-spacexs-focus-returns-to-falcon/',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '12',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://spaceflightnow.com/2015/01/10/dragon-successfully-launched-rocket-recovery-demo-crash-lands/',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '11',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://www.washingtonpost.com/news/the-switch/wp/2014/09/16/nasa-awards-space-contract-to-boeing-and-spacex/?utm_term=.d6388390d071',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '15',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://spaceflightnow.com/2016/04/08/spacex-lands-rocket-on-floating-platform-after-station-resupply-launch/',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '6',
-          links: {
-            __typename: 'Link',
-            article: 'http://thespacereview.com/article/2168/1',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '18',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://spaceflightnow.com/2018/02/07/spacex-debuts-worlds-most-powerful-rocket-sends-tesla-toward-the-asteroid-belt/',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '20',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://spaceflightnow.com/2018/08/07/indonesian-communications-satellite-deployed-in-orbit-by-spacex/',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '5',
-          links: {
-            __typename: 'Link',
-            article: 'http://www.cnn.com/2010/US/12/08/space.flight/index.html',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '19',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://spaceflightnow.com/2018/05/11/spacex-debuts-an-improved-human-rated-model-of-the-falcon-9-rocket/',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '10',
-          links: {
-            __typename: 'Link',
-            article:
-              'http://www.parabolicarc.com/2014/05/02/falcon-9-reusable-vehicle-flies-1000-meters/',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '13',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://spaceflightnow.com/2015/04/21/dragon-pad-abort-test-set-for-early-may/',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '1',
-          links: {
-            __typename: 'Link',
-            article:
-              'http://www.spacex.com/news/2013/02/11/flight-4-launch-update-0',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '4',
-          links: {
-            __typename: 'Link',
-            article: 'http://www.bbc.com/news/10209704',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '3',
-          links: {
-            __typename: 'Link',
-            article: 'http://www.spacex.com/news/2013/02/12/falcon-1-flight-5',
-          },
-        },
-        {
-          __typename: 'History',
-          id: '2',
-          links: {
-            __typename: 'Link',
-            article:
-              'https://www.nasaspaceflight.com/2008/12/spacex-and-orbital-win-huge-crs-contract-from-nasa/',
+          __typename: 'Film',
+          title: 'Revenge of the Sith',
+          director: 'George Lucas',
+          releaseDate: '2005-05-19',
+          speciesConnection: {
+            __typename: 'FilmSpeciesConnection',
+            species: [
+              {
+                id: 'c3BlY2llczox',
+                __typename: 'Species',
+                name: 'Human',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Coruscant',
+                },
+              },
+              {
+                id: 'c3BlY2llczoy',
+                __typename: 'Species',
+                name: 'Droid',
+                classification: 'artificial',
+                homeworld: null,
+              },
+              {
+                id: 'c3BlY2llczoz',
+                __typename: 'Species',
+                name: 'Wookie',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Kashyyyk',
+                },
+              },
+              {
+                id: 'c3BlY2llczo2',
+                __typename: 'Species',
+                name: "Yoda's species",
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'unknown',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxNQ==',
+                __typename: 'Species',
+                name: "Twi'lek",
+                classification: 'mammals',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Ryloth',
+                },
+              },
+              {
+                id: 'c3BlY2llczoxOQ==',
+                __typename: 'Species',
+                name: 'Toong',
+                classification: 'unknown',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Tund',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyMA==',
+                __typename: 'Species',
+                name: 'Cerean',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Cerea',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyMw==',
+                __typename: 'Species',
+                name: 'Tholothian',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Tholoth',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyNA==',
+                __typename: 'Species',
+                name: 'Iktotchi',
+                classification: 'unknown',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Iktotch',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyNQ==',
+                __typename: 'Species',
+                name: 'Quermian',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Quermia',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyNg==',
+                __typename: 'Species',
+                name: 'Kel Dor',
+                classification: 'unknown',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Dorin',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyNw==',
+                __typename: 'Species',
+                name: 'Chagrian',
+                classification: 'amphibian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Champala',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyOA==',
+                __typename: 'Species',
+                name: 'Geonosian',
+                classification: 'insectoid',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Geonosis',
+                },
+              },
+              {
+                id: 'c3BlY2llczoyOQ==',
+                __typename: 'Species',
+                name: 'Mirialan',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Mirial',
+                },
+              },
+              {
+                id: 'c3BlY2llczozMA==',
+                __typename: 'Species',
+                name: 'Clawdite',
+                classification: 'reptilian',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Zolan',
+                },
+              },
+              {
+                id: 'c3BlY2llczozMw==',
+                __typename: 'Species',
+                name: 'Skakoan',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Skako',
+                },
+              },
+              {
+                id: 'c3BlY2llczozNA==',
+                __typename: 'Species',
+                name: 'Muun',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Muunilinst',
+                },
+              },
+              {
+                id: 'c3BlY2llczozNQ==',
+                __typename: 'Species',
+                name: 'Togruta',
+                classification: 'mammal',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Shili',
+                },
+              },
+              {
+                id: 'c3BlY2llczozNg==',
+                __typename: 'Species',
+                name: 'Kaleesh',
+                classification: 'reptile',
+                homeworld: {
+                  __typename: 'Planet',
+                  name: 'Kalee',
+                },
+              },
+              {
+                id: 'c3BlY2llczozNw==',
+                __typename: 'Species',
+                name: "Pau'an",
+                classification: 'mammal',
+                homeworld: null,
+              },
+            ],
           },
         },
       ],
-      result: {
-        __typename: 'Result',
-        totalCount: 20,
-      },
     },
   },
 };
-
 function iterateFieldsArr(fieldArr, currCacheKey, data, dataKey, currCache) {
   let currDepthObj = {};
   currCache[currCacheKey] = currDepthObj;
@@ -428,10 +1045,10 @@ function iterateFieldsArr(fieldArr, currCacheKey, data, dataKey, currCache) {
       let index = 0;
 
       data[dataKey].forEach((obj) => {
-        console.log(data[dataKey][index]);
         // may need to edge case check in future to have error in case user forgets to insert a unique id.
         const unique = uniques[currCacheKey] || 'id';
-        const uniqueKey = `${obj.__typename}:${obj[unique]}`;
+        const objTypeName = `${obj.__typename}`;
+        const uniqueKey = `${objTypeName.toLowerCase()}:${obj[unique]}`;
 
         tempArr.push(uniqueKey);
         currCache[uniqueKey] = iterateFieldsArr(
@@ -448,14 +1065,18 @@ function iterateFieldsArr(fieldArr, currCacheKey, data, dataKey, currCache) {
       currDepthObj[fieldArr[j]] = data[dataKey][fieldArr[j]];
     } else {
       const currNestedFieldName = Object.keys(fieldArr[j])[0];
-      const innerField = fieldArr[j][currNestedFieldName];
-      iterateFieldsArr(
-        innerField,
-        currNestedFieldName,
-        data[dataKey],
-        currNestedFieldName,
-        currCache[currCacheKey]
-      );
+      if (data[dataKey][currNestedFieldName] === null) {
+        currCache[dataKey][currNestedFieldName] = null;
+      } else {
+        const innerField = fieldArr[j][currNestedFieldName];
+        iterateFieldsArr(
+          innerField,
+          currNestedFieldName,
+          data[dataKey],
+          currNestedFieldName,
+          currCache[currCacheKey]
+        );
+      }
     }
   }
   return currDepthObj;
@@ -477,17 +1098,17 @@ cacheNewData(queryNormalizer(singleQuery), data, testCache);
 function iterateCache(fieldArr, currCacheKey, currReturnData, currCache) {
   const currDepthObj = {};
   currReturnData[currCacheKey] = currDepthObj;
-  console.log(currCache[currCacheKey]);
+
   for (let j = 0; j < fieldArr.length; j++) {
     if (currCache[currCacheKey] === undefined) {
-      return false;
+      checkMissingData = false;
+      return;
     } else {
       if (Array.isArray(currCache[currCacheKey])) {
         const tempArr = [];
         let index = 0;
-        console.log(currCache);
+
         currCache[currCacheKey].forEach((key) => {
-          console.log(currCache[currCacheKey][index]);
           tempArr.push(
             iterateCache(
               fieldArr,
@@ -496,44 +1117,58 @@ function iterateCache(fieldArr, currCacheKey, currReturnData, currCache) {
               currCache
             )
           );
-          currCache[key];
+          if (tempArr[index] === false) {
+            checkMissingData = false;
+            return;
+          }
           index++;
         });
         currReturnData[currCacheKey] = tempArr;
       } else if (typeof fieldArr[j] === 'string') {
-        console.log(fieldArr[j]);
-        console.log(currCache[currCacheKey]);
-        console.log(currCache);
-        if (currCache[currCacheKey][fieldArr[j]] === undefined) return false;
+        if (currCache[currCacheKey][fieldArr[j]] === undefined) {
+          checkMissingData = false;
+          return;
+        }
         currDepthObj[fieldArr[j]] = currCache[currCacheKey][fieldArr[j]];
       } else {
         const currNestedFieldName = Object.keys(fieldArr[j])[0];
         const innerField = fieldArr[j][currNestedFieldName];
-        iterateCache(
-          innerField,
-          currNestedFieldName,
-          currDepthObj,
-          currCache[currCacheKey]
-        );
+        if (currCache[currCacheKey][currNestedFieldName] === null) {
+          currDepthObj[currNestedFieldName] = null;
+        } else {
+          const result = iterateCache(
+            innerField,
+            currNestedFieldName,
+            currDepthObj,
+            currCache[currCacheKey]
+          );
+          if (result === false) {
+            checkMissingData = false;
+            return;
+          }
+        }
       }
     }
   }
   return currDepthObj;
 }
-
+let checkMissingData = true;
 function checkCache(normalizedQuery, cache) {
   const { typesArr, cacheKeysArr, fieldsArr } = normalizedQuery;
   const resultData = { data: {} };
   const currData = resultData.data;
-  console.log(typesArr, cacheKeysArr, fieldsArr);
+
   for (let i = 0; i < fieldsArr.length; i++) {
     let currCacheKey = cacheKeysArr[i];
-    console.log(iterateCache(fieldsArr[i], currCacheKey, currData, cache));
+    const result = iterateCache(fieldsArr[i], currCacheKey, currData, cache);
   }
-  console.log('RESULTDATA', resultData);
-  return resultData;
+  return checkMissingData ? resultData : false;
 }
-checkCache(queryNormalizer(testPartialQuery), testCache);
+checkCache(queryNormalizer(testPartialQuery, false), testCache);
+console.log(
+  'RESULTDATA',
+  checkCache(queryNormalizer(testPartialQuery, false), testCache)
+);
 
 // function partialQueryCache(endpoint) {
 //   const cache = {};
