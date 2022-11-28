@@ -15,8 +15,7 @@ root.render(
       <BrowserRouter>
         <div className='navbar bg-neutral text-neutral-content sticky top-0 NavBarContainer'>
           <div className='flex-1'>
-            <img className='h-20 w-18' src={cachierlogo}></img>
-            {/* <a className='btn btn-ghost normal-case text-xl'>Cachier</a> */}
+            <img className='pl-6 h-20 w-18' src={cachierlogo}></img>
           </div>
           <div className='flex-none'>
             <ul className='menu menu-horizontal p-0'>

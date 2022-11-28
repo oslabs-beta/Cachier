@@ -1,12 +1,21 @@
+.demoContainer{
+  background-color: #d2f0fb;
+}
+
+.heading{
+  color: #121f4e;
+  font-family: Georgia, serif;
+}
+
 .demoDiv {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5vw;
-  padding-top: 6vw;
+  padding-top: 2vw;
   padding-bottom: 2vw;
-  background-color: #d2f0fb;
 }
+
 .clientFields {
   padding-left: 1vw;
 }
