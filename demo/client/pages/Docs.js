@@ -23,7 +23,7 @@ const Docs = () => {
                         <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         <path d="M6 21V19C6 17.9391 6.42143 16.9217 7.17157 16.1716C7.92172 15.4214 8.93913 15 10 15H14C15.0609 15 16.0783 15.4214 16.8284 16.1716C17.5786 16.9217 18 17.9391 18 19V21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <p className="text-base leading-4 ">Documentation</p>
+                    <p className="text-base leading-4 font-serif">Documentation</p>
                 </button>
             </div>
             <div className="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
@@ -47,7 +47,7 @@ const Docs = () => {
                           <svg className="fill-stroke" width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M15 10L11 14L17 20L21 4L3 11L7 13L9 19L12 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
-                          <p>Prerequistes</p>                        
+                          <p >Prerequisites</p>                        
                       </button>
                     </a>
                     <a href='#getStarted'>
@@ -164,14 +164,14 @@ const Docs = () => {
     <div id='rightContainer' style={{backgroundColor: 'rgb(210, 240, 251)', color: 'black'}} className='flex flex-col p-20'>
       <div id='intro'>
         <div className="divider text-black before:bg-primary after:bg-primary">
-          <h5 className='text-5xl leading-tight mb-4 pb-2'>Cachier</h5>
+          <h5 className='font-serif text-5xl leading-tight mb-4 pb-2'>Cachier</h5>
         </div>
         <p>Cachier is a lightweight open-source developer tool that leverages the pinpoint accuracy of GraphQL’s queries and implements caching to improve your application's query efficiency.</p>
       </div>
 
       <div id='prereq' className='space-y-5'>
         <div className="divider text-black before:bg-primary after:bg-primary pt-12">
-          <h5 className='text-5xl leading-tight mb-4 pb-2'>Prerequistes</h5>
+          <h5 className='font-serif text-5xl leading-tight mb-4 pb-2'>Prerequistes</h5>
         </div>
         <p>Cachier is a lightweight open-source developer tool that leverages the pinpoint accuracy of GraphQL’s queries and implements caching to improve your application's query efficiency.</p>
         <ol>
@@ -183,7 +183,7 @@ const Docs = () => {
 
       <div id='getStarted' className='space-y-5'>
         <div className="divider text-black before:bg-primary after:bg-primary pt-12">
-          <h5 className='text-5xl leading-tight mb-4 pb-2'>How to Get Started</h5>
+          <h5 className='font-serif text-5xl leading-tight mb-4 pb-2'>How to Get Started</h5>
         </div>
         <p>If this is your first time using Cachier, run the following command in your terminal.</p>
 
@@ -230,7 +230,7 @@ const Docs = () => {
 
       <div id='withRedis' className='space-y-5'>
         <div className="divider text-black before:bg-primary after:bg-primary pt-12 pb-4">
-          <h5 className='text-5xl leading-tight mb-4 pb-2'>Using Cachier with Redis</h5>
+          <h5 className='font-serif text-5xl leading-tight mb-4 pb-2'>Using Cachier with Redis</h5>
         </div>
         <p>Cachier lets you decide if you would like to use Redis, or our custom LRU eviction cache. If you are using Redis, make sure you have Redis installed and your Redis server is running. To run Redis, type the following command in your terminal:</p>
         
@@ -298,7 +298,7 @@ const Docs = () => {
 
       <div id='withoutRedis' className='space-y-5'>
         <div className="divider text-black before:bg-primary after:bg-primary pt-12 pb-4">
-          <h5 className='text-5xl leading-tight mb-4 pb-2'>Using Cachier without Redis</h5>
+          <h5 className='font-serif text-5xl leading-tight mb-4 pb-2'>Using Cachier without Redis</h5>
         </div>
         <p>If you are not using Redis caching, Cachier provides a middleware for caching using the server's memory with our custom cache that behaves with an LRU eviction policy. The arguments you should input for this middlware are as follows:</p>
         <p>For the first parameter, since you are not using Redis, simply pass in an empty object &#123;&#125; like so.</p>
@@ -333,9 +333,9 @@ const Docs = () => {
 
       <div id='techstack'>
         <div className="divider text-black before:bg-primary after:bg-primary pt-12">
-          <h5 className='text-5xl leading-tight mb-4 pb-2'>Technology Stack</h5>
+          <h5 className='font-serif text-5xl leading-tight mb-4 pb-2'>Technology Stack</h5>
         </div>
-        <ul>
+        <ul style={{rowGap:'1vw', columnGap:'8vw'}} className='list-disc flex flex-wrap justify-center text-xl'>
           <li>GraphQL</li>
           <li>Redis</li>
           <li>Typescript</li>
@@ -346,6 +346,7 @@ const Docs = () => {
           <li>DaisyUI</li>
           <li>Jest/Supertest</li>
           <li>Webpack</li>
+          <li>MongoDB</li>
         </ul>
       </div>
 
