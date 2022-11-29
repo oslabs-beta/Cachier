@@ -118,8 +118,8 @@ const Demo = () => {
         query: queryGraphQLString,
       }),
     }).then((data) => {
-      setClientSideTime((performance.now() - startTime).toFixed(2));
       console.log('DATA', data);
+      setClientSideTime((performance.now() - startTime).toFixed(2));
     });
 
     fetch('http://localhost:3000/cacheMoney', {
@@ -332,7 +332,14 @@ const Demo = () => {
       <div className='Visualizers'>
         <div className='visualizersDiv'>
           <div className='barChart'>
-            <p className='barChartHeading'>
+            <p
+              style={{
+                fontFamily: 'Georgia, serif',
+                textAlign: 'center',
+                fontSize: '2vw',
+                margin: '.7vw',
+              }}
+            >
               {' '}
               Query Cache Performance Chart{' '}
             </p>

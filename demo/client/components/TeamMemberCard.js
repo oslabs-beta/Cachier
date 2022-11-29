@@ -9,9 +9,8 @@ const TeamMemberCard = (props) => {
         <figure>
           <img className='w-80 h-80' src={props.img} alt='img' />
         </figure>
-        <div className='card-body'>
-          <h2 className='card-title'>{props.info.name}</h2>
-          <p>{props.info.description}</p>
+        <div className='card-body pt-2'>
+          <h2 className='card-title m-auto'>{props.info.name}</h2>
           <div className='card-actions justify-center'>
             <div className='btn-group'>
               <button

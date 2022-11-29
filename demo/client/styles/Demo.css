@@ -1,12 +1,21 @@
+.demoContainer{
+  background-color: #d2f0fb;
+}
+
+.heading{
+  color: #121f4e;
+  font-family: Georgia, serif;
+}
+
 .demoDiv {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5vw;
-  padding-top: 6vw;
+  padding-top: 2vw;
   padding-bottom: 2vw;
-  background-color: rgb(210, 240, 251);
 }
+
 .clientFields {
   padding-left: 1vw;
 }
@@ -164,7 +173,13 @@ body {
   padding-top: 1vw;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   display: flex;
+}
+
+.loadingDiv{
+  padding-bottom: 1vw;
+  height: 5vw;
 }
 
 .barChart {
@@ -192,4 +207,32 @@ body {
   text-align: center;
   font-size: 2vw;
   margin: .7vw;
+}
+
+.queryTextInput{
+  margin-top: 30px;
+}
+
+span.label-text {
+  color: grey;
+}
+
+span.label-text-alt {
+  color: grey;
+}
+
+.quertyTextInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+textarea.textarea.textarea-bordered.h-24{
+  background-color: midnightblue;
+  width: auto;
+  height: auto;
+  min-width: 175px;
+  min-height: 225px;
+
 }
