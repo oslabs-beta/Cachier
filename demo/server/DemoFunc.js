@@ -123,7 +123,6 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
               if (currGroupSize <= 0) currGroupSize = groupSize;
             }
             const listArray = traverse(queue);
-            console.log('GROUP', currGroupSize);
             res.json({
               data,
               queue: listArray,
@@ -250,7 +249,6 @@ class EvictionQueue {
     const node = this.cache[cacheKey];
     //if node being updated is already at the head of list, we can just return since it is already in the most recent position.
     if (this.head === node) {
-      console.log('hit head');
       return;
     }
     //remove linkage of the node at the current position.
