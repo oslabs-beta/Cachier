@@ -118,8 +118,8 @@ const Demo = () => {
         query: queryGraphQLString,
       }),
     }).then((data) => {
-      setClientSideTime((performance.now() - startTime).toFixed(2));
       console.log('DATA', data);
+      setClientSideTime((performance.now() - startTime).toFixed(2));
     });
 
     fetch('http://localhost:3000/cacheMoney', {
