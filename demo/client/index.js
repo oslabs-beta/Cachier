@@ -19,9 +19,7 @@ root.render(
           <div className='flex-none'>
             <ul className='menu menu-horizontal p-0'>
               <li>
-               
-                  <NavLink to={'/'}>Home</NavLink>
-                
+                <NavLink to={'/'}>Home</NavLink>
               </li>
               <li tabIndex={0}>
                 <a>
