@@ -38,32 +38,12 @@ const QueueVisualizer = (props) => {
   return (
     <div
       className='Eviction'
-      style={{
-        marginTop: '2vw',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        paddingBottom: '1vw',
-        color: 'black',
-        boxShadow: 24,
-      }}
     >
-      <div
-        style={{
-          fontFamily: 'Georgia, serif',
-          padding: 2,
-          fontSize: '2vw',
-          color: 'white',
-        }}
+      <div className='EvictionHeading'
       >
         LRU-SLFR Eviction Policy Visualizer
       </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          marginTop: '1.5vw',
-        }}
+      <div className='queueContainerDiv'
       >
         <div className='queueContainer'>{traverse(queue)}</div>
         <div className='Evicted'>

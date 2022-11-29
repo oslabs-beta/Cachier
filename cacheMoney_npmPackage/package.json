@@ -1,7 +1,7 @@
 {
-  "name": "cache-money",
+  "name": "Cachier",
   "version": "1.0.0",
-  "description": "a cache for queries to GraphQL APIs and including customizable eviction policies as well as built-in latency tracking for queries",
+  "description": "A cache for queries to GraphQL APIs including customizable eviction policies as well as built-in latency tracking for queries",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,7 +15,7 @@
     "GraphQL",
     "eviction"
   ],
-  "author": "cache-money inc (not actually incorporated)",
+  "author": "Roman Darker, Kaju Sarkar, ",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/oslabs-beta/Cache-MoneyQL/issues"

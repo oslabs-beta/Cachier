@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { ReactDOM } from 'react';
-import Physics from './Physics';
+import LandingContent from '../components/LandingContent';
+//import Physics from './Physics';
+import Testimonials from '../components/Testimonials';
+import { useNavigate } from "react-router-dom";
+import LandingContent2 from '../components/LandingContent2';
+import logo from '../styles/logo.png'
+
 
 const Landing = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className='welcomeBox'>
+        <img className='w-48' src={logo} ></img>
         <h1 className='welcome'>Welcome to Cachier</h1>
-        <p className='productDescription '>
-          A lightweight open-source developer tool that leverages the pinpoint
-          accuracy of GraphQL’s queries
-        </p>
-        <p className='productDescription'>
-          and implements caching to improve your website’s query efficiency
-        </p>
+        <div className='py-3 px-3'>
+          <p className='productDescription'>
+            A lightweight open-source developer tool that leverages the pinpoint
+            accuracy of GraphQL’s queries
+          </p>
+          <p className='productDescription'>
+            and implements caching to improve your website’s query efficiency
+          </p>
+        </div>
+        <div className='flex py-3 gap-3'>
+          <button onClick={() => navigate('/demo')} type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Run Demo</button>
+          <button onClick={() => navigate('/documentation')} type="button" className="inline-block px-6 py-2.5 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out">Documents</button>
+        </div> 
       </div>
       <div className='carousel w-full'>
         <div id='slide1' className='carousel-item relative w-full'>
@@ -56,6 +71,9 @@ const Landing = () => {
           </div>
         </div>
       </div>
+      <LandingContent2 />
+      <LandingContent />
+      <Testimonials />
     </div>
   );
 };

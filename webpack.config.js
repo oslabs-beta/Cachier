@@ -33,6 +33,11 @@ const config = {
         exclude: /node_modules/,
       },
       {
+        test: /\.(ts|tsx)$/,
+        use: 'ts-loader',
+        exclude: '/node_modules',
+      },
+      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
@@ -58,7 +63,7 @@ const config = {
       },
     ],
   },
-  resolve: { extensions: ['*', '.js', '.jsx'] },
+  resolve: { extensions: ['*', '.js', '.jsx', '.ts', '.tsx'] },
   plugins: [new HtmlWebpackPlugin({ template: './demo/client/index.html' })],
 };
 

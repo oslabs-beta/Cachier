@@ -2,6 +2,9 @@
 module.exports = {
   content: ['./demo/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    fontFamily: {
+      'serif': ['Georgia, serif'],
+    },
     extend: {},
   },
   daisyui: {

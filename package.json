@@ -6,8 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node demo/server/server.js",
     "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack-dev-server --open & nodemon demo/server/server.js",
-    "test": "jest"
+    "dev": "NODE_ENV=development webpack-dev-server --open & nodemon demo/server/server.ts"
   },
   "dependencies": {
     "@cachier/client-side": "^1.0.1",
@@ -20,7 +19,7 @@
     "chart.js": "^3.9.1",
     "concurrently": "^7.5.0",
     "cors": "^2.8.5",
-    "daisyui": "^2.41.0",
+    "daisyui": "^2.42.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
@@ -29,7 +28,6 @@
     "mongoose": "^6.7.2",
     "node": "^19.0.1",
     "node-fetch": "^3.3.0",
-    "postcss-loader": "^7.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
@@ -51,9 +49,13 @@
     "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.20",
     "postcss": "^8.4.19",
+    "postcss-loader": "^7.0.1",
+    "react-svg-loader": "^3.0.3",
     "sass-loader": "^13.1.0",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.2.4",
+    "ts-loader": "^9.4.1",
+    "ts-node": "^10.9.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^4.10.0",
     "webpack-dashboard": "^3.3.7",

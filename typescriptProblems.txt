@@ -1,0 +1,3 @@
+remove nodemodules and packagelock.json
+npm install
+npm link typescript
