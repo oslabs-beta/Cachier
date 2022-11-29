@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-//import '../styles/LLNode.css';
+import React from 'react';
 
 const RemovedLLNode = (props) => {
   return (

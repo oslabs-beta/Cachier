@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response} from 'express';
 
 require('dotenv').config();
 const path = require('path');

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './App.js';
 import { BrowserRouter, NavLink } from 'react-router-dom';
 import './style.css';
-import logo from '../client/styles/logo.png';
 import Footer from './components/Footer.js';
 import cachierlogo from '../client/styles/cachierlogo.png'
 
@@ -20,9 +19,9 @@ root.render(
           <div className='flex-none'>
             <ul className='menu menu-horizontal p-0'>
               <li>
-                <a>
+               
                   <NavLink to={'/'}>Home</NavLink>
-                </a>
+                
               </li>
               <li tabIndex={0}>
                 <a>

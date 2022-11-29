@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ReactDOM } from 'react';
+import React from 'react';
 import LandingContent from '../components/LandingContent';
-//import Physics from './Physics';
 import Testimonials from '../components/Testimonials';
 import { useNavigate } from "react-router-dom";
 import LandingContent2 from '../components/LandingContent2';

@@ -61,7 +61,6 @@ const Demo = () => {
     }${clientEmailChecked ? ' email' : ''}${
       clientPhoneChecked ? ' phone' : ''
     } } }`;
-    //string.replaceAll("  ", " ");
     setQueryGraphQLString(string);
   }, [
     clientChecked,
@@ -78,7 +77,6 @@ const Demo = () => {
   };
 
   useEffect(() => {
-    let arr = [];
 
     setChartData({
       labels: queryTimeArray
@@ -155,24 +153,12 @@ const Demo = () => {
       });
   };
 
-  const displayData = () => {
-    return queryData.map((item, i) => {
-      return <div key={i}>{JSON.stringify(item)}</div>;
-    });
-  };
-  const displayQueryTimeArray = () => {
-    return queryTimeArray.map((item, i) => {
-      return <div key={i}>{item.latency}</div>;
-    });
-  };
-
   const handleQuery = () => {
     setLoading(true);
     fetchData();
   };
 
   const handleUploadAndQuery = () => {
-    console.log('querying from text query field');
     setQueryString(`{ clients { id name email phone } }`);
     setLoading(true);
     fetchData();
