@@ -16,7 +16,6 @@ This custom eviction policy accounts for both query recency and latency.
 */
 import { EvQ, Nde, removedQueryKey } from "../types";
 import { Request, Response, NextFunction } from "express";
-import { string } from "prop-types";
 const fetch:any = (endpoint: string, options: any) =>
 import('node-fetch').then(({ default: fetch }) => fetch(endpoint, options));
 
