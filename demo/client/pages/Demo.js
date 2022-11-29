@@ -21,6 +21,8 @@ const Demo = () => {
   const [llData, setLLData] = useState([]);
 
   const [loading, setLoading] = useState(false);
+  const [clientSideLoading, setClientSideLoading] = useState(false);
+
 
   const [removedNode, setRemovedNode] = useState({ num: 0, latency: 0 });
   const [currGroupSize, setCurrGroupSize] = useState(0);
@@ -118,8 +120,9 @@ const Demo = () => {
         query: queryGraphQLString,
       }),
     }).then((data) => {
+      setClientSideLoading(false);
       setClientSideTime((performance.now() - startTime).toFixed(2));
-      console.log('DATA', data);
+      
     });
 
     fetch('http://localhost:3000/cacheMoney', {
@@ -155,6 +158,7 @@ const Demo = () => {
 
   const handleQuery = () => {
     setLoading(true);
+    setClientSideLoading(true);
     fetchData();
   };
 
@@ -206,15 +210,28 @@ const Demo = () => {
                 <div className='queryResultMetrics'>
                   <span className='serverSide'>Server Side:</span>
                   <span className='metrics'>
-                    {queryTime}
-                    <span className='ms'>ms</span>
+                    {loading ? 
+                        <span>Loading...</span>
+                        :
+                        <div>
+                          {queryTime}
+                          <span className='ms'>ms</span>
+                        </div>
+                    }
                   </span>
                 </div>
                 <div className='queryResultMetricsDiv'>
                   <span className='serverSide'>Client Side:</span>
                   <span className='metrics'>
-                    {clientSideTime}
-                    <span className='ms'>ms</span>
+                    {clientSideLoading ? 
+                      <span>Loading...</span>
+                      :
+                      <div>
+                        {clientSideTime}
+                        <span className='ms'>ms</span>
+                      </div>
+                    }
+                    
                   </span>
                 </div>
 
@@ -332,17 +349,17 @@ const Demo = () => {
 
         <div className='Visualizers'>
           <div className='visualizersDiv'>
-            <div class='loadingDiv'>
+            <div className='loadingDiv'>
               {loading && (
                 <div>
                   <button
                     disabled
                     type='button'
-                    class='py-2.5 px-5 mr-2 text-lg font-large text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center'
+                    className='py-2.5 px-5 mr-2 text-lg font-large text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center'
                   >
                     <svg
                       role='status'
-                      class='inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600'
+                      className='inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600'
                       viewBox='0 0 100 101'
                       fill='none'
                       xmlns='http://www.w3.org/2000/svg'
