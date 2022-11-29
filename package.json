@@ -20,6 +20,7 @@
     "concurrently": "^7.5.0",
     "cors": "^2.8.5",
     "daisyui": "^2.42.1",
+    "depcheck": "^1.4.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
