@@ -1,6 +1,5 @@
 import React from 'react';
 import logo from '../styles/logo.png'
-import github from '../styles/github.png';
 
 const Footer = () =>  {
     return (
