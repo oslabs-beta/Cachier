@@ -33,12 +33,7 @@ function partialQueryCache(
         .then((response) => response.json())
         .then((data) => {
           res.json(data);
-          const keyCount = cacheNewData(
-            queryNormalizer(query),
-            data,
-            cache,
-            uniques
-          );
+          cacheNewData(queryNormalizer(query), data, cache, uniques);
 
           while (Object.keys(cache).length > capacity * 100) {
             for (let i = 0; i < evictionSize; i++) {
