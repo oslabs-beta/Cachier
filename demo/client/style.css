@@ -32,3 +32,25 @@
   background: linear-gradient(10deg, rgb(3, 129, 187), rgb(192, 20, 129));
   padding: none;
 }
+
+.carousel.w-full {
+  width: 100vw;
+  height: 300px;
+}
+
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(10deg, rgb(3, 129, 187), rgb(192, 20, 129));
+  width: 100vw;
+  height: 300px;
+}
+
+.carousel-item.relative.w-full {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
