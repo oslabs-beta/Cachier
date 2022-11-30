@@ -15,7 +15,13 @@ function approxLRU(cache, sampleSize) {
   let currLeastRecentDate = Infinity;
   for (let i = 0; i < samplePool.length; i++) {
     const currKey = samplePool[i];
-    if (cache[currKey]['__CachierCacheDate'] < currLeastRecentDate) {
+    if (
+      Array.isArray(cache[currKey]) &&
+      cache[currKey][cache[currKey].length - 1] < currLeastRecentDate
+    ) {
+      currLeastRecentDate = cache[currKey][cache[currKey].length - 1];
+      leastRecentlyUsedKey = currKey;
+    } else if (cache[currKey]['__CachierCacheDate'] < currLeastRecentDate) {
       currLeastRecentDate = cache[currKey].__CachierCacheDate;
       leastRecentlyUsedKey = currKey;
     }

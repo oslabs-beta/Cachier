@@ -10,38 +10,6 @@ const Landing = () => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          fetch('http://localhost:3000/partialCache/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify({
-              query: `{
-                company {
-                  ceo
-                }
-                roadster {
-                  details
-                  epoch_jd
-                  inclination
-                  launch_date_unix
-                  launch_date_utc
-                }
-              }
-              
-              `,
-              uniques: { data: 'id', landpads: 'id' },
-            }),
-          })
-            .then((data) => data.json())
-            .then((data) => console.log(data));
-        }}
-      >
-        TEST
-      </button>
       <div className='welcomeBox'>
         <img className='w-48' src={logo}></img>
         <h1 className='welcome'>Welcome to Cachier</h1>

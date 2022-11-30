@@ -16,7 +16,6 @@ const Redis = require('redis');
 const REDIS_PORT = 6379;
 const client = Redis.createClient(REDIS_PORT);
 const connectDB = require('./config/db');
-const { cache } = require('webpack');
 const port = process.env.PORT || 3000;
 const app = express();
 const partialQueryCache = require('../../NPM_PartialCache/partialQuery');
@@ -34,7 +33,7 @@ app.use('/cacheMoney', demoFunc('http://localhost:3000/graphql', 4, 2));
 
 app.use(
   '/partialCache',
-  partialQueryCache('http://localhost:3000/graphql', 100, 5)
+  partialQueryCache('http://localhost:3000/graphql', 60)
 );
 
 app.use(

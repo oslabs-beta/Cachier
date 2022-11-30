@@ -1,6 +1,5 @@
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const os = require('node:os');
 
 const checkCache = require('./helperfunctions/checkCacheFunc.js');
 const {
@@ -12,16 +11,16 @@ const evictionPolicy = require('./approx_LRU');
 
 function partialQueryCache(
   endpoint,
-  freeMemRemainingBeforeEviction,
-  sampleSize
+  capacity = 100,
+  sampleSize = 5,
+  evictionSize = 5
 ) {
   const cache = {};
   return async function helper(req, res, next) {
     const { query, uniques } = req.body;
     const dataFromCache = checkCache(queryNormalizer(query, false), cache);
-    console.log(os.freemem());
     if (dataFromCache !== false) {
-      return res.json(dataFromCache);
+      return res.json(cache);
     } else {
       const queryWithTypename = addTypenameField(query);
       fetch(endpoint, {
@@ -33,18 +32,21 @@ function partialQueryCache(
       })
         .then((response) => response.json())
         .then((data) => {
-          res.json(data);
-          cacheNewData(queryNormalizer(query), data, cache, uniques);
-          console.log(os.freemem());
+          res.json(cache);
+          const keyCount = cacheNewData(
+            queryNormalizer(query),
+            data,
+            cache,
+            uniques
+          );
 
-          while (
-            os.freemem() / 1000000 < 100000 &&
-            Object.keys(cache).length > 1
-          ) {
-            evictionPolicy(cache, sampleSize);
+          while (Object.keys(cache).length > capacity * 100) {
+            for (let i = 0; i < evictionSize; i++) {
+              evictionPolicy(cache, sampleSize);
+            }
           }
+          return;
         });
-      console.log(os.freemem());
     }
   };
 }

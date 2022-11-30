@@ -54,7 +54,6 @@ function iterateCache(fieldArr, currCacheKey, currReturnData, currCache) {
           index++;
         }
         if (depthCount <= 1) {
-          console.log('DEPTH');
           currCacheObj[currCacheObj.length - 1] = performance.now();
         }
         currReturnData[currCacheKey] = tempArr;
