@@ -1,6 +1,6 @@
-# Cache-MoneyQL
+# Cachier
 
-Welcome to Cache-MoneyQL, a lightweight GraphQL caching tool that is configured specifically for GraphQL to reduce load times and minimize data fetching.  
+Welcome to Cachier, a lightweight GraphQL caching tool that is configured specifically for GraphQL to reduce load times and minimize data fetching.  
 
 GraphQL does not have native HTTP caching as a result of its singular employment of the POST method, forcing the danger of over-fetching by re-running queries and slowing load times. 
 
@@ -24,12 +24,12 @@ Then install our npm package.
 
 
 ## Tech stack used
-Node - Express - React - Material-UI - ChartJS - Redis - GraphQL - TypeScript - Jest - Supertest - AWS RDS - Webpack
+Node - Express - React - Tailwind CSS - ChartJS - Redis - GraphQL - TypeScript - Jest - Supertest - Webpack
 
 ## Here's how to contribute to our open source library
-Our vision for our open-source project is for fellow developers to be able to interate on and improve this tool. This is exactly where you and the community comes in. So, if you have an idea that can make CacheQL better, you can make that idea come to life by following the steps below: 
+Our vision for our open-source project is for fellow developers to be able to interate on and improve this tool. This is exactly where you and the community comes in. So, if you have an idea that can make Cachier better, you can make that idea come to life by following the steps below: 
 
-1. Fork Cache-MoneyQL
+1. Fork Cachier
 2. Pull down our dev branch with command  ```git pull origin dev```
 3. Create your own Feature Branch with the command ```git checkout -b <yourFeatureName>```
 4. Add your changes with the command ```git add .```
