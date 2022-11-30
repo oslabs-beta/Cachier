@@ -47,8 +47,8 @@ app.use(
 );
 
 app.get('/*', (req: Request, res: Response) => {
-  return res.sendFile(
-    path.resolve(__dirname, '../client/index.html'),
+  res.sendFile(
+    path.resolve(__dirname, '../../dist/index.html'),
     function (err) {
       if (err) {
         res.status(500).send(err);
@@ -56,6 +56,8 @@ app.get('/*', (req: Request, res: Response) => {
     }
   );
 });
+
+app.use((req: Request, res: Response) => res.status(404).send('Cannot get route'));
 
 app.listen(port, console.log(`Server listening on ${port}`));
 

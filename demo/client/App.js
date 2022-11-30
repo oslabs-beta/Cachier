@@ -8,8 +8,9 @@ import Footer from './components/Footer'
 import NavBar from './components/NavBar';
 
 const App = () => {
+  
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <NavBar />
       <Routes>
         <Route path='/' element={<Landing />}></Route>

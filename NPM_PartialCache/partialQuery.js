@@ -29,7 +29,6 @@ function partialQueryCache(endpoint, redisClient) {
         .then((response) => response.json())
         .then((data) => {
           res.json(data);
-          console.log('DATATATA', data);
           cacheNewData(normalizedQuery, data, {}, redisClient, uniques);
         });
     }
