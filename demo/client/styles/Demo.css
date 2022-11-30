@@ -1,8 +1,8 @@
-.demoContainer{
+.demoContainer {
   background-color: #d2f0fb;
 }
 
-.heading{
+.heading {
   color: #121f4e;
   font-family: Georgia, serif;
 }
@@ -177,7 +177,7 @@ body {
   display: flex;
 }
 
-.loadingDiv{
+.loadingDiv {
   padding-bottom: 1vw;
   height: 5vw;
 }
@@ -204,12 +204,16 @@ body {
 
 .barChartHeading {
   font-family: 'Georgia, serif';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
   text-align: center;
   font-size: 2vw;
-  margin: .7vw;
+  margin: 0.7vw;
 }
 
-.queryTextInput{
+.queryTextInput {
   margin-top: 30px;
 }
 
@@ -228,11 +232,29 @@ span.label-text-alt {
   align-content: center;
 }
 
-textarea.textarea.textarea-bordered.h-24{
+textarea.textarea.textarea-bordered.h-24 {
   background-color: midnightblue;
   width: auto;
   height: auto;
   min-width: 175px;
   min-height: 225px;
+}
 
+.chartCheckBoxDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+}
+
+.cacheLabel {
+  font-size: 16px;
+  text-align: center;
+}
+
+.checkFieldDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
