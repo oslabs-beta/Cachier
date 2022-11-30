@@ -3,7 +3,7 @@ import LandingContent from '../components/LandingContent';
 import Testimonials from '../components/Testimonials';
 import { useNavigate } from "react-router-dom";
 import LandingContent2 from '../components/LandingContent2';
-import logo from '../styles/logo.png'
+import logo from '../styles/logo.png';
 
 
 const Landing = () => {
@@ -11,6 +11,7 @@ const Landing = () => {
 
   return (
     <div>
+
       <div className='welcomeBox'>
         <img className='w-48' src={logo} ></img>
         <h1 className='welcome'>Welcome to Cachier</h1>
