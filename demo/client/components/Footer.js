@@ -26,7 +26,9 @@ const Footer = () =>  {
                 </div> 
                 <div>
                     <span className="footer-title">Links</span> 
-                    <a className="link link-hover">Github</a>
+                    <a className="link link-hover">
+                        Github
+                    </a>
                     <a className="link link-hover">Press</a>
                     <a className="link link-hover">Download</a>
                 </div> 
