@@ -197,9 +197,6 @@ const Demo = () => {
     }
   };
 
-  // const elem = document.getElementById('canvas1');
-  // elem.remove();
-
   return (
     <div className='demoDiv'>
       <div className='demoLeftContainer'>
