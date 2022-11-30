@@ -4,7 +4,7 @@ import App from './App.js';
 import { BrowserRouter, NavLink } from 'react-router-dom';
 import './style.css';
 import Footer from './components/Footer.js';
-import cachierlogo from '../client/styles/cachierlogo.png'
+import cachierlogo from '../client/styles/CachierNavBar(1).png';
 
 
 const root = ReactDOM.createRoot(document.querySelector('#root'));
