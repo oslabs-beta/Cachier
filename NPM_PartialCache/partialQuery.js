@@ -7,18 +7,22 @@ const {
   addTypenameField,
 } = require('./helperfunctions/queryNormalizingFuncs.js');
 const cacheNewData = require('./helperfunctions/setCacheFunc.js');
+const evictionPolicy = require('./approx_LRU');
 
-function partialQueryCache(endpoint, redisClient) {
-  return async function cache(req, res, next) {
+function partialQueryCache(
+  endpoint,
+  capacity = 100,
+  sampleSize = 5,
+  evictionSize = 5
+) {
+  const cache = {};
+  return async function helper(req, res, next) {
     const { query, uniques } = req.body;
-    const normalizedQuery = queryNormalizer(query);
-    const dataFromCache = checkCache(normalizedQuery, {}, redisClient);
-
-    if (dataFromCache) {
+    const dataFromCache = checkCache(queryNormalizer(query, false), cache);
+    if (dataFromCache !== false) {
       return res.json(dataFromCache);
     } else {
       const queryWithTypename = addTypenameField(query);
-      console.log('DATA', queryWithTypename);
       fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
@@ -29,7 +33,18 @@ function partialQueryCache(endpoint, redisClient) {
         .then((response) => response.json())
         .then((data) => {
           res.json(data);
+<<<<<<< HEAD
           cacheNewData(normalizedQuery, data, {}, redisClient, uniques);
+=======
+          cacheNewData(queryNormalizer(query), data, cache, uniques);
+
+          while (Object.keys(cache).length > capacity * 100) {
+            for (let i = 0; i < evictionSize; i++) {
+              evictionPolicy(cache, sampleSize);
+            }
+          }
+          return;
+>>>>>>> main
         });
     }
   };

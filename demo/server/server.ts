@@ -1,11 +1,11 @@
-import { Request, Response} from 'express';
+import { Request, Response } from 'express';
 
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 const schema = require('./schema.js');
-
+const redis = require('redis');
 // Eviction Queue Linked List
 const cacheMoney = require('@cachier/server-side');
 const demoFunc = require('./DemoFunc.js');
@@ -14,29 +14,27 @@ const demoFunc = require('./DemoFunc.js');
 const cors = require('cors');
 const Redis = require('redis');
 const REDIS_PORT = 6379;
+const client = Redis.createClient(REDIS_PORT);
 const connectDB = require('./config/db');
-const { cache } = require('webpack');
 const port = process.env.PORT || 3000;
 const app = express();
 const partialQueryCache = require('../../NPM_PartialCache/partialQuery');
 
+client.connect();
 connectDB();
 // Changed package.json to "start": "server2.js"
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//need to uncomment to test partial queries
-// const client = Redis.createClient(REDIS_PORT);
-// client.connect();
-
 app.use(express.static(path.resolve(__dirname, '../client')));
 
 app.use('/cacheMoney', demoFunc('http://localhost:3000/graphql', 4, 2));
-// app.use(
-//   '/cacheMoney',
-//   partialQueryCache('http://localhost:3000/graphql', client)
-// );
+
+app.use(
+  '/partialCache',
+  partialQueryCache('http://localhost:3000/graphql', 60)
+);
 
 app.use(
   '/graphql',

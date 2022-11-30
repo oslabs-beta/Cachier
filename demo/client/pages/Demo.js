@@ -41,6 +41,9 @@ const Demo = () => {
   const [clientEmailChecked, setClientEmailChecked] = useState(true);
   const [clientPhoneChecked, setClientPhoneChecked] = useState(true);
 
+  const [demoRegularCacheChecked, setDemoRegularCacheChecked] = useState(true);
+  const [demoPartialCacheChecked, setDemoPartialCacheChecked] = useState(false);
+
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -79,7 +82,6 @@ const Demo = () => {
   };
 
   useEffect(() => {
-
     setChartData({
       labels: queryTimeArray
         .map((data, i) => {
@@ -109,6 +111,7 @@ const Demo = () => {
   }, [queryTimeArray]);
 
   const fetchData = async () => {
+<<<<<<< HEAD
     const startTime = performance.now();
     cachierFetch('http://localhost:3000/graphql', {
       method: 'POST',
@@ -153,7 +156,77 @@ const Demo = () => {
         ]); // updates data points for charts
         setQueryResult(JSON.stringify(data.data, null, 2));
         setLoading(false);
+=======
+    if (demoRegularCacheChecked) {
+      const startTime = performance.now();
+      cachierFetch('http://localhost:3000/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          query: queryGraphQLString,
+        }),
+      }).then((data) => {
+        setClientSideTime((performance.now() - startTime).toFixed(2));
+        console.log('DATA', data);
+>>>>>>> main
       });
+
+      fetch('http://localhost:3000/cacheMoney', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          query: queryGraphQLString,
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
+          setLLData(data.queue); // updates state linked list object
+          if (data.removedNode) {
+            setRemovedNode(data.removedNode);
+          }
+          setCurrGroupSize(data.currGroupSize);
+          setQueryTime(endTime);
+
+          setQueryTimeArray([
+            ...queryTimeArray,
+            { latency: endTime, cached: data.cached },
+          ]); // updates data points for charts
+          setQueryResult(JSON.stringify(data.data, null, 2));
+          setLoading(false);
+        });
+    } else {
+      const startTime = performance.now();
+      fetch('http://localhost:3000/partialCache/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          query: queryGraphQLString,
+          uniques: { clients: 'id' },
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
+          setQueryTime(endTime);
+          setQueryTimeArray([...queryTimeArray]); // updates data points for charts
+          setQueryResult(JSON.stringify(data.data, null, 2));
+          setLoading(false);
+        });
+    }
   };
 
   const handleQuery = () => {
@@ -220,6 +293,7 @@ const Demo = () => {
                     }
                   </span>
                 </div>
+<<<<<<< HEAD
                 <div className='queryResultMetricsDiv'>
                   <span className='serverSide'>Client Side:</span>
                   <span className='metrics'>
@@ -234,6 +308,17 @@ const Demo = () => {
                     
                   </span>
                 </div>
+=======
+                {demoRegularCacheChecked && (
+                  <div className='queryResultMetricsDiv'>
+                    <span className='serverSide'>Client Side:</span>
+                    <span className='metrics'>
+                      {clientSideTime}
+                      <span className='ms'>ms</span>
+                    </span>
+                  </div>
+                )}
+>>>>>>> main
 
                 <div className='cacheHitDiv'>
                   <span className='serverSide'>Cache Hit:</span>
@@ -380,17 +465,45 @@ const Demo = () => {
             </div>
 
             <div className='barChart'>
-              <p className='barChartHeading'> Query Cache Performance Chart </p>
+              <div className='barChartHeading'>
+                <h1> Query Cache Performance Chart</h1>
+                <div className='chartCheckBoxDiv'>
+                  <div className='checkFieldDiv'>
+                    <input
+                      type='checkbox'
+                      checked={demoRegularCacheChecked}
+                      onClick={() => {
+                        setDemoRegularCacheChecked(true);
+                        setDemoPartialCacheChecked(false);
+                      }}
+                    ></input>
+                    <label className='cacheLabel'>Cachier LRU-SLFR Cache</label>
+                  </div>
+                  <div className='checkFieldDiv'>
+                    <input
+                      type='checkbox'
+                      checked={demoPartialCacheChecked}
+                      onClick={() => {
+                        setDemoRegularCacheChecked(false);
+                        setDemoPartialCacheChecked(true);
+                      }}
+                    ></input>
+                    <label className='cacheLabel'>Cachier Partial Cache</label>
+                  </div>
+                </div>
+              </div>
               <div className='barChartContainer'>
                 <BarChart chartData={chartData} />
               </div>
             </div>
           </div>
-          <QueueVisualizer
-            queue={llData}
-            removedNode={removedNode}
-            currGroupSize={currGroupSize}
-          />
+          {demoRegularCacheChecked && (
+            <QueueVisualizer
+              queue={llData}
+              removedNode={removedNode}
+              currGroupSize={currGroupSize}
+            />
+          )}
         </div>
       </div>
     </div>

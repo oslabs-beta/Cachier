@@ -1,14 +1,3 @@
-/**
- * ***********************************
- *
- * @module trunQify
- * @date 11/5/2019
- * @params apiURL (string), port (integer), timer (integer)
- *
- * @description A Massive he
- * ***********************************
- */
-
 function queryNormalizer(query, addType = true) {
   if (addType) {
     query = addTypenameField(query);
