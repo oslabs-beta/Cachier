@@ -111,52 +111,6 @@ const Demo = () => {
   }, [queryTimeArray]);
 
   const fetchData = async () => {
-<<<<<<< HEAD
-    const startTime = performance.now();
-    cachierFetch('http://localhost:3000/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query: queryGraphQLString,
-      }),
-    }).then((data) => {
-      setClientSideLoading(false);
-      setClientSideTime((performance.now() - startTime).toFixed(2));
-      
-    });
-
-    fetch('http://localhost:3000/cacheMoney', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query: queryGraphQLString,
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
-        setLLData(data.queue); // updates state linked list object
-        if (data.removedNode) {
-          setRemovedNode(data.removedNode);
-        }
-        setCurrGroupSize(data.currGroupSize);
-        setQueryTime(endTime);
-
-        setQueryTimeArray([
-          ...queryTimeArray,
-          { latency: endTime, cached: data.cached },
-        ]); // updates data points for charts
-        setQueryResult(JSON.stringify(data.data, null, 2));
-        setLoading(false);
-=======
     if (demoRegularCacheChecked) {
       const startTime = performance.now();
       cachierFetch('http://localhost:3000/graphql', {
@@ -171,7 +125,6 @@ const Demo = () => {
       }).then((data) => {
         setClientSideTime((performance.now() - startTime).toFixed(2));
         console.log('DATA', data);
->>>>>>> main
       });
 
       fetch('http://localhost:3000/cacheMoney', {
@@ -293,22 +246,6 @@ const Demo = () => {
                     }
                   </span>
                 </div>
-<<<<<<< HEAD
-                <div className='queryResultMetricsDiv'>
-                  <span className='serverSide'>Client Side:</span>
-                  <span className='metrics'>
-                    {clientSideLoading ? 
-                      <span>Loading...</span>
-                      :
-                      <div>
-                        {clientSideTime}
-                        <span className='ms'>ms</span>
-                      </div>
-                    }
-                    
-                  </span>
-                </div>
-=======
                 {demoRegularCacheChecked && (
                   <div className='queryResultMetricsDiv'>
                     <span className='serverSide'>Client Side:</span>
@@ -318,7 +255,6 @@ const Demo = () => {
                     </span>
                   </div>
                 )}
->>>>>>> main
 
                 <div className='cacheHitDiv'>
                   <span className='serverSide'>Cache Hit:</span>

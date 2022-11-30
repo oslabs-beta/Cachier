@@ -9,7 +9,7 @@ const NavBar = () => {
         <img className='pl-6 h-20 w-18' src={cachierlogo}></img>
         </div>
         <div className='flex-none'>
-        <ul className='menu menu-horizontal p-0'>
+        <ul className='menu menu-horizontal p-0 rounded-md'>
             <li>
             <NavLink to={'/'}>Home</NavLink>
             </li>
@@ -26,7 +26,7 @@ const NavBar = () => {
                 <path d='M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z' />
                 </svg>
             </a>
-            <ul className='p-2 bg-base-100'>
+            <ul className='p-2 bg-base-100 rounded-md'>
                 <li>
                 <NavLink to={'/demo'}>Demo</NavLink>
                 </li>
@@ -35,7 +35,7 @@ const NavBar = () => {
                 </li>
             </ul>
             </li>
-            <li>
+            <li className='rounded-md'>
             <NavLink to={'/about'}>Developers</NavLink>
             </li>
         </ul>

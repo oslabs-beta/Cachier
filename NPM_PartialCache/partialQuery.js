@@ -33,9 +33,6 @@ function partialQueryCache(
         .then((response) => response.json())
         .then((data) => {
           res.json(data);
-<<<<<<< HEAD
-          cacheNewData(normalizedQuery, data, {}, redisClient, uniques);
-=======
           cacheNewData(queryNormalizer(query), data, cache, uniques);
 
           while (Object.keys(cache).length > capacity * 100) {
@@ -44,7 +41,6 @@ function partialQueryCache(
             }
           }
           return;
->>>>>>> main
         });
     }
   };
