@@ -1,5 +1,6 @@
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const os = require('node:os');
 
 const checkCache = require('./helperfunctions/checkCacheFunc.js');
 const {
@@ -7,18 +8,22 @@ const {
   addTypenameField,
 } = require('./helperfunctions/queryNormalizingFuncs.js');
 const cacheNewData = require('./helperfunctions/setCacheFunc.js');
+const evictionPolicy = require('./approx_LRU');
 
-function partialQueryCache(endpoint, redisClient) {
-  return async function cache(req, res, next) {
+function partialQueryCache(
+  endpoint,
+  freeMemRemainingBeforeEviction,
+  sampleSize
+) {
+  const cache = {};
+  return async function helper(req, res, next) {
     const { query, uniques } = req.body;
-    const normalizedQuery = queryNormalizer(query);
-    const dataFromCache = checkCache(normalizedQuery, {}, redisClient);
-
-    if (dataFromCache) {
+    const dataFromCache = checkCache(queryNormalizer(query, false), cache);
+    console.log(os.freemem());
+    if (dataFromCache !== false) {
       return res.json(dataFromCache);
     } else {
       const queryWithTypename = addTypenameField(query);
-      console.log('DATA', queryWithTypename);
       fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
@@ -29,9 +34,17 @@ function partialQueryCache(endpoint, redisClient) {
         .then((response) => response.json())
         .then((data) => {
           res.json(data);
-          console.log('DATATATA', data);
-          cacheNewData(normalizedQuery, data, {}, redisClient, uniques);
+          cacheNewData(queryNormalizer(query), data, cache, uniques);
+          console.log(os.freemem());
+
+          while (
+            os.freemem() / 1000000 < 100000 &&
+            Object.keys(cache).length > 1
+          ) {
+            evictionPolicy(cache, sampleSize);
+          }
         });
+      console.log(os.freemem());
     }
   };
 }
