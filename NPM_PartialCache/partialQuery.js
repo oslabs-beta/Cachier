@@ -20,7 +20,7 @@ function partialQueryCache(
     const { query, uniques } = req.body;
     const dataFromCache = checkCache(queryNormalizer(query, false), cache);
     if (dataFromCache !== false) {
-      return res.json(cache);
+      return res.json(dataFromCache);
     } else {
       const queryWithTypename = addTypenameField(query);
       fetch(endpoint, {
@@ -32,7 +32,7 @@ function partialQueryCache(
       })
         .then((response) => response.json())
         .then((data) => {
-          res.json(cache);
+          res.json(data);
           const keyCount = cacheNewData(
             queryNormalizer(query),
             data,
