@@ -1,6 +1,74 @@
-# Cachier
+<a name="readme-top"></a>
 
-<img src="demo/client/styles/cachierlogo.png" alt="Alt text" title="Optional title">
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/oslabs-beta/Cachier">
+    <img src="demo/client/styles/cachierlogo.png" alt="Cachier Logo" title="Cachier Logo" width="520" height="180">
+  </a>
+
+<h3 align="center">Cachier</h3>
+
+  <p align="center">
+    project_description
+    <br />
+    <a href="https://github.com/oslabs-beta/Cachier"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/oslabs-beta/Cachier">View Demo</a>
+    ·
+    <a href="https://github.com/oslabs-beta/Cachier/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/oslabs-beta/Cachier/issues">Request Feature</a>
+  </p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
+
+### Built With
+
+* [![React][React.js]][React-url]
+* [![Vue][Vue.js]][Vue-url]
+* [![Angular][Angular.io]][Angular-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 Welcome to Cachier, a lightweight GraphQL caching tool that is configured specifically for GraphQL to reduce load times and minimize data fetching.  
 
@@ -21,12 +89,13 @@ GraphQL does not have native HTTP caching as a result of its singular employment
 
 We will go over each solution in detail below.
 
-
+<!-- GETTING STARTED -->
+## Getting Started
 ## Cachier Normalized Server-side Cache
 
 Cachier's Normalized Server-side Cache breaks up GraphQL queries into individual sub-queries to be stored in the cache. This provides maximum cache efficency by organizing data in a way that prevents data redundancy and allows for partial retrievals of subset data, thus drastically reducing network requests to the database.
 
-## How to Install and Import 
+## Installation and Import
 If this is your first time using Cachiers Normalized Cache, run the following command in your terminal.
 ~~~
 npm install @cachier/cache-partials
@@ -54,12 +123,14 @@ app.use(
        Cachier(graphQLEndPoint, cacheCapacity, sampleSize, evictionSize);
 ~~~
 
-Example implementation:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<!-- USAGE EXAMPLES -->
+## Usage
 ~~~
 app.use( '/Cachier', Cachier('https://api.spacex.land/graphql', 100, 5, 5) );
 ~~~
 
-To fetch from Cachiers normalized cache you will fetch like you would to your GraphQL api except you will need set the option for uniques in the request body. The uniques object will need to contain a unique identifier for all list items in your query. You will need to include the list name as the key and the unique identifier as a the value. The unique identifier is any piece of data that is queried that is unique to each list item.
+To fetch from Cachiers normalized cache you will fetch like you would to your GraphQL API except you will need set the option for uniques in the request body. The uniques object will need to contain a unique identifier for all list items in your query. You will need to include the list name as the key and the unique identifier as a the value. The unique identifier is any piece of data that is queried that is unique to each list item.
 
 ~~~
 fetch('/graphql', {
@@ -191,8 +262,7 @@ As you can see the dragons array now only stores references to keys in the cache
 
 Cachiers Normalized Cache uses a custom Approximated LRU Eviction Policy. This is not a true LRU implementation, but it comes very close in terms of performance. The reason Cachier does not use a true LRU implementation is because it costs more memory. Cachiers LRU policy works by creating a sample (the sample size can be configured by the developer) of randomly selected keys from the cache and evicting the least recently used key from the sample.
 
-
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 ## Cachier Direct Server-side Cache
 Cachiers Direct Server-side Cache uses a custom LRU-SLFR (Least Recently Used Smallest Latency First Replacement) policy. LRU-SLFR is very similar to LRU except it takes latency into account as well as recency when evicting. Cachiers LRU-SLFR eviction policy utilizes a linked hash map to achieve true LRU and allows O(1) deletion, lookup, and insertion. Cachier takes latency into account as well as recency by creating a group of least recent queries and removes the query with the lowest latency first. This allows for much smarter evictions compared to traditional LRU. The whole group will be evicted first before moving on to the next group. Check out the demo page for a visualization of the eviction policy
 
@@ -255,7 +325,7 @@ Then install redis npm package.
 
 Cachiers Direct Client-Side Cache uses the same underlying mechanisms as Cachiers Direct Server-side cache except it stores the cache in the client browsers session storage. This allows for even faster cached query times than a server side implementation. Cachiers client side cache was built to mimic a traditional fetch request so it is very easy to integrate into new and existing codebases.
 
-### How to install and import
+### Installation and Import
 
 If this is your first time using Cachiers Direct Client-side Cache, run the following command in your terminal.
 
@@ -295,6 +365,33 @@ cachierFetch('/graphql', {
     });
 ~~~
 
+<!-- ROADMAP -->
+## Roadmap
+
+- [ ] Mutation handling
+- [ ] Full partial querying
+- [ ] Demo with more options
+    - [ ] Faster text editor
+
+See the [open issues](https://github.com/oslabs-beta/Cachier/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Tech stack used
 Node - Express - React - Tailwind CSS - ChartJS - Redis - GraphQL - TypeScript - Jest - Supertest - Webpack
@@ -315,11 +412,11 @@ Our vision for our open-source project is for fellow developers to be able to in
 Please star our repo if you've found this useful, we want to be able to help as many of developers as we can!
 
 ## Contributors
-Andy Zheng || [Github](https://github.com/andy5313) || [Linkedin](https://www.linkedin.com/in/andyzheng5313/)\
-Dhruv Thota || [Github](https://github.com/L05Dhruv) || [Linkedin](https://www.linkedin.com/in/dhruv-thota/)\
-Jonathan Chen || [Github](https://github.com/jchen0903i) || [Linkedin](https://www.linkedin.com/in/jonathan-chen3/)\
-Kaju Sarkar || [Github](https://github.com/kajusarkar) || [Linkedin](https://www.linkedin.com/in/kaju-sarkar-a6329862/)\
-Roman Darker || [Github](https://github.com/romanjamesd) || [Linkedin](https://www.linkedin.com/in/roman-darker-707147175/)
+* Andy Zheng || [Github](https://github.com/andy5313) || [Linkedin](https://www.linkedin.com/in/andyzheng5313/)
+* Dhruv Thota || [Github](https://github.com/L05Dhruv) || [Linkedin](https://www.linkedin.com/in/dhruv-thota/)
+* Jonathan Chen || [Github](https://github.com/jchen0903i) || [Linkedin](https://www.linkedin.com/in/jonathan-chen3/)
+* Kaju Sarkar || [Github](https://github.com/kajusarkar) || [Linkedin](https://www.linkedin.com/in/kaju-sarkar-a6329862/)
+* Roman Darker || [Github](https://github.com/romanjamesd) || [Linkedin](https://www.linkedin.com/in/roman-darker-707147175/)
 
 ## Works cited
 - LRU based small latency first replacement (SLFR) algorithm for the proxy cache. (2003). Proceedings IEEE/WIC International Conference on Web Intelligence (WI 2003). https://doi.org/10.1109/wi.2003.1241250
@@ -329,3 +426,26 @@ Roman Darker || [Github](https://github.com/romanjamesd) || [Linkedin](https://w
 
 ## License
 Distributed under the MIT license.
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
+[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
+[forks-url]: https://github.com/github_username/repo_name/network/members
+[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
+[stars-url]: https://github.com/github_username/repo_name/stargazers
+[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
+[issues-url]: https://github.com/github_username/repo_name/issues
+[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
+[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/linkedin_username
+[product-screenshot]: images/screenshot.png
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+
