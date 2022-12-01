@@ -30,6 +30,7 @@
 
 /* .navbar.bg-neutral.text-neutral-content.sticky.top-0.NavBarContainer {
   background: linear-gradient(10deg, rgb(3, 129, 187), rgb(192, 20, 129));
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
   padding: none;
 } */
 
@@ -53,4 +54,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.teamCard {
+  box-shadow: 0 0 30px 2px #48abe0;
+  border-radius: 15px;
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import TeamMemberCard from '../components/TeamMemberCard';
-import andy from '../styles/andy.png'
-import dhruv from '../styles/dhruv.png'
-import kaju from '../styles/kaju.png'
-import jonathan from '../styles/jonathan.png'
-import roman from '../styles/roman.png'
+import andy from '../styles/andy.png';
+import dhruv from '../styles/dhruv.png';
+import kaju from '../styles/kaju.png';
+import jonathan from '../styles/jonathan.png';
+import roman from '../styles/roman.png';
 
 const About = () => {
   const team = [
@@ -20,7 +20,7 @@ const About = () => {
     },
     {
       name: 'Andy Zheng',
-      img: {andy},
+      img: { andy },
       description: ` Lorem Aliquam sit amet porta justo. Duis nec lorem vel risus
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
@@ -30,7 +30,7 @@ const About = () => {
     },
     {
       name: 'Roman Darker',
-      img: {roman},
+      img: { roman },
       description: ` Lorem Aliquam sit amet porta justo. Duis nec lorem vel risus
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
@@ -40,7 +40,7 @@ const About = () => {
     },
     {
       name: 'Jonathan Chen',
-      img: {jonathan},
+      img: { jonathan },
       description: ` Lorem Aliquam sit amet porta justo. Duis nec lorem vel risus
   molestie mattis. Ut id velit et felis imperdiet euismod. Sed a leo
   sed urna egestas viverra. Donec dignissim sem eu sapien fringilla
@@ -61,19 +61,22 @@ const About = () => {
   ];
 
   return (
-      <div>
-        <h2 style={{fontFamily: 'Georgia, serif'}} className='text-6xl m-auto pt-6 flex justify-center'>Our Team</h2>
-        <div className='about flex mt-4 gap-3 justify-center	max-w-7xl flex-wrap m-auto'>
-          <TeamMemberCard key={kaju} info={team[0]} img={dhruv} />
-          <TeamMemberCard key={dhruv} info={team[1]} img={andy} />
-          <TeamMemberCard key={andy} info={team[2]} img={roman} />
-          <TeamMemberCard key={roman} info={team[3]} img={jonathan} />
-          <TeamMemberCard key={jonathan} info={team[4]} img={kaju} />
-        </div>
+    <div>
+      <h2
+        style={{ fontFamily: 'Georgia, serif' }}
+        className='text-6xl m-auto pt-6 flex justify-center'
+      >
+        Our Team
+      </h2>
+      <div className='about flex mt-4 gap-10 justify-center max-w-7xl flex-wrap m-auto py-8'>
+        <TeamMemberCard key={kaju} info={team[0]} img={dhruv} />
+        <TeamMemberCard key={dhruv} info={team[1]} img={andy} />
+        <TeamMemberCard key={andy} info={team[2]} img={roman} />
+        <TeamMemberCard key={roman} info={team[3]} img={jonathan} />
+        <TeamMemberCard key={jonathan} info={team[4]} img={kaju} />
       </div>
-    );
-    
-    
+    </div>
+  );
 };
 
 export default About;
