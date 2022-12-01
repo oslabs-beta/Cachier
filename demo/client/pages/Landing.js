@@ -20,11 +20,10 @@ const Landing = () => {
         <h1 className='welcome'>Welcome to Cachier</h1>
         <div className='py-3 px-3'>
           <p className='productDescription'>
-            A lightweight open-source developer tool that leverages the pinpoint
-            accuracy of GraphQL’s queries
+            A highly customizable, lightweight, open-source GraphQL caching tool
           </p>
           <p className='productDescription'>
-            and implements caching to improve your website’s query efficiency
+            that intelligently manages and delivers data at lightning speeds.
           </p>
         </div>
         <div className='flex py-3 gap-3'>

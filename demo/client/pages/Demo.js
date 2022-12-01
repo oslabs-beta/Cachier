@@ -404,7 +404,9 @@ const Demo = () => {
                         setDemoPartialCacheChecked(false);
                       }}
                     ></input>
-                    <label className='cacheLabel'>Cachier LRU-SLFR Cache</label>
+                    <label className='cacheLabel'>
+                      Cachier Direct Server & Client-side Cache
+                    </label>
                   </div>
                   <div className='checkFieldDiv'>
                     <input
@@ -415,7 +417,9 @@ const Demo = () => {
                         setDemoPartialCacheChecked(true);
                       }}
                     ></input>
-                    <label className='cacheLabel'>Cachier Partial Cache</label>
+                    <label className='cacheLabel'>
+                      Cachier Normalized Server-side Cache
+                    </label>
                   </div>
                 </div>
               </div>

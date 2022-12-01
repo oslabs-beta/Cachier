@@ -6,7 +6,6 @@ import './style.css';
 import Footer from './components/Footer.js';
 import cachierlogo from '../client/styles/CachierNavBar(1).png';
 
-
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(
   <div className='BodyDiv'>
@@ -14,14 +13,14 @@ root.render(
       <BrowserRouter>
         <div className='navbar bg-neutral text-neutral-content sticky top-0 NavBarContainer'>
           <div className='flex-1'>
-            <img className='pl-6 h-20 w-18' src={cachierlogo}></img>
+            <NavLink to='/'>
+              <img className='pl-6 h-20 w-18' src={cachierlogo} />
+            </NavLink>
           </div>
           <div className='flex-none'>
             <ul className='menu menu-horizontal p-0'>
               <li>
-               
-                  <NavLink to={'/'}>Home</NavLink>
-                
+                <NavLink to={'/'}>Home</NavLink>
               </li>
               <li tabIndex={0}>
                 <a>
@@ -51,7 +50,7 @@ root.render(
             </ul>
           </div>
         </div>
-        
+
         <App />
         <Footer />
       </BrowserRouter>
