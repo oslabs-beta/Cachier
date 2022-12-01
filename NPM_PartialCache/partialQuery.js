@@ -18,6 +18,10 @@ function partialQueryCache(
   const cache = {};
   return async function helper(req, res, next) {
     const { query, uniques } = req.body;
+    if(query === clear) {
+      cache = {};
+      return res.send('Cache Cleared!')
+    }
     const dataFromCache = checkCache(queryNormalizer(query, false), cache);
     if (dataFromCache !== false) {
       return res.json(dataFromCache);

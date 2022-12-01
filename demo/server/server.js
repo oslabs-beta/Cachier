@@ -1,11 +1,8 @@
-import { Request, Response } from 'express';
-
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 const schema = require('./schema.js');
-const redis = require('redis');
 const demoFunc = require('./DemoFunc.js');
 
 const cors = require('cors');
@@ -34,11 +31,11 @@ app.use(
   '/graphql',
   expressGraphQL({
     schema,
-    graphiql: true,
+    graphiql: true
   })
 );
 
-app.get('/*', (req: Request, res: Response) => {
+app.get('/*', (req, res) => {
   res.sendFile(
     path.resolve(__dirname, '../../dist/index.html'),
     function (err) {
@@ -49,9 +46,7 @@ app.get('/*', (req: Request, res: Response) => {
   );
 });
 
-app.use((req: Request, res: Response) =>
-  res.status(404).send('Cannot get route')
-);
+app.use((req, res) => res.status(404).send('Cannot get route'));
 
 app.listen(port, console.log(`Server listening on ${port}`));
 
