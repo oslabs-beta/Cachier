@@ -30,7 +30,8 @@ Cachiers Normalized Server-side Cache breaks up GraphQL queries into individual 
 
 Example Fetch to SpaceX GQL API:
 
-``fetch('http://localhost:3000/partialCache', {
+  ~~~
+fetch('http://localhost:3000/partialCache', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -48,13 +49,15 @@ Example Fetch to SpaceX GQL API:
               ,
               uniques: { dragons: 'id' },
             }),
-          })``
+          })
+        
+ ~~~
+          
           
 The client will fetch to the Cachier Cache endpoint with an object containing the query string and the unique types. The unique types need contain a unique identifier for all array/list items so that Cachier can generate a unique cache key. 
 
- 
- ```
- {
+ ~~~
+{
    "typesArr": [
       "dragons"
    ],
@@ -74,16 +77,15 @@ The client will fetch to the Cachier Cache endpoint with an object containing th
       ]
    ]
 }
-```
-
+~~~
           
          
  Cachier parses incoming GraphQL queries and seperates them into subqueries stored in a "Cachier" object. The queries are broken up into 3 arrays typesArr, cacheKeysArr , and fieldsArr where their respective indexes connect with one another. FieldsArr will be an array of arrays containing the fields for each cacheKey, if a field is nested it will be stored as a nested object. We will then wait for the return Data and use this "Cachier" query object to sort the data into our cache.
  
 
 Here is data returned from our example query:
-
-```{
+~~~
+{
   "data": {
     "dragons": [
       {
@@ -100,12 +102,12 @@ Here is data returned from our example query:
       }
     ]
   }
-}```
-
+}
+~~~
 
 After receiving the data back Cachier will utilize the query map stored in the "Cachier" Object to normalize and store the data as individual keys inside the cache. This is how the data will look once normalized and stored in the cache:
-
-```{
+~~~
+{
    "dragons": [
       "dragon:dragon2",
       "dragon:dragon1",
@@ -129,9 +131,14 @@ After receiving the data back Cachier will utilize the query map stored in the "
       },
       "__CachierCacheDate": 8492.691667079926
    }
-}```
+}
+~~~
+As you can see the dragons array now only stores references to keys in the cache and the data from the array is stored as seperate keys unique in the cache. This normalized cache structure eliminiates data redundancy in the cache and allows for partial retrieval of subset data. ("__CachierCacheData" fields and the number at the last index array is to keep track of recency for our eviction policy which we will speak about next).
 
-As you can see the dragons array now only stores references to keys in the cache and the data from the array is stored as seperate keys unique in the cache. This normalized cache structure eliminiates data redundancy in the cache and allows for partial retrieval of subset data. (You can ignore the "__CachierCacheData" fields and the number at the last index array, that is for our eviction policy which we will speak about next).
+
+## Approximated LRU Eviction 
+
+Cachiers Normalized Cache uses a custom Approximated LRU Eviction Policy. This is not a true LRU implementation, but it comes very close in terms of performance. The reason Cachier does not use a true LRU implementation is because it costs more memory. Cachiers LRU policy works by creating a sample (the sample size can be configured by the developer) of randomly selected keys from the cache and evicting the least recently used key from the sample.
 
 
 
