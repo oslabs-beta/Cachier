@@ -280,7 +280,7 @@ const Cachier = require('@cachier/server-side')
 ### Set up your Cachier middleware function.
 
 #### endpoint 
-- the endpoint that the client will make GraphQL queries to if it wants to utilize the cache.
+- The endpoint that the client will make GraphQL queries to if it wants to utilize the cache.
 #### graphQLEndpoint 
 - The graphQLEndpoint parameter is where you will specify your GraphQL APIs endpoint. This allows Cachier to route all queries that are unable to be resolved by the Cachier Cache to your GraphQL API.
 #### capacity 
