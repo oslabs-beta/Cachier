@@ -58,6 +58,36 @@ const Demo = () => {
     },
   });
 
+
+  useEffect(() => {
+    fetch('https://cachier.onrender.com/partialCache/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: 'clear',
+      }),
+    }).then(data => data.json()).then(data => console.log('PartialCLEARED', data))
+
+    fetch('https://cachier.onrender.com/cacheMoney/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: 'clear',
+      }),
+    }).then(data => data.json()).then(data => console.log('regCACHECLEARED', data))
+  },[])
+
+
+
+
+
+
   useEffect(() => {
     const string = `{ clients { ${clientIdChecked ? 'id' : ''}${
       clientNameChecked ? ' name' : ''
@@ -173,7 +203,7 @@ const Demo = () => {
         .then((data) => {
           const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
           setQueryTime(endTime);
-          setQueryTimeArray([...queryTimeArray]); // updates data points for charts
+          setQueryTimeArray([...queryTimeArray, { latency: endTime, cached: data.cached }]); // updates data points for charts
           setQueryResult(JSON.stringify(data.data, null, 2));
           setLoading(false);
         });
@@ -433,13 +463,16 @@ const Demo = () => {
               </div>
             </div>
           </div>
-          {demoRegularCacheChecked && (
-            <QueueVisualizer
-              queue={llData}
-              removedNode={removedNode}
-              currGroupSize={currGroupSize}
-            />
-          )}
+          <div className='queueDiv'>
+            {demoRegularCacheChecked && (
+              <QueueVisualizer
+                queue={llData}
+                removedNode={removedNode}
+                currGroupSize={currGroupSize}
+              />
+            )}
+          </div>
+          
         </div>
       </div>
     </div>
