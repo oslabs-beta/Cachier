@@ -7,11 +7,11 @@ Welcome to Cachier, a lightweight GraphQL caching tool that is configured specif
 GraphQL does not have native HTTP caching as a result of its singular employment of the POST method, forcing the danger of over-fetching by re-running queries and slowing load times. 
 
 #### Cachier currently offers:
-- storage inside session storage for client side caching
-- ability to choose between Redis and a native in memory cache.
-- unique key generation for response data to avoid developer having to tag for cache.
-- partial and exact matching for query fields in the developer's GraphQL API.
-- Highly configurable eviction policies.
+- Atorage inside session storage for client side caching
+- Ability to choose between Redis and a native in memory cache
+- Unique key generation for response data to avoid developer having to tag for the cache
+- Partial and exact matching for query fields in the developer's GraphQL API
+- Highly configurable eviction policies
 
 
 #### We created a highly performant and customizable GraphQL caching library that consists of three main caching functions:
@@ -22,10 +22,9 @@ GraphQL does not have native HTTP caching as a result of its singular employment
 We will go over each solution in detail below.
 
 
-
 ## Cachier Normalized Server-side Cache
 
-Cachiers Normalized Server-side Cache breaks up GraphQL queries into individual sub-queries to be stored in the cache. This provides maximum cache efficency by organizing data in a way that prevents data redundancy and allows for partial retrievals of subset data, thus drastically reducing network requests to the database.
+Cachier's Normalized Server-side Cache breaks up GraphQL queries into individual sub-queries to be stored in the cache. This provides maximum cache efficency by organizing data in a way that prevents data redundancy and allows for partial retrievals of subset data, thus drastically reducing network requests to the database.
 
 ## How to Install and Import 
 If this is your first time using Cachiers Normalized Cache, run the following command in your terminal.
