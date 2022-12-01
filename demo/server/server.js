@@ -20,14 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 //app.use(express.static(path.resolve(__dirname, '../client')));
 app.use(express.static(path.resolve(__dirname, '../../dist')));
 
-app.use(
-  '/cacheMoney',
-  demoFunc('https://cachier.onrender.com:10000/graphql', 4, 2)
-);
+app.use('/cacheMoney', demoFunc('https://cachier.onrender.com/graphql', 4, 2));
 
 app.use(
   '/partialCache',
-  partialQueryCache('https://cachier.onrender.com:10000/graphql', 60)
+  partialQueryCache('https://cachier.onrender.com/graphql', 60)
 );
 
 app.use(
