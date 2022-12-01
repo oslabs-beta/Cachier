@@ -18,7 +18,8 @@ const client = Redis.createClient(REDIS_PORT);
 const connectDB = require('./config/db');
 const port = process.env.PORT || 3000;
 const app = express();
-const partialQueryCache = require('../../NPM_PartialCache/partialQuery');
+//const partialQueryCache = require('../../NPM_PartialCache/partialQuery');
+const partialQueryCache = require('@cachier/cache-partials');
 
 client.connect();
 connectDB();

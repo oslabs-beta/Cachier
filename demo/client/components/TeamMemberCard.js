@@ -4,7 +4,7 @@ import linkedin from '../styles/linkedin.png';
 
 const TeamMemberCard = (props) => {
   return (
-    <div>
+    <div className='teamCard'>
       <div className='card w-80 bg-base-100 shadow-xl'>
         <figure>
           <img className='w-80 h-80' src={props.img} alt='img' />
