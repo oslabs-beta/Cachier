@@ -50,12 +50,12 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
   return async function checkCache(req, res, next) {
     const query = req.body.query.trim();
 
-    if(query === 'clear') {
+    if (query === 'clear') {
       cacheMoneyCache = {};
       queue = new EvictionQueue();
-      currGroupSize = groupSize
-      return res.send('Cache Cleared!')
-    } 
+      currGroupSize = groupSize;
+      return res.json('Cache Cleared!');
+    }
 
     let { variables } = req.body;
     const isMutation = query.startsWith('mutation');

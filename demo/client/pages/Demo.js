@@ -81,6 +81,18 @@ const Demo = () => {
         query: 'clear',
       }),
     }).then(data => data.json()).then(data => console.log('regCACHECLEARED', data))
+
+    cachierFetch('https://cachier.onrender.com/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          query: 'clear',
+        }),
+      }).then( data => console.log('client Cache Cleared'))
+    
   },[])
 
 

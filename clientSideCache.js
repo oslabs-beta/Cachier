@@ -15,12 +15,18 @@ export function clientSideCache(capacity, groupSize) {
     );
   }
 
-  const queue = new EvictionQueue();
+  let queue = new EvictionQueue();
 
   return async function checkCache(endpoint, options) {
     const body = JSON.parse(options.body);
     const { query } = body;
     let { variables } = body;
+
+    if(query === 'clear') {
+      sessionStorage.clear()
+      queue = new EvictionQueue()
+      return;
+    }
 
     if (!variables) {
       variables = {};
