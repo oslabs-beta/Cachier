@@ -13,6 +13,8 @@ const partialQueryCache = require('@cachier/cache-partials');
 
 connectDB();
 // Changed package.json to "start": "server2.js"
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
