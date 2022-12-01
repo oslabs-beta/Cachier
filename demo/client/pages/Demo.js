@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from '../components/BarChart';
 import QueueVisualizer from '../components/QueueVisualizer';
-import TextQuery from '../components/TextQuery';
 import '../styles/Demo.css';
 import { clientSideCache } from '../../../clientSideCache';
 
@@ -22,7 +21,6 @@ const Demo = () => {
 
   const [loading, setLoading] = useState(false);
   const [clientSideLoading, setClientSideLoading] = useState(false);
-
 
   const [removedNode, setRemovedNode] = useState({ num: 0, latency: 0 });
   const [currGroupSize, setCurrGroupSize] = useState(0);
@@ -236,14 +234,14 @@ const Demo = () => {
                 <div className='queryResultMetrics'>
                   <span className='serverSide'>Server Side:</span>
                   <span className='metrics'>
-                    {loading ? 
-                        <span>Loading...</span>
-                        :
-                        <div>
-                          {queryTime}
-                          <span className='ms'>ms</span>
-                        </div>
-                    }
+                    {loading ? (
+                      <span>Loading...</span>
+                    ) : (
+                      <div>
+                        {queryTime}
+                        <span className='ms'>ms</span>
+                      </div>
+                    )}
                   </span>
                 </div>
                 {demoRegularCacheChecked && (
@@ -362,10 +360,6 @@ const Demo = () => {
               </div>
             </div>
           </div>
-          <TextQuery
-            handleUploadAndQuery={handleUploadAndQuery}
-            loading={loading}
-          />
         </div>
 
         <div className='Visualizers'>

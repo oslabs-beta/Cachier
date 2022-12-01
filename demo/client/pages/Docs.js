@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import exampleScreenShot from '../styles/partialExampleFetch.png';
 
 const Docs = () => {
   let menuArray = [true, false, false];
@@ -774,7 +775,7 @@ const Docs = () => {
           unique identifier for each list item.
         </p>
         <img
-          src='../styles/partialExampleFetch.png'
+          src={exampleScreenShot}
           className='flex justify-between bg-black text-sky-300 rounded-md p-4 w-1/2'
         />
         <div id='CachierServerCache' className='text-xl my-8'>

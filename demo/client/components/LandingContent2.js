@@ -7,7 +7,7 @@ const LandingContent2 = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='container px-6 mx-auto'>
+    <div className='container px-6 mx-auto pt-24'>
       <section className='mb-32 text-gray-800'>
         <div className='container mx-auto xl:px-32 text-center lg:text-left'>
           <div className='grid lg:grid-cols-2 flex items-center'>
