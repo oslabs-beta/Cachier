@@ -9,10 +9,13 @@ const Selector = (props) => {
         console.log(gqlEndpoint);
     }
 
+    let bing = '';
+
     const handleEnterClick = () => {
         // const x = document.getElementById('uriInput').value;
         console.log('Enter button clicked');
     }
+
 
     return (
         <div className="navbar bg-base-300 rounded-box">
@@ -23,7 +26,7 @@ const Selector = (props) => {
             </div>
             <div className="flex justify-end flex-1 px-2">
                 <div className="flex items-stretch">
-                
+                    <a>{bing}</a>
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost rounded-btn">Select a public API</label>
                         <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
