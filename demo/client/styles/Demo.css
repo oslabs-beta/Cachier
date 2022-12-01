@@ -1,5 +1,5 @@
 .demoContainer {
-  background-color: #e2f7ff;
+  background-color: #d2f0fb;
 }
 
 .heading {
@@ -18,8 +18,6 @@
 
 .clientFields {
   padding-left: 1vw;
-  display: flex;
-  gap: 1vw;
 }
 
 body {
@@ -63,7 +61,7 @@ body {
   padding: 0px !important;
   border: black 2px;
   border-radius: 10px;
-  background-color: #121f4e;
+  background-color: #245594;
   color: 'white';
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
@@ -75,7 +73,7 @@ body {
   justify-content: center;
   padding: 1vw 0;
   display: flex;
-  color: #d2f0fb;
+  color: #ffd240;
   font-size: 2vw;
   margin: 0;
 }
@@ -98,7 +96,7 @@ body {
   font-family: Georgia, serif;
   font-size: 1.1vw;
   padding-left: 1.1vw;
-  color: #d2f0fb;
+  color: #ffd240;
 }
 
 .metrics {
@@ -137,15 +135,16 @@ body {
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border-radius: 3%;
 }
 
 .queryString {
   border: black 2px;
   border-radius: 10px;
-  background-color: #121f4e;
+  background-color: #245594;
   padding: 1vw;
   font-family: Georgia, serif;
-  color: #d2f0fb;
+  color: #ffd240;
 }
 
 .queryDisplayStringContainer {
@@ -165,14 +164,14 @@ body {
 }
 
 .queryButton {
-  background-color: #121f4e;
-  color: #d2f0fb;
+  background-color: #245594;
+  color: #ffd240;
   padding: 0.6vw;
   font-size: 1vw;
 }
 
 .visualizersDiv {
-  padding-top: 1vw;
+  padding-top: 5vw;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -190,18 +189,22 @@ body {
   border-radius: 10px;
   background-color: white;
   padding: 1vw;
+  margin-top: 75px;
   color: #121f4e;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
+.Eviction {
+  margin-top: 55px;
+}
 
 .evictedText {
-  color: #121f4e;
+  color: #245594;
 }
 
 .demoLeftContainer {
-  width: 25vw;
+  width: 35vw;
 }
 
 .barChartHeading {
@@ -234,7 +237,7 @@ span.label-text-alt {
   align-content: center;
 }
 
-textarea.textarea.textarea-bordered.h-24 {
+textarea.textarea.textarea-info {
   background-color: midnightblue;
   width: auto;
   height: auto;
@@ -242,23 +245,11 @@ textarea.textarea.textarea-bordered.h-24 {
   min-height: 225px;
 }
 
-.chartCheckBoxDiv {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-}
-
-.cacheLabel {
-  font-size: 16px;
-  text-align: center;
-}
-
-.checkFieldDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
+.navbar.bg-base-300.rounded-box {
+  margin-top: 20px;
+  width: 900px;
+  margin-left: 120px;
+  margin-bottom: 50px;
 }
 
 .queueDiv{

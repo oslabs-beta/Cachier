@@ -1,3 +1,9 @@
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
 /*!
  * @kurkle/color v0.2.1
  * https://github.com/kurkle/color#readme
@@ -10,6 +16,12 @@
  * https://www.chartjs.org
  * (c) 2022 Chart.js Contributors
  * Released under the MIT License
+ */
+
+/*!
+ * vary
+ * Copyright(c) 2014-2017 Douglas Christopher Wilson
+ * MIT Licensed
  */
 
 /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
@@ -45,7 +57,7 @@
  */
 
 /**
- * @remix-run/router v1.0.4
+ * @remix-run/router v1.0.3
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -56,7 +68,7 @@
  */
 
 /**
- * React Router DOM v6.4.4
+ * React Router DOM v6.4.3
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -67,7 +79,7 @@
  */
 
 /**
- * React Router v6.4.4
+ * React Router v6.4.3
  *
  * Copyright (c) Remix Software Inc.
  *
