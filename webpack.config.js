@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -18,7 +17,7 @@ const config = {
     },
     // port: 3000,
     proxy: {
-      '/': 'http://localhost:3000',
+      '/': 'http://localhost:3000/',
     },
   },
   module: {
@@ -35,7 +34,7 @@ const config = {
       },
       {
         test: /\.(ts|tsx)$/,
-        use: 'ts-loader',
+        use: ['ts-loader'],
         exclude: '/node_modules',
       },
       {
