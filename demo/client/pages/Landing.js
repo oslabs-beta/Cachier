@@ -4,7 +4,7 @@ import Testimonials from '../components/Testimonials';
 import { useNavigate } from 'react-router-dom';
 import LandingContent2 from '../components/LandingContent2';
 import logo from '../styles/logo.png';
-import installIcon from '../styles/installIcon.png';
+import ImageSlider from '../components/ImageSlider.js';
 import FastIcon from '../styles/FastIcon.png';
 import customizableIcon from '../styles/customizableIcon.png';
 import memoryIcon from '../styles/memoryIcon.png';
@@ -12,6 +12,18 @@ import demoIcon from '../styles/Demo.png';
 
 const Landing = () => {
   const navigate = useNavigate();
+
+  const slides = [
+    {url: FastIcon},
+    {url: customizableIcon},
+    {url: memoryIcon},
+    {url: demoIcon},
+  ];
+  const containerStyles = {
+    width: '500px',
+    height: '280px',
+    margin: '0 auto',
+  }
 
   return (
     <div>
@@ -43,6 +55,12 @@ const Landing = () => {
           </button>
         </div>
       </div>
+
+      {/* <div>
+        <div style={containerStyles}>
+          <ImageSlider slides={slides}/>
+        </div>
+      </div> */}
 
       <LandingContent2 />
       <LandingContent />

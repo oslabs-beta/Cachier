@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from '../components/BarChart';
 import QueueVisualizer from '../components/QueueVisualizer';
+import Selector from '../components/Selector';
 import '../styles/Demo.css';
 import { clientSideCache } from '../../../clientSideCache';
 
@@ -26,7 +27,15 @@ const Demo = () => {
   const [currGroupSize, setCurrGroupSize] = useState(0);
 
   const [queryGraphQLString, setQueryGraphQLString] = useState(
-    '{ clients { id name email phone } }'
+    `{ 
+        clients
+        {
+            id
+            name
+            email
+            phone
+        } 
+    }`
   );
   const [queryTime, setQueryTime] = useState(0);
   const [queryTimeArray, setQueryTimeArray] = useState([
@@ -57,8 +66,38 @@ const Demo = () => {
       indexAxis: 'y',
     },
   });
+  
+  useEffect(() => {
+    const txtArea = document.getElementsByClassName('textarea textarea-info');
+      txtArea.placeholder =
+        `{
+          clients { 
+              ${clientIdChecked ? 'id' : ''}
+              ${clientNameChecked ? ' name' : ''}
+              ${clientEmailChecked ? ' email' : ''}
+              ${clientPhoneChecked ? ' phone' : ''}
+            } 
+          }`;
+      
+    const string = `{
+      clients { 
+          ${clientIdChecked ? 'id' : ''}
+          ${clientNameChecked ? ' name' : ''}
+          ${clientEmailChecked ? ' email' : ''}
+          ${clientPhoneChecked ? ' phone' : ''}
+        } 
+      }`;
+    setQueryGraphQLString(string);
+  }, [
+    clientChecked,
+    clientIdChecked,
+    clientNameChecked,
+    clientEmailChecked,
+    clientPhoneChecked,
+  ]);
 
-
+  const placeholderString = "{ \n   clients {\n      id\n      name\n      email\n      phone\n   }\n}";
+  
   useEffect(() => {
     fetch('https://cachier.onrender.com/partialCache/', {
       method: 'POST',
@@ -93,27 +132,8 @@ const Demo = () => {
         }),
       }).then( data => console.log('client Cache Cleared'))
     
-  },[])
+  },[]);
 
-
-
-
-
-
-  useEffect(() => {
-    const string = `{ clients { ${clientIdChecked ? 'id' : ''}${
-      clientNameChecked ? ' name' : ''
-    }${clientEmailChecked ? ' email' : ''}${
-      clientPhoneChecked ? ' phone' : ''
-    } } }`;
-    setQueryGraphQLString(string);
-  }, [
-    clientChecked,
-    clientIdChecked,
-    clientNameChecked,
-    clientEmailChecked,
-    clientPhoneChecked,
-  ]);
 
   const chartLatency = () => {
     let latencyArray = queryTimeArray.map((el) => el.latency);
@@ -225,14 +245,14 @@ const Demo = () => {
   const handleQuery = () => {
     setLoading(true);
     setClientSideLoading(true);
+    
+    const str = document.getElementsByClassName('textarea textarea-info')[0].value;
+    setQueryGraphQLString(str);
+    console.log('queryGraphQLString: ', str);
+
     fetchData();
   };
 
-  const handleUploadAndQuery = () => {
-    setQueryString(`{ clients { id name email phone } }`);
-    setLoading(true);
-    fetchData();
-  };
 
   const testQuery = () => {
     if (clientChecked) {
@@ -266,6 +286,7 @@ const Demo = () => {
       </h2>
       <div className='demoDiv'>
         <div className='demoLeftContainer'>
+        <Selector />
           <div className='query'>
             <div className='padding0'>
               <div className='queryResultContainer'>
@@ -391,6 +412,17 @@ const Demo = () => {
                 <div className='queryDisplayStringContainer'>
                   <p className='testQuery'> {testQuery()} </p>
                 </div>
+                {/* <div className='queryTextInput'>
+                  <div className="form-control">
+                    <label className="queryTextInputField">
+                      <span className="label-text">Type custom query here</span>
+                    </label>
+                    <textarea className="textarea textarea-info" placeholder={placeholderString}></textarea>
+                    <label className="label">
+                      <span className="label-text-alt">Type a GraphQL query as you would in your code. Can handle only queries for now, no mutations.</span>
+                    </label>
+                  </div>
+                </div> */}
 
                 <button
                   className='queryButton'
