@@ -17,7 +17,7 @@ const config = {
     },
     // port: 3000,
     proxy: {
-      '/': 'http://localhost:3000/',
+      '/': 'https://cachier.onrender.com:10000',
     },
   },
   module: {

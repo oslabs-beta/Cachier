@@ -111,7 +111,7 @@ const Demo = () => {
   const fetchData = async () => {
     if (demoRegularCacheChecked) {
       const startTime = performance.now();
-      cachierFetch('http://localhost:3000/graphql', {
+      cachierFetch('https://cachier.onrender.com:10000/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ const Demo = () => {
         console.log('DATA', data);
       });
 
-      fetch('http://localhost:3000/cacheMoney', {
+      fetch('https://cachier.onrender.com:10000/cacheMoney', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ const Demo = () => {
         });
     } else {
       const startTime = performance.now();
-      fetch('http://localhost:3000/partialCache/', {
+      fetch('https://cachier.onrender.com:10000/partialCache/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
