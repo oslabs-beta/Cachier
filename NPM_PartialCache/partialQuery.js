@@ -24,7 +24,12 @@ function partialQueryCache(
     }
     const dataFromCache = checkCache(queryNormalizer(query, false), cache);
     if (dataFromCache !== false) {
+      const data = dataFromCache;
+<<<<<<< HEAD
       return res.json(dataFromCache);
+=======
+      return res.json({data, cached: true});
+>>>>>>> 59b10eea557f086145669db5878b5dd7e9ce1a00
     } else {
       const queryWithTypename = addTypenameField(query);
       fetch(endpoint, {
@@ -36,7 +41,7 @@ function partialQueryCache(
       })
         .then((response) => response.json())
         .then((data) => {
-          res.json(data);
+          res.json({data, cached: false});
           cacheNewData(queryNormalizer(query), data, cache, uniques);
 
           while (Object.keys(cache).length > capacity * 100) {

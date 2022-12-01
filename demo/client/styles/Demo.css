@@ -250,3 +250,8 @@ textarea.textarea.textarea-info {
   margin-left: 120px;
   margin-bottom: 50px;
 }
+
+.queueDiv{
+  width: 45vw;
+  height: 15vw;
+}
