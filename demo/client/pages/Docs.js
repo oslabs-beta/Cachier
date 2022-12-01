@@ -525,18 +525,19 @@ const Docs = () => {
         </div>
       </div>
 
+      <div id='intro'></div>
       <div
         id='rightContainer'
         style={{ backgroundColor: 'rgb(210, 240, 251)', color: 'black' }}
         className='flex flex-col p-20'
       >
-        <div id='intro'>
+        <div>
           <div className='divider text-black before:bg-primary after:bg-primary'>
             <h5 className='font-sans text-5xl leading-tight mb-4 pb-2 font-bold'>
               Cachier
             </h5>
           </div>
-          <p className='text-xl text-center my-8'>
+          <p id='CachierSolutions' className='text-xl text-center my-8'>
             Cachier is a lightweight open-source developer caching tool that
             stores the results of your GraphQL queries in a local, in-memory
             cache. This enables Cachier to respond to the client almost
@@ -548,7 +549,7 @@ const Docs = () => {
           </p>
         </div>
 
-        <div id='CachierSolutions' className='space-y-5'>
+        <div className='space-y-5'>
           <div className='divider text-black before:bg-primary after:bg-primary pt-12'>
             <h5 className='font-sans text-5xl leading-tight mb-4 pt-8 pb-12 font-bold'>
               Cachier Caching Solutions
@@ -559,14 +560,14 @@ const Docs = () => {
             With Cachier you will be able to customize a unique GraphQL cache to
             fit the needs of you application.
           </p>
-          <ul className='text-xl my-8'>
+          <ul id='CachierNormalizedCache' className='text-xl my-8'>
             <li>- Cachier Normalized Server-side Cache</li>
             <li>- Cachier Direct Client-side Cache</li>
             <li>- Cachier Direct Server-side Cache</li>
           </ul>
         </div>
 
-        <div id='CachierNormalizedCache' className='space-y-5'>
+        <div className='space-y-5'>
           <div className='divider text-black before:bg-primary after:bg-primary pt-12'>
             <h5 className='font-sans text-5xl leading-tight mb-4 pt-8 pb-12 font-bold'>
               Cachier Normalized Server-side Cache
@@ -776,12 +777,12 @@ const Docs = () => {
           src='../styles/partialExampleFetch.png'
           className='flex justify-between bg-black text-sky-300 rounded-md p-4 w-1/2'
         />
-        <div className='text-xl my-8'>
+        <div id='CachierServerCache' className='text-xl my-8'>
           Check out our demo page to test out Cachiers Normalized Server-side
           Cache!
         </div>
 
-        <div id='CachierServerCache' className='space-y-5'>
+        <div className='space-y-5'>
           <div className='divider text-black before:bg-primary after:bg-primary pt-12 pb-4'>
             <h5 className='font-sans text-5xl leading-tight mb-4 pt-8 pb-12 font-bold'>
               Cachier Direct Server-side Cache
@@ -1008,6 +1009,7 @@ const Docs = () => {
           </div>
 
           <div
+            id='CachierClientCache'
             style={{ backgroundColor: '#0a3046' }}
             className='flex flex-row justify-between items-center w-1/2 bg-black text-sky-300 rounded-md p-4'
           >
@@ -1018,7 +1020,7 @@ const Docs = () => {
           </div>
         </div>
 
-        <div id='CachierClientCache' className='space-y-5'>
+        <div className='space-y-5'>
           <div className='divider text-black before:bg-primary after:bg-primary pt-12 pb-4'>
             <h5 className='font-sans text-5xl leading-tight mb-4 pt-12 pb-8 font-bold'>
               Cachier Direct Client-side Cache
