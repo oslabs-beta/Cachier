@@ -25,6 +25,52 @@ We will go over each solution in detail below.
 
 Cachiers Normalized Server-side Cache breaks up GraphQL queries into individual sub-queries to be stored in the cache. This provides maximum cache efficency by organizing data in a way that prevents data redundancy and allows for partial retrievals of subset data, thus drastically reducing network requests to the database.
 
+## How to Install and Import 
+If this is your first time using Cachiers Normalized Cache, run the following command in your terminal.
+~~~
+npm install @cachier/cache-partials
+~~~
+
+In your server file, require our middleware to handle GraphQL requests using the CommonJS format
+~~~
+const Cachier = require('@cachier/cache-partials');
+~~~
+
+## Set up your Cachier middleware function.
+endpoint - the endpoint that the client will make GraphQL queries to if it wants to utilize the cache.
+graphQLEndpoint - The graphQLEndpoint parameter is where you will specify your GraphQL APIs endpoint. This allows Cachier to route all queries that are unable to be resolved by the Cachier Cache to your GraphQL API.
+cacheCapacity - the cacheCapacity parameter allows you to specify a maximum cache length which allows cachier to know when to evict from the cache. All inputs for Capacity will be multiples of 100. The default parameter for Capacity is 100 (1000 keys in the cache).
+sampleSize - the sampleSize parameter allows the developer to configure the number of random keys that will be considered for eviction. The default sampleSize is 5 which we recommend for most applications.
+evictionSize - the sampleSize parameter allows the developer to configure the number of evictions what will be made when your cache capacity is reached. The default evictionSize is 5.
+
+~~~
+app.use(
+       endpoint,
+       Cachier(graphQLEndPoint, cacheCapacity, sampleSize, evictionSize);
+~~~
+
+Example implementation:
+~~~
+app.use( '/Cachier', Cachier('https://api.spacex.land/graphql', 100, 5, 5) );
+~~~
+
+To fetch from Cachiers normalized cache you will fetch like you would to your GraphQL api except you will need set the option for uniques in the request body. The uniques object will need to contain a unique identifier for all list items in your query. You will need to include the list name as the key and the unique identifier as a the value. The unique identifier is any piece of data that is queried that is unique to each list item.
+
+~~~
+fetch('/graphql', {
+  method: 'POST',
+   headers:{
+     'Content-Type': 'application/json',
+     Accept: 'application/json',
+ },
+    body: JSON.stringify({
+      query: queryGraphQLString,
+      uniques: {listKey :uniqueIdentifier},
+       })
+    });
+~~~
+
+
 ### How it works 
 
 
@@ -136,7 +182,7 @@ After receiving the data back Cachier will utilize the query map stored in the "
 As you can see the dragons array now only stores references to keys in the cache and the data from the array is stored as seperate keys unique in the cache. This normalized cache structure eliminiates data redundancy in the cache and allows for partial retrieval of subset data. ("__CachierCacheData" fields and the number at the last index array is to keep track of recency for our eviction policy which we will speak about next).
 
 
-## Approximated LRU Eviction 
+### Approximated LRU Eviction 
 
 Cachiers Normalized Cache uses a custom Approximated LRU Eviction Policy. This is not a true LRU implementation, but it comes very close in terms of performance. The reason Cachier does not use a true LRU implementation is because it costs more memory. Cachiers LRU policy works by creating a sample (the sample size can be configured by the developer) of randomly selected keys from the cache and evicting the least recently used key from the sample.
 
