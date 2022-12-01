@@ -4,16 +4,36 @@ Welcome to Cachier, a lightweight GraphQL caching tool that is configured specif
 
 GraphQL does not have native HTTP caching as a result of its singular employment of the POST method, forcing the danger of over-fetching by re-running queries and slowing load times. 
 
-We created a library which enables a developer to utilize a server-side cache leveraging a Redis database when querying a GraphQL database.
-Our algorithm uses a customized Least Recently Used (LRU) Smallest Latency First Replacement (SLFR) eviction policy. A priority queue keeps track of evictions, using a weighted formula based on recency and latency and is kept separate from the query cache which is still 0(1) in lookup time.
+
+We created a highly performant and customizable GraphQL caching library that consists of three main caching functions.
+- Cachier Normalized Server-side Cache
+- Cachier Direct Server-side Cache
+- Cachier Direct Client-side Cache
+
+We will go over each solution in detail below.
 
 
-## Getting Started
+
+## 
+
+
+
+
+
+
+
+
+
+
+
+
+
+## If using Redis
 First, install the Redis package for Node.js
 
 `npm install redis`
 
-Then install our npm package.
+Then install redis npm package.
 `npm install _______`
 1. Install Redis
 - MacOS users: [Redis installation for MacOS](https://redis.io/docs/getting-started/installation/install-redis-on-mac-os/)
