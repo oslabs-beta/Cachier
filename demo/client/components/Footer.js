@@ -67,8 +67,8 @@ const Footer = () => {
         </div>
         <div>
           <span className='footer-title'>Links</span>
-          <a className='link link-hover'>Github</a>
-          <a className='link link-hover'>Press</a>
+          <a className='link link-hover' href = "https://github.com/oslabs-beta/Cachier" >Github</a>
+          <a className='link link-hover' href = "https://medium.com/@dthota8/cachier-lightweight-graphql-caching-tool-1eed76f19290">Press</a>
           <a className='link link-hover'>Download</a>
         </div>
       </div>

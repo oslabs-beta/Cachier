@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/LLNode.css';
+import arrow from '../styles/arrow.png'
 
 const LLNode = (props) => {
   return (
