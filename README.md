@@ -23,9 +23,48 @@ We will go over each solution in detail below.
 
 ## Cachier Normalized Server-side Cache
 
-### hi
+Cachiers Normalized Server-side Cache breaks up GraphQL queries into individual sub-queries to be stored in the cache. This provides maximum cache efficency by organizing data in a way that prevents data redundancy and allows for partial retrievals of subset data, thus drastically reducing network requests to the database.
+
+### How it works 
 
 
+Example Fetch to SpaceX GQL API:
+
+`fetch('http://localhost:3000/partialCache', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              query: ``{
+                dragons {
+                  id
+                  return_payload_mass {
+                    kg
+                  }
+                }
+              }
+              ``,
+              uniques: { dragons: 'id' },
+            }),
+          })`
+
+The client will fetch to the Cachier Cache endpoint with an object containing the query string and the unique types. The unique types need contain a unique identifier for all array/list items so that Cachier can generate a unique cache key. 
+
+
+`{
+  typesArr: [ 'dragons' ],
+  cacheKeysArr: [ 'dragons' ],
+  fieldsArr: [ [ '__typename', 'id', [Object] ] ]
+}`
+          
+ Cachier parses incoming GraphQL queries and seperates them into subqueries. The queries are broken up into 3 arrays types, cache key , fields where their respective indexes connect with one another. 
+          
+          
+          
+          
+          
 
 
 
