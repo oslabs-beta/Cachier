@@ -260,3 +260,8 @@ textarea.textarea.textarea-bordered.h-24 {
   align-items: center;
   gap: 5px;
 }
+
+.queueDiv{
+  width: 45vw;
+  height: 15vw;
+}

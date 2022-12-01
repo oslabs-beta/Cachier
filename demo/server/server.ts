@@ -12,7 +12,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const port = process.env.PORT || 3000;
 const app = express();
-const partialQueryCache = require('@cachier/cache-partials');
+const partialQueryCache = require('../../NPM_PartialCache/partialQuery.js');
 
 connectDB();
 // Changed package.json to "start": "server2.js"

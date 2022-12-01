@@ -80,6 +80,7 @@ const Demo = () => {
   };
 
   useEffect(() => {
+    console.log(queryTimeArray)
     setChartData({
       labels: queryTimeArray
         .map((data, i) => {
@@ -122,7 +123,6 @@ const Demo = () => {
         }),
       }).then((data) => {
         setClientSideTime((performance.now() - startTime).toFixed(2));
-        console.log('DATA', data);
       });
 
       fetch('http://localhost:3000/cacheMoney', {
@@ -139,6 +139,7 @@ const Demo = () => {
           return res.json();
         })
         .then((data) => {
+          console.log('normal data', data)
           const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
           setLLData(data.queue); // updates state linked list object
           if (data.removedNode) {
@@ -171,9 +172,11 @@ const Demo = () => {
           return res.json();
         })
         .then((data) => {
+          console.log('partial data', data);
+          console.log('data.cached', data.cached)
           const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
           setQueryTime(endTime);
-          setQueryTimeArray([...queryTimeArray]); // updates data points for charts
+          setQueryTimeArray([...queryTimeArray, { latency: endTime, cached: data.cached }]); // updates data points for charts
           setQueryResult(JSON.stringify(data.data, null, 2));
           setLoading(false);
         });
@@ -441,13 +444,16 @@ const Demo = () => {
               </div>
             </div>
           </div>
-          {demoRegularCacheChecked && (
-            <QueueVisualizer
-              queue={llData}
-              removedNode={removedNode}
-              currGroupSize={currGroupSize}
-            />
-          )}
+          <div className='queueDiv'>
+            {demoRegularCacheChecked && (
+              <QueueVisualizer
+                queue={llData}
+                removedNode={removedNode}
+                currGroupSize={currGroupSize}
+              />
+            )}
+          </div>
+          
         </div>
       </div>
     </div>
