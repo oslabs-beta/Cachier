@@ -75,7 +75,7 @@ Welcome to Cachier, a lightweight GraphQL caching tool that is configured specif
 GraphQL does not have native HTTP caching as a result of its singular employment of the POST method, forcing the danger of over-fetching by re-running queries and slowing load times. 
 
 #### Cachier currently offers:
-- Atorage inside session storage for client side caching
+- Storage inside session storage for client side caching
 - Ability to choose between Redis and a native in memory cache
 - Unique key generation for response data to avoid developer having to tag for the cache
 - Partial and exact matching for query fields in the developer's GraphQL API
