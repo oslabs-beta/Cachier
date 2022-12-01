@@ -69,7 +69,7 @@ const Demo = () => {
       body: JSON.stringify({
         query: 'clear',
       }),
-    }).then(data => data.json()).then(data => console.log('PartialCLEARED', data))
+    })
 
     fetch('https://cachier.onrender.com/cacheMoney/', {
       method: 'POST',
@@ -80,7 +80,7 @@ const Demo = () => {
       body: JSON.stringify({
         query: 'clear',
       }),
-    }).then(data => data.json()).then(data => console.log('regCACHECLEARED', data))
+    })
 
     cachierFetch('https://cachier.onrender.com/graphql', {
         method: 'POST',
@@ -91,7 +91,7 @@ const Demo = () => {
         body: JSON.stringify({
           query: 'clear',
         }),
-      }).then( data => console.log('client Cache Cleared'))
+      })
     
   },[])
 
