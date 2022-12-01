@@ -188,24 +188,45 @@ Cachiers Normalized Cache uses a custom Approximated LRU Eviction Policy. This i
 
 
 
+## Cachier Direct Server-side Cache
+Cachiers Direct Server-side Cache uses a custom LRU-SLFR (Least Recently Used Smallest Latency First Replacement) policy. LRU-SLFR is very similar to LRU except it takes latency into account as well as recency when evicting. Cachiers LRU-SLFR eviction policy utilizes a linked hash map to achieve true LRU and allows O(1) deletion, lookup, and insertion. Cachier takes latency into account as well as recency by creating a group of least recent queries and removes the query with the lowest latency first. This allows for much smarter evictions compared to traditional LRU. The whole group will be evicted first before moving on to the next group. Check out the demo page for a visualization of the eviction policy
 
-          
-          
-          
-          
-          
+### How to install and import
+If this is your first time using Cachiers Direct Server-side Cache, run the following command in your terminal.
+
+~~~
+npm install @cachier/server-side
+~~~
+
+In your server file, require our middleware to handle GraphQL requests using the CommonJS format
+
+~~~
+const Cachier = require('@cachier/server-side')
+~~~
+
+### Set up your Cachier middleware function.
+
+endpoint - the endpoint that the client will make GraphQL queries to if it wants to utilize the cache.
+graphQLEndpoint - The graphQLEndpoint parameter is where you will specify your GraphQL APIs endpoint. This allows Cachier to route all queries that are unable to be resolved by the Cachier Cache to your GraphQL API.
+capacity - the cacheCapacity parameter allows you to specify a maximum cache length which allows cachier to know when to evict from the cache.
+groupSize - the groupSize parameter allows the developer to configure the number of least recently used keys that will be considered for eviction. The key with the least latency out of the group will be evicted first. The whole group will be evicted first before moving on to the next group.
+RedisClient - If you would like to use Redis to store your cache, insert your connected redis client as an arguement. If you leave out this parameter Cachier will default to its native built in cache.
 
 
+~~~
+app.use(
+       endpoint,
+       Cachier(graphqlEndpoint, capacity, groupSize, RedisClient(optional));
+~~~
+
+Example implementation without Redis:
+
+~~~
+app.use( '/Cachier', Cachier('https://api.spacex.land/graphql', 100, 5) );
+~~~
 
 
-
-
-
-
-
-
-
-## If using Redis
+### If using Redis
 First, install the Redis package for Node.js
 
 `npm install redis`
@@ -218,6 +239,49 @@ Then install redis npm package.
 - Windows users: 
 1. Redis is not officially supported on Windows, so you must have a [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install).
 2. Once you have WSL, follow [Redis installation for Windows](https://redis.io/docs/getting-started/installation/install-redis-on-windows/)
+
+
+## Cachier Direct Client-side Cache
+
+Cachiers Direct Client-Side Cache uses the same underlying mechanisms as Cachiers Direct Server-side cache except it stores the cache in the client browsers session storage. This allows for even faster cached query times than a server side implementation. Cachiers client side cache was built to mimic a traditional fetch request so it is very easy to integrate into new and existing codebases.
+
+### How to install and import
+
+If this is your first time using Cachiers Direct Client-side Cache, run the following command in your terminal.
+
+~~~
+npm install @cachier/client-side
+~~~
+
+In your client file, import the cachier client side function:
+
+~~~
+import clientSideCache from '@cachier/client-side';
+~~~
+
+### Initalize your Cachier Client-side cache.
+
+capacity - the cacheCapacity parameter allows you to specify a maximum cache length which allows cachier to know when to evict from the cache.
+groupSize - the groupSize parameter allows the developer to configure the number of least recently used keys that will be considered for eviction. The key with the least latency out of the group will be evicted first. The whole group will be evicted first before moving on to the next group.
+
+~~~
+const cachierFetch = clientSideCache(500, 5);
+~~~
+
+Operates exactly like fetch():
+
+~~~
+cachierFetch('/graphql', {
+  method: 'POST',
+   headers:{
+     'Content-Type': 'application/json',
+     Accept: 'application/json',
+ },
+    body: JSON.stringify({
+      query: queryGraphQLString,
+       })
+    });
+~~~
 
 
 ## Tech stack used
