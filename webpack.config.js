@@ -11,13 +11,14 @@ const config = {
   },
   mode: process.env.NODE_ENV,
   devServer: {
+    historyApiFallback: true,
     static: {
-      directory: path.join(__dirname, './build'),
+      directory: path.join(__dirname, './dist'),
       publicPath: '/',
     },
     // port: 3000,
     proxy: {
-      '/**': 'http://localhost:3000',
+      '/': 'http://localhost:3000',
     },
   },
   module: {

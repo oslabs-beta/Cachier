@@ -98,10 +98,10 @@ const Docs = () => {
                       strokeLinejoin='round'
                     />
                   </svg>
-                  <p>Introduction</p>
+                  <p>Cachier</p>
                 </button>
               </a>
-              <a href='#prereq'>
+              <a href='#CachierSolutions'>
                 <button className='flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52'>
                   <svg
                     className='fill-stroke'
@@ -119,10 +119,10 @@ const Docs = () => {
                       strokeLinejoin='round'
                     />
                   </svg>
-                  <p>Prerequisites</p>
+                  <p>Cachier Solutions</p>
                 </button>
               </a>
-              <a href='#getStarted'>
+              <a href='#CachierNormalizedCache'>
                 <button className='flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52'>
                   <svg
                     width={24}
@@ -195,11 +195,11 @@ const Docs = () => {
                       strokeLinejoin='round'
                     />
                   </svg>
-                  <p className='text-base leading-4  '>Get Started</p>
+                  <p className='text-base leading-4  '>Normalized Cache</p>
                 </button>
               </a>
 
-              <a href='#withRedis'>
+              <a href='#CachierServerCache'>
                 <button className='flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52'>
                   <svg
                     width={24}
@@ -223,11 +223,11 @@ const Docs = () => {
                       strokeLinejoin='round'
                     />
                   </svg>
-                  <p className='text-base leading-4  '>With Redis</p>
+                  <p className='text-base leading-4  '>Server Cache</p>
                 </button>
               </a>
 
-              <a href='#noRedis'>
+              <a href='#CachierClientCache'>
                 <button className='flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52'>
                   <svg
                     width={24}
@@ -258,10 +258,10 @@ const Docs = () => {
                       strokeLinejoin='round'
                     />
                   </svg>
-                  <p className='text-base leading-4  '>Without Redis</p>
+                  <p className='text-base leading-4  '>Client Cache</p>
                 </button>
               </a>
-              <a href='#techstack'>
+              {/* <a href='#techstack'>
                 <button className='flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52'>
                   <svg
                     width={24}
@@ -294,7 +294,7 @@ const Docs = () => {
                   </svg>
                   <p className='text-base leading-4  '>Technology Stack</p>
                 </button>
-              </a>
+              </a> */}
             </div>
           </div>
           <div className='flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  '>
@@ -548,7 +548,7 @@ const Docs = () => {
           </p>
         </div>
 
-        <div id='prereq' className='space-y-5'>
+        <div id='CachierSolutions' className='space-y-5'>
           <div className='divider text-black before:bg-primary after:bg-primary pt-12'>
             <h5 className='font-sans text-5xl leading-tight mb-4 pt-8 pb-12 font-bold'>
               Cachier Caching Solutions
@@ -566,7 +566,7 @@ const Docs = () => {
           </ul>
         </div>
 
-        <div id='getStarted' className='space-y-5'>
+        <div id='CachierNormalizedCache' className='space-y-5'>
           <div className='divider text-black before:bg-primary after:bg-primary pt-12'>
             <h5 className='font-sans text-5xl leading-tight mb-4 pt-8 pb-12 font-bold'>
               Cachier Normalized Server-side Cache
@@ -781,7 +781,7 @@ const Docs = () => {
           Cache!
         </div>
 
-        <div id='withRedis' className='space-y-5'>
+        <div id='CachierServerCache' className='space-y-5'>
           <div className='divider text-black before:bg-primary after:bg-primary pt-12 pb-4'>
             <h5 className='font-sans text-5xl leading-tight mb-4 pt-8 pb-12 font-bold'>
               Cachier Direct Server-side Cache
@@ -1018,7 +1018,7 @@ const Docs = () => {
           </div>
         </div>
 
-        <div id='withoutRedis' className='space-y-5'>
+        <div id='CachierClientCache' className='space-y-5'>
           <div className='divider text-black before:bg-primary after:bg-primary pt-12 pb-4'>
             <h5 className='font-sans text-5xl leading-tight mb-4 pt-12 pb-8 font-bold'>
               Cachier Direct Client-side Cache
