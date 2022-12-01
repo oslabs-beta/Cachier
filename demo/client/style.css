@@ -28,10 +28,10 @@
   font-size: 1.1vw;
 }
 
-.navbar.bg-neutral.text-neutral-content.sticky.top-0.NavBarContainer {
+/* .navbar.bg-neutral.text-neutral-content.sticky.top-0.NavBarContainer {
   background: linear-gradient(10deg, rgb(3, 129, 187), rgb(192, 20, 129));
   padding: none;
-}
+} */
 
 .carousel.w-full {
   width: 100vw;

@@ -1,6 +1,7 @@
 import React from 'react';
 import stephenPic from '../styles/stephen.png'
 import huaPic from '../styles/hua.png'
+import andrewPic from '../styles/andrew.png'
 
 const Testimonials = () => {
 
@@ -62,7 +63,7 @@ const Testimonials = () => {
                         <div
                         className="relative overflow-hidden bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mx-4 -mt-4 w-full"
                         data-mdb-ripple="true" data-mdb-ripple-color="light">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.jpg" className="w-full" />
+                        <img src={andrewPic} className="w-full " />
                         <a href="#!">
                             <div
                             className="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
@@ -71,8 +72,8 @@ const Testimonials = () => {
                         </div>
                     </div>
                     <div className="p-6">
-                        <h5 className="text-lg font-bold mb-2">Andrew Rama</h5>
-                        <h6 className="font-medium text-gray-600 mb-4">Software Engineer at <span className='text-red-600'>Docklight</span></h6>
+                        <h5 className="text-lg font-bold mb-2">Andrew Moy</h5>
+                        <h6 className="font-medium text-gray-600 mb-4">Software Engineer at <span className='text-red-600'>DacheQL</span></h6>
                         <p>"Cachier really is lightweight! Excellent alternative for those looking to cache GraphQL endpoints without having to use Apollo."</p>
                     </div>
                     </div>
