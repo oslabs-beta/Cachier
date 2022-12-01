@@ -1,6 +1,6 @@
 # Cachier
 
-<img src="demo/client/styles/CachierNavBar(1).png" alt="Alt text" title="Optional title">
+<img src="demo/client/styles/cachierlogo.png" alt="Alt text" title="Optional title">
 
 Welcome to Cachier, a lightweight GraphQL caching tool that is configured specifically for GraphQL to reduce load times and minimize data fetching.  
 
