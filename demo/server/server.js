@@ -1,11 +1,8 @@
-import { Request, Response } from 'express';
-
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 const schema = require('./schema.js');
-const redis = require('redis');
 const demoFunc = require('./DemoFunc.js');
 
 const cors = require('cors');
@@ -16,6 +13,8 @@ const partialQueryCache = require('../../NPM_PartialCache/partialQuery.js');
 
 connectDB();
 // Changed package.json to "start": "server2.js"
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,22 +22,22 @@ app.use(express.urlencoded({ extended: true }));
 //app.use(express.static(path.resolve(__dirname, '../client')));
 app.use(express.static(path.resolve(__dirname, '../../dist')));
 
-app.use('/cacheMoney', demoFunc('http://localhost:3000/graphql', 4, 2));
+app.use('/cacheMoney', demoFunc('https://cachier.onrender.com/graphql', 4, 2));
 
 app.use(
   '/partialCache',
-  partialQueryCache('http://localhost:3000/graphql', 60)
+  partialQueryCache('https://cachier.onrender.com/graphql', 60)
 );
 
 app.use(
   '/graphql',
   expressGraphQL({
     schema,
-    graphiql: true,
+    graphiql: false
   })
 );
 
-app.get('/*', (req: Request, res: Response) => {
+app.get('/*', (req, res) => {
   res.sendFile(
     path.resolve(__dirname, '../../dist/index.html'),
     function (err) {
@@ -49,9 +48,7 @@ app.get('/*', (req: Request, res: Response) => {
   );
 });
 
-app.use((req: Request, res: Response) =>
-  res.status(404).send('Cannot get route')
-);
+app.use((req, res) => res.status(404).send('Cannot get route'));
 
 app.listen(port, console.log(`Server listening on ${port}`));
 

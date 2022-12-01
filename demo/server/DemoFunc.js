@@ -49,9 +49,18 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
 
   return async function checkCache(req, res, next) {
     const query = req.body.query.trim();
-    let { variables } = req.body;
 
+    if (query === 'clear') {
+      cacheMoneyCache = {};
+      queue = new EvictionQueue();
+      currGroupSize = groupSize;
+      return res.json('Cache Cleared!');
+    }
+
+    let { variables } = req.body;
     const isMutation = query.startsWith('mutation');
+
+
 
     //accounts for if client did not include a variables object in the body of the post.
     if (!variables) {

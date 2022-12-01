@@ -59,6 +59,43 @@ const Demo = () => {
   });
 
   useEffect(() => {
+    fetch('https://cachier.onrender.com/partialCache/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: 'clear',
+      }),
+    }).then(data => data.json()).then(data => console.log('PartialCLEARED', data))
+
+    fetch('https://cachier.onrender.com/cacheMoney/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: 'clear',
+      }),
+    }).then(data => data.json()).then(data => console.log('regCACHECLEARED', data))
+
+    cachierFetch('https://cachier.onrender.com/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          query: 'clear',
+        }),
+      }).then( data => console.log('client Cache Cleared'))
+    
+  },[])
+
+
+  useEffect(() => {
     const string = `{ clients { ${clientIdChecked ? 'id' : ''}${
       clientNameChecked ? ' name' : ''
     }${clientEmailChecked ? ' email' : ''}${
@@ -80,7 +117,6 @@ const Demo = () => {
   };
 
   useEffect(() => {
-    console.log(queryTimeArray)
     setChartData({
       labels: queryTimeArray
         .map((data, i) => {
@@ -139,7 +175,6 @@ const Demo = () => {
           return res.json();
         })
         .then((data) => {
-          console.log('normal data', data)
           const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
           setLLData(data.queue); // updates state linked list object
           if (data.removedNode) {
@@ -172,8 +207,6 @@ const Demo = () => {
           return res.json();
         })
         .then((data) => {
-          console.log('partial data', data);
-          console.log('data.cached', data.cached)
           const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
           setQueryTime(endTime);
           setQueryTimeArray([...queryTimeArray, { latency: endTime, cached: data.cached }]); // updates data points for charts

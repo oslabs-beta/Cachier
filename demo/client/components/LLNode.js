@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/LLNode.css';
+import arrow from '../styles/arrow.png'
 
 const LLNode = (props) => {
   return (
@@ -12,7 +13,7 @@ const LLNode = (props) => {
         <img
           style={{ width: '2vw', height: '1vw' }}
           className='arrow'
-          src='../styles/arrow.png'
+          src={arrow}
         />
       </div>
     </div>

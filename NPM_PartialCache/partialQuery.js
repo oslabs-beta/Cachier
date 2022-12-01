@@ -15,9 +15,13 @@ function partialQueryCache(
   sampleSize = 5,
   evictionSize = 5
 ) {
-  const cache = {};
+  let cache = {};
   return async function helper(req, res, next) {
     const { query, uniques } = req.body;
+    if (query === 'clear') {
+      cache = {};
+      return res.json('Cache Cleared!');
+    }
     const dataFromCache = checkCache(queryNormalizer(query, false), cache);
     if (dataFromCache !== false) {
       const data = dataFromCache;
