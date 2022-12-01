@@ -65,8 +65,6 @@
 ### Built With
 
 * [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -106,7 +104,7 @@ In your server file, require our middleware to handle GraphQL requests using the
 const Cachier = require('@cachier/cache-partials');
 ~~~
 
-## Set up your Cachier middleware function.
+## Set up your Cachier middleware function
 endpoint - the endpoint that the client will make GraphQL queries to if it wants to utilize the cache.
 #### graphQLEndpoint 
 - The graphQLEndpoint parameter is where you will specify your GraphQL APIs endpoint. This allows Cachier to route all queries that are unable to be resolved by the Cachier Cache to your GraphQL API.
@@ -339,7 +337,7 @@ In your client file, import the cachier client side function:
 import clientSideCache from '@cachier/client-side';
 ~~~
 
-### Initalize your Cachier Client-side cache.
+### Initalize your Cachier client-side cache
 
 #### capacity 
 - the cacheCapacity parameter allows you to specify a maximum cache length which allows cachier to know when to evict from the cache.
@@ -394,7 +392,7 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Tech stack used
-Node - Express - React - Tailwind CSS - ChartJS - Redis - GraphQL - TypeScript - Jest - Supertest - Webpack
+Node - Express - React - Tailwind CSS - ChartJS - Redis - GraphQL - TypeScript - Jest - Supertest - Webpack 
 
 ## Here's how to contribute to our open source library
 Our vision for our open-source project is for fellow developers to be able to interate on and improve this tool. This is exactly where you and the community comes in. So, if you have an idea that can make Cachier better, you can make that idea come to life by following the steps below: 
