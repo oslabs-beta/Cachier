@@ -59,7 +59,83 @@ The client will fetch to the Cachier Cache endpoint with an object containing th
   fieldsArr: [ [ '__typename', 'id', [Object] ] ]
 }`
           
- Cachier parses incoming GraphQL queries and seperates them into subqueries. The queries are broken up into 3 arrays types, cache key , fields where their respective indexes connect with one another. 
+ Cachier parses incoming GraphQL queries and seperates them into subqueries stored in a "Cachier" object. The queries are broken up into 3 arrays typesArr, cacheKeysArr , and fieldsArr where their respective indexes connect with one another. FieldsArr will be an array of arrays containing the fields for each cacheKey, if a field is nested it will be stored as a nested object. We will then wait for the return Data and use this "Cachier" query object to sort the data into our cache.
+ 
+ `{
+   "typesArr": [
+      "dragons"
+   ],
+   "cacheKeysArr": [
+      "dragons"
+   ],
+   "fieldsArr": [
+      [
+         "__typename",
+         "id",
+         {
+            "return_payload_mass": [
+               "__typename",
+               "kg"
+            ]
+         }
+      ]
+   ]
+}`
+
+Here is data returned from our example query:
+
+`{
+  "data": {
+    "dragons": [
+      {
+        "id": "dragon2",
+        "return_payload_mass": {
+          "kg": 3000
+        }
+      },
+      {
+        "id": "dragon1",
+        "return_payload_mass": {
+          "kg": 3000
+        }
+      }
+    ]
+  }
+}`
+
+After receiving the data back Cachier will utilize the query map stored in the "Cachier" Object to normalize and store the data as individual keys inside the cache. This is how the data will look once normalized and stored in the cache:
+
+`{
+   "dragons": [
+      "dragon:dragon2",
+      "dragon:dragon1",
+      8492.694458007812
+   ],
+   "dragon:dragon2": {
+      "__typename": "Dragon",
+      "id": "dragon2",
+      "return_payload_mass": {
+         "__typename": "Mass",
+         "kg": 3000
+      },
+      "__CachierCacheDate": 8492.681999921799
+   },
+   "dragon:dragon1": {
+      "__typename": "Dragon",
+      "id": "dragon1",
+      "return_payload_mass": {
+         "__typename": "Mass",
+         "kg": 3000
+      },
+      "__CachierCacheDate": 8492.691667079926
+   }
+}
+`
+As you can see the dragons array now only stores references to keys in the cache and the data from the array is stored as seperate keys unique in the cache. This normalized cache structure eliminiates data redundancy in the cache and allows for partial retrieval of subset data. (You can ignore the "__CachierCacheData" fields and the number at the last index array, that is for our eviction policy which we will speak about next).
+
+
+
+
           
           
           
