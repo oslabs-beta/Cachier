@@ -30,15 +30,14 @@ Cachiers Normalized Server-side Cache breaks up GraphQL queries into individual 
 
 Example Fetch to SpaceX GQL API:
 
-```
-fetch('http://localhost:3000/partialCache', {
+``fetch('http://localhost:3000/partialCache', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               Accept: 'application/json',
             },
             body: JSON.stringify({
-              query: ``{
+              query: {
                 dragons {
                   id
                   return_payload_mass {
@@ -46,12 +45,11 @@ fetch('http://localhost:3000/partialCache', {
                   }
                 }
               }
-              ``,
+              ,
               uniques: { dragons: 'id' },
             }),
-          })
-          ```
-
+          })``
+          
 The client will fetch to the Cachier Cache endpoint with an object containing the query string and the unique types. The unique types need contain a unique identifier for all array/list items so that Cachier can generate a unique cache key. 
 
  
