@@ -72,8 +72,8 @@ const Testimonials = () => {
                         </div>
                     </div>
                     <div className="p-6">
-                        <h5 className="text-lg font-bold mb-2">Andrew Moy</h5>
-                        <h6 className="font-medium text-gray-600 mb-4">Software Engineer at <span className='text-red-600'>DacheQL</span></h6>
+                        <h5 className="text-lg font-bold mb-2">Andrew Rama</h5>
+                        <h6 className="font-medium text-gray-600 mb-4">Software Engineer at <span className='text-red-600'>Docklight</span></h6>
                         <p>"Cachier really is lightweight! Excellent alternative for those looking to cache GraphQL endpoints without having to use Apollo."</p>
                     </div>
                     </div>
