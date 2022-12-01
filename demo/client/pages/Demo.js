@@ -405,6 +405,8 @@ const Demo = () => {
             <div className='barChart'>
               <div className='barChartHeading'>
                 <h1> Query Cache Performance Chart</h1>
+              </div>
+              <div className='barChartHeading'>
                 <div className='chartCheckBoxDiv'>
                   <div className='checkFieldDiv'>
                     <input
@@ -416,7 +418,7 @@ const Demo = () => {
                       }}
                     ></input>
                     <label className='cacheLabel'>
-                      Cachier Direct Server & Client-side Cache
+                      <p>Cachier Direct Server & Client-side Cache</p>
                     </label>
                   </div>
                   <div className='checkFieldDiv'>
