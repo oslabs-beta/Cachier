@@ -1,5 +1,5 @@
 .demoContainer {
-  background-color: #d2f0fb;
+  background-color: #e2f7ff;
 }
 
 .heading {
@@ -18,6 +18,8 @@
 
 .clientFields {
   padding-left: 1vw;
+  display: flex;
+  gap: 1vw;
 }
 
 body {
@@ -61,7 +63,7 @@ body {
   padding: 0px !important;
   border: black 2px;
   border-radius: 10px;
-  background-color: #245594;
+  background-color: #121f4e;
   color: 'white';
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
@@ -73,7 +75,7 @@ body {
   justify-content: center;
   padding: 1vw 0;
   display: flex;
-  color: #ffd240;
+  color: #d2f0fb;
   font-size: 2vw;
   margin: 0;
 }
@@ -96,7 +98,7 @@ body {
   font-family: Georgia, serif;
   font-size: 1.1vw;
   padding-left: 1.1vw;
-  color: #ffd240;
+  color: #d2f0fb;
 }
 
 .metrics {
@@ -140,10 +142,10 @@ body {
 .queryString {
   border: black 2px;
   border-radius: 10px;
-  background-color: #245594;
+  background-color: #121f4e;
   padding: 1vw;
   font-family: Georgia, serif;
-  color: #ffd240;
+  color: #d2f0fb;
 }
 
 .queryDisplayStringContainer {
@@ -163,8 +165,8 @@ body {
 }
 
 .queryButton {
-  background-color: #245594;
-  color: #ffd240;
+  background-color: #121f4e;
+  color: #d2f0fb;
   padding: 0.6vw;
   font-size: 1vw;
 }
@@ -195,7 +197,7 @@ body {
 }
 
 .evictedText {
-  color: #245594;
+  color: #121f4e;
 }
 
 .demoLeftContainer {

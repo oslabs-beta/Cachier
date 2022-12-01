@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
   return (
-    <div className='navbar bg-neutral text-neutral-content sticky top-0 NavBarContainer'>
+    <div style={{background: 'linear-gradient(10deg, rgb(3, 129, 187), rgb(192, 20, 129))'}}className='navbar bg-neutral text-neutral-content sticky top-0 NavBarContainer'>
       <div className='flex-1'>
         <NavLink to='/'>
           {' '}

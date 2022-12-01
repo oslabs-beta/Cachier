@@ -290,58 +290,66 @@ const Demo = () => {
                   <div>
                     {clientChecked === true && (
                       <div className='clientFields'>
-                        <input
-                          type='checkbox'
-                          onChange={() =>
-                            clientIdChecked
-                              ? setClientIdChecked(false)
-                              : setClientIdChecked(true)
-                          }
-                          checked={clientIdChecked}
-                          id='clients'
-                          name='clientId'
-                          value='clientId'
-                        />
-                        <label htmlFor='clientId'> ID</label>
-                        <input
-                          type='checkbox'
-                          onChange={() =>
-                            clientNameChecked
-                              ? setClientNameChecked(false)
-                              : setClientNameChecked(true)
-                          }
-                          checked={clientNameChecked}
-                          id='clientName'
-                          name='clientName'
-                          value='clientName'
-                        />
-                        <label htmlFor='clientName'> Name</label>
-                        <input
-                          type='checkbox'
-                          onChange={() =>
-                            clientEmailChecked
-                              ? setClientEmailChecked(false)
-                              : setClientEmailChecked(true)
-                          }
-                          checked={clientEmailChecked}
-                          id='clientEmail'
-                          name='clientEmail'
-                          value='clientEmail'
-                        />
-                        <label htmlFor='clientEmail'> Email</label>
-                        <input
-                          type='checkbox'
-                          onChange={() =>
-                            clientPhoneChecked
-                              ? setClientPhoneChecked(false)
-                              : setClientPhoneChecked(true)
-                          }
-                          checked={clientPhoneChecked}
-                          id='clientPhone'
-                          name='clientPhone'
-                          value='clientPhone'
-                        />
-                        <label htmlFor='clientPhone'> Phone</label>
+                        <div>
+                          <input
+                            type='checkbox'
+                            onChange={() =>
+                              clientIdChecked
+                                ? setClientIdChecked(false)
+                                : setClientIdChecked(true)
+                            }
+                            checked={clientIdChecked}
+                            id='clients'
+                            name='clientId'
+                            value='clientId'
+                          />
+                          <label htmlFor='clientId'> ID</label>
+                        </div>
+                        <div>
+                          <input
+                            type='checkbox'
+                            onChange={() =>
+                              clientNameChecked
+                                ? setClientNameChecked(false)
+                                : setClientNameChecked(true)
+                            }
+                            checked={clientNameChecked}
+                            id='clientName'
+                            name='clientName'
+                            value='clientName'
+                          />
+                          <label htmlFor='clientName'> Name</label>
+                        </div>
+                        <div>
+                          <input
+                            type='checkbox'
+                            onChange={() =>
+                              clientEmailChecked
+                                ? setClientEmailChecked(false)
+                                : setClientEmailChecked(true)
+                            }
+                            checked={clientEmailChecked}
+                            id='clientEmail'
+                            name='clientEmail'
+                            value='clientEmail'
+                          />
+                          <label htmlFor='clientEmail'> Email</label>
+                        </div>
+                        <div>
+                          <input
+                            type='checkbox'
+                            onChange={() =>
+                              clientPhoneChecked
+                                ? setClientPhoneChecked(false)
+                                : setClientPhoneChecked(true)
+                            }
+                            checked={clientPhoneChecked}
+                            id='clientPhone'
+                            name='clientPhone'
+                            value='clientPhone'
+                          />
+                          <label htmlFor='clientPhone'> Phone</label>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -397,6 +405,8 @@ const Demo = () => {
             <div className='barChart'>
               <div className='barChartHeading'>
                 <h1> Query Cache Performance Chart</h1>
+              </div>
+              <div className='barChartHeading'>
                 <div className='chartCheckBoxDiv'>
                   <div className='checkFieldDiv'>
                     <input
@@ -408,7 +418,7 @@ const Demo = () => {
                       }}
                     ></input>
                     <label className='cacheLabel'>
-                      Cachier Direct Server & Client-side Cache
+                      <p>Cachier Direct Server & Client-side Cache</p>
                     </label>
                   </div>
                   <div className='checkFieldDiv'>
