@@ -68,7 +68,7 @@ const Demo = () => {
       body: JSON.stringify({
         query: 'clear',
       }),
-    }).then(data => data.json()).then(data => console.log('PartialCLEARED', data))
+    });
 
     fetch('https://cachier.onrender.com/cacheMoney/', {
       method: 'POST',
@@ -79,21 +79,19 @@ const Demo = () => {
       body: JSON.stringify({
         query: 'clear',
       }),
-    }).then(data => data.json()).then(data => console.log('regCACHECLEARED', data))
+    });
 
     cachierFetch('https://cachier.onrender.com/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          query: 'clear',
-        }),
-      }).then( data => console.log('client Cache Cleared'))
-    
-  },[])
-
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: 'clear',
+      }),
+    });
+  }, []);
 
   useEffect(() => {
     const string = `{ clients { ${clientIdChecked ? 'id' : ''}${
@@ -209,7 +207,10 @@ const Demo = () => {
         .then((data) => {
           const endTime = (performance.now() - startTime).toFixed(2); // records end time for front-end latency measure
           setQueryTime(endTime);
-          setQueryTimeArray([...queryTimeArray, { latency: endTime, cached: data.cached }]); // updates data points for charts
+          setQueryTimeArray([
+            ...queryTimeArray,
+            { latency: endTime, cached: data.cached },
+          ]); // updates data points for charts
           setQueryResult(JSON.stringify(data.data, null, 2));
           setLoading(false);
         });
@@ -486,7 +487,6 @@ const Demo = () => {
               />
             )}
           </div>
-          
         </div>
       </div>
     </div>
