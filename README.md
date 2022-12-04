@@ -181,9 +181,6 @@ The client will fetch to the Cachier Cache endpoint with an object containing th
    "typesArr": [
       "dragons"
    ],
-   "cacheKeysArr": [
-      "dragons"
-   ],
    "fieldsArr": [
       [
          "__typename",
@@ -200,7 +197,7 @@ The client will fetch to the Cachier Cache endpoint with an object containing th
 ~~~
           
          
- Cachier parses incoming GraphQL queries and seperates them into subqueries stored in a "Cachier" object. The queries are broken up into 3 arrays typesArr, cacheKeysArr , and fieldsArr where their respective indexes connect with one another. FieldsArr will be an array of arrays containing the fields for each cacheKey, if a field is nested it will be stored as a nested object. We will then wait for the return Data and use this "Cachier" query object to sort the data into our cache.
+ Cachier parses incoming GraphQL queries and seperates them into subqueries stored in a "Cachier" object. The queries are broken up into 2 arrays typesArr, and fieldsArr where their respective indexes connect with one another. FieldsArr will be an array of arrays containing the fields for each cacheKey, if a field is nested it will be stored as a nested object. We will then wait for the return Data and use this "Cachier" query object to sort the data into our cache.
  
 
 Here is data returned from our example query:
