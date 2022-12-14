@@ -64,7 +64,8 @@
 
 ### Built With
 
-* [![React][React.js]][React-url]
+ [![React][React.js]][React-url]
+ [![Redis][Redis.io]][Redis-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -439,6 +440,8 @@ Distributed under the MIT license.
 [product-screenshot]: images/screenshot.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
+[Redis.io]: https://img.shields.io/badge/Redis-Data%20store-red
+[Redis-url]: https://redis.io/
 [Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
 [Vue-url]: https://vuejs.org/
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
