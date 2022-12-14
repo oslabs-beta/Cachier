@@ -66,6 +66,9 @@
 
  [![React][React.js]][React-url]
  [![Redis][Redis.io]][Redis-url]
+ [![GraphQL][GraphQL.io]][GraphQL-url]
+ [![Node/Express][Express.io]][Express-url]
+ [![TailwindCSS][TailwindCSS.io]][Tailwind-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -442,6 +445,12 @@ Distributed under the MIT license.
 [React-url]: https://reactjs.org/
 [Redis.io]: https://img.shields.io/badge/Redis-Data%20store-red
 [Redis-url]: https://redis.io/
+[GraphQL.io]: https://img.shields.io/badge/%20-GraphQL-brightgreen
+[GraphQL-url]: https://graphql.org/learn/
+[Express.io]: https://img.shields.io/badge/Node-Express-orange
+[Express-url]: https://expressjs.com/
+[TailwindCSS.io]: https://img.shields.io/badge/%20UI-TailwindCSS%20-blue
+[Tailwind-url]: https://v2.tailwindcss.com/docs
 [Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
 [Vue-url]: https://vuejs.org/
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
