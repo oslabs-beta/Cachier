@@ -89,7 +89,7 @@ GraphQL does not have native HTTP caching as a result of its singular employment
 - Cachier Direct Server-side Cache
 - Cachier Direct Client-side Cache
 
-We will go over each solution in detail below.
+We will go over each solution in detail below:
 
 <!-- GETTING STARTED -->
 ## Getting Started
