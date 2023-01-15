@@ -44,7 +44,7 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#if-using-redis">Prerequisites</a></li>
         <li><a href="#installation-and-import">Installation</a></li>
       </ul>
     </li>
