@@ -20,7 +20,7 @@
   <p align="center">
     GraphQL caching tool with custom eviction policies, cache normalization.
     <br />
-    <a href="https://github.com/oslabs-beta/Cachier"><strong>Explore the docs »</strong></a>
+    <a href="https://cachierql.com/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/oslabs-beta/Cachier">View Demo</a>
