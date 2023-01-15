@@ -45,15 +45,15 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#installation-and-import">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#contributors">Contact</a></li>
+    <li><a href="#works-cited">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -98,7 +98,7 @@ We will go over each solution in detail below:
 Cachier's Normalized Server-side Cache breaks up GraphQL queries into individual sub-queries to be stored in the cache. This provides maximum cache efficency by organizing data in a way that prevents data redundancy and allows for partial retrievals of subset data, thus drastically reducing network requests to the database.
 
 ## Installation and Import
-If this is your first time using Cachiers Normalized Cache, run the following command in your terminal.
+If this is your first time using Cachier's Normalized Cache, run the following command in your terminal.
 ~~~
 npm install @cachier/cache-partials
 ~~~
@@ -127,12 +127,14 @@ app.use(
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <!-- USAGE EXAMPLES -->
+
 ## Usage
+
 ~~~
 app.use( '/Cachier', Cachier('https://api.spacex.land/graphql', 100, 5, 5) );
 ~~~
 
-To fetch from Cachiers normalized cache you will fetch like you would to your GraphQL API except you will need set the option for uniques in the request body. The uniques object will need to contain a unique identifier for all list items in your query. You will need to include the list name as the key and the unique identifier as a the value. The unique identifier is any piece of data that is queried that is unique to each list item.
+To fetch from Cachier's normalized cache you will fetch like you would to your GraphQL API except you will need set the option for uniques in the request body. The uniques object will need to contain a unique identifier for all list items in your query. You will need to include the list name as the key and the unique identifier as a the value. The unique identifier is any piece of data that is queried that is unique to each list item.
 
 ~~~
 fetch('/graphql', {
@@ -259,14 +261,15 @@ As you can see the dragons array now only stores references to keys in the cache
 
 ### Approximated LRU Eviction 
 
-Cachiers Normalized Cache uses a custom Approximated LRU Eviction Policy. This is not a true LRU implementation, but it comes very close in terms of performance. The reason Cachier does not use a true LRU implementation is because it costs more memory. Cachiers LRU policy works by creating a sample (the sample size can be configured by the developer) of randomly selected keys from the cache and evicting the least recently used key from the sample.
+Cachier's Normalized Cache uses a custom Approximated LRU Eviction Policy. This is not a true LRU implementation, but it comes very close in terms of performance. The reason Cachier does not use a true LRU implementation is because it costs more memory. Cachier's LRU policy works by creating a sample (the sample size can be configured by the developer) of randomly selected keys from the cache and evicting the least recently used key from the sample.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Cachier Direct Server-side Cache
-Cachiers Direct Server-side Cache uses a custom LRU-SLFR (Least Recently Used Smallest Latency First Replacement) policy. LRU-SLFR is very similar to LRU except it takes latency into account as well as recency when evicting. Cachiers LRU-SLFR eviction policy utilizes a linked hash map to achieve true LRU and allows O(1) deletion, lookup, and insertion. Cachier takes latency into account as well as recency by creating a group of least recent queries and removes the query with the lowest latency first. This allows for much smarter evictions compared to traditional LRU. The whole group will be evicted first before moving on to the next group. Check out the demo page for a visualization of the eviction policy
+Cachier's Direct Server-side Cache uses a custom LRU-SLFR (Least Recently Used Smallest Latency First Replacement) policy. LRU-SLFR is very similar to LRU except it takes latency into account as well as recency when evicting. Cachier's LRU-SLFR eviction policy utilizes a linked hash map to achieve true LRU and allows O(1) deletion, lookup, and insertion. Cachier takes latency into account as well as recency by creating a group of least recent queries and removes the query with the lowest latency first. This allows for much smarter evictions compared to traditional LRU. The whole group will be evicted first before moving on to the next group. Check out the demo page for a visualization of the eviction policy
 
 ### How to install and import
-If this is your first time using Cachiers Direct Server-side Cache, run the following command in your terminal.
+If this is your first time using Cachier's Direct Server-side Cache, run the following command in your terminal.
 
 ~~~
 npm install @cachier/server-side
@@ -322,11 +325,11 @@ Then install redis npm package.
 
 ## Cachier Direct Client-side Cache
 
-Cachiers Direct Client-Side Cache uses the same underlying mechanisms as Cachiers Direct Server-side cache except it stores the cache in the client browsers session storage. This allows for even faster cached query times than a server side implementation. Cachiers client side cache was built to mimic a traditional fetch request so it is very easy to integrate into new and existing codebases.
+Cachier's Direct Client-Side Cache uses the same underlying mechanisms as Cachier's Direct Server-side cache except it stores the cache in the client browsers session storage. This allows for even faster cached query times than a server side implementation. Cachier's client side cache was built to mimic a traditional fetch request so it is very easy to integrate into new and existing codebases.
 
 ### Installation and Import
 
-If this is your first time using Cachiers Direct Client-side Cache, run the following command in your terminal.
+If this is your first time using Cachier's Direct Client-side Cache, run the following command in your terminal.
 
 ~~~
 npm install @cachier/client-side
