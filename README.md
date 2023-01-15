@@ -18,7 +18,7 @@
 <h3 align="center">Cachier</h3>
 
   <p align="center">
-    project_description
+    GraphQL caching tool with custom eviction policies, cache normalization.
     <br />
     <a href="https://github.com/oslabs-beta/Cachier"><strong>Explore the docs »</strong></a>
     <br />
