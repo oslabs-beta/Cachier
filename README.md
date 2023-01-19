@@ -132,7 +132,7 @@ app.use(
 app.use( '/Cachier', Cachier('https://api.spacex.land/graphql', 100, 5, 5) );
 ~~~
 
-To fetch from Cachier's normalized cache you will fetch like you would to your GraphQL API except you will need set the option for uniques in the request body. The uniques object will need to contain a unique identifier for all list items in your query. You will need to include the list name as the key and the unique identifier as a the value. The unique identifier is any piece of data that is queried that is unique to each list item.
+To fetch from Cachier's normalized cache you will fetch like you would to your GraphQL API except you will need set the option for uniques in the request body. The uniques object will need to contain a unique identifier for all list items in your query. You will need to include the list name as the key and the unique identifier as a the value. The unique identifier is any piece of data that is queried that is unique to each list item!
 
 ~~~
 fetch('/graphql', {
