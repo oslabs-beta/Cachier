@@ -13,6 +13,7 @@ eviction scrutiny, respectively. Ex: capacity = 50, groupSize = 5 -> whenever ca
 the 5 least recently accessed queries are selected, and the one with the highest latency (time delay) is evicted from the Redis cache, local cache and linked list.
 This custom eviction policy accounts for both query recency and latency.
 
+@params: endpoint (str), capacity (int), groupSize (int), redisClient (bool)
 */
 
 const fetch = (...args) =>
@@ -35,9 +36,9 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
     }
     return output;
   };
-  //initalizes a new eviction queue (linked list) for the server
+  //Initalize a new eviction queue (linked list) for the server
   let queue = new EvictionQueue();
-  //keeps track of the current group size
+  //Keep track of the current group size
   let currGroupSize = groupSize;
   let cacheMoneyCache = {};
 
@@ -53,17 +54,17 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
 
     const isMutation = query.startsWith('mutation');
 
-    //accounts for if client did not include a variables object in the body of the post.
+    //Account for client not including a variables object in the body of the post request
     if (!variables) {
       variables = {};
     }
 
-    //Stringifies variables and concats with queryStr to form a unique key in the cache.
+    //Stringify variables and concats with queryStr to form a unique key in the cache
     const variablesStr = JSON.stringify(variables);
     const cacheKey = JSON.stringify(`${query}${variablesStr}`);
     let valueFromCache;
 
-    //checks if query is already in our redis cache or cacheMoneyCache if redis is not being used.
+    //Check if query is already in our Redis cache or Object Storage (cacheMoneyCache)
     if (redisClient) {
       try {
         valueFromCache = await redisClient.get(cacheKey);
@@ -76,10 +77,10 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
     }
 
     if (valueFromCache) {
-      // update recency of the accessed cacheKey by moving it to the front of the linked list.
+      //Update recency of the accessed cacheKey by moving it to the front of the linked list
 
       queue.updateRecencyOfExistingCache(cacheKey);
-      // if cache contains the requested data return data from the cache.
+      //If cache contains the requested data, return data from the cache
       const parsedValue = JSON.parse(valueFromCache);
       const listArray = traverse(queue);
 
@@ -133,7 +134,7 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
               currGroupSize,
               cached: false,
             });
-          } else {
+          } else { //if it is a mutation
             return res.json(data);
           }
         })
@@ -160,43 +161,43 @@ class Node {
 //Doubly linked list to keep track of our eviction order
 class EvictionQueue {
   constructor() {
-    // tracks front of queue (where newest queries go)
+    //Track front of queue (where newest queries go)
     this.head = null;
-    // tracks back of queue (oldest accessed query)
+    //Track back of queue (oldest accessed query)
     this.tail = null;
-    //keeps track of the number of nodes in the queue
+    //Keep track of the number of nodes in the queue
     this.length = 0;
-    //Keeps all nodes of linkedlist in a hashmap associated with their redis keys to allow O(1) updates to node positions in the queue
+    //Keep all nodes of linkedlist in a hashmap associated with their redis keys to allow O(1) updates to node positions in the queue
     this.cache = {};
     this.nodeNum = 1;
   }
 
-  //adds a node to the queue (at the head).
+  //Add a node to the queue (at the head).
   add(cacheKey, latency) {
-    //creates a new Node containing the latency of the query and its key in the cache.
+    //Create a new Node containing the latency of the query and its key in the cache.
     const newNode = new Node(cacheKey, latency, this.nodeNum++);
     this.cache[cacheKey] = newNode;
-    //accounts for if the queue is empty.
+    //Account for if the queue is empty.
     if (this.head === null && this.tail === null) {
       this.head = newNode;
       this.tail = newNode;
     } else {
-      //Will add new node to the front of the list by making it the new head.
-      //makes old head prev point to the newNode.
+      //Add new node to the front of the list by making it the new head - make old head prev point to the newNode.
       this.head.prev = newNode;
-      // makes newNode point to old head and relabels newNode as the new head.
+      //Make newNode point to old head and relabel newNode as the new head.
       newNode.next = this.head;
       this.head = newNode;
     }
 
-    //updates length of the EvictionQueue.
+    //Update length of the EvictionQueue.
     this.length += 1;
   }
 
+  // Remove node with lowest latency (fastest query) from eviction queue
   removeSmallestLatencyFromGroup(groupSize) {
     if (this.tail === null) return undefined;
 
-    //keeps track of smallest latency node.
+    //Keep track of smallest latency node.
     let minLatencyNodeInGroup = this.tail;
     let currentNode = this.tail;
 
@@ -209,7 +210,7 @@ class EvictionQueue {
       return currentNode;
     }
 
-    //iterates through the least recent group and finds the smallest latency node.
+    //Iterate through the least recent group and finds the smallest latency node.
     while (groupSize > 0 && currentNode) {
       if (currentNode.latency < minLatencyNodeInGroup.latency)
         minLatencyNodeInGroup = currentNode;
@@ -217,7 +218,7 @@ class EvictionQueue {
       groupSize -= 1;
     }
 
-    //accounts for if the minLatencyNodeInGroup is the head of the list
+    //Account for if the minLatencyNodeInGroup is the head of the list
     if (this.head === minLatencyNodeInGroup) {
       this.head = this.head.next;
       this.head.prev = null;
@@ -226,7 +227,7 @@ class EvictionQueue {
       return minLatencyNodeInGroup;
     }
 
-    //accounts for if the minLatencyNodeInGroup is the tail of the list
+    //Account for if the minLatencyNodeInGroup is the tail of the list
     if (this.tail === minLatencyNodeInGroup) {
       this.tail = this.tail.prev;
       this.tail.next = null;
@@ -244,15 +245,15 @@ class EvictionQueue {
     return removedNode;
   }
 
-  //Moves node to front of the linkedList if its cache is accessed again inorder to update recency.
+  //Move node to front of the linkedList if its cache is accessed again inorder to update recency.
   updateRecencyOfExistingCache(cacheKey) {
     const node = this.cache[cacheKey];
     //if node being updated is already at the head of list, we can just return since it is already in the most recent position.
     if (this.head === node) {
       return;
     }
-    //remove linkage of the node at the current position.
-    //accounts for if the tail node is the one getting updated since it wouldnt have a next node in the list.
+    //Remove linkage of the node at the current position.
+    //Accounts for if the tail node is the one getting updated since it wouldnt have a next node in the list.
     if (this.tail === node) {
       node.prev.next = node.next;
       this.tail = node.prev;
@@ -261,7 +262,7 @@ class EvictionQueue {
       node.prev.next = node.next;
     }
 
-    //move node to the head of the queue inorder to update the recency.
+    //Move node to the head of the queue inorder to update the recency.
     this.head.prev = node;
     node.next = this.head;
     this.head = node;
@@ -270,6 +271,3 @@ class EvictionQueue {
 }
 
 module.exports = CacheMoney;
-
-
-
