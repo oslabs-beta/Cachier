@@ -1,16 +1,16 @@
 /* @description 
 
-Queries to /cacheMoney endpoint (from frontend) reach here. Locally stored linked list tracks what is in Redis cache. 
-The doubly linked list ("EvictionQueue") has a head that tracks the newest query, and a tail which tracks the oldest (least recently accessed) query.
+Queries to /cacheMoney endpoint reach this middleware. Locally stored Eviction Queue tracks what is in the cache (cacheMoneyCache or Redis). 
+The doubly linked list ("EvictionQueue") has a head - tracks the newest query, and a tail - tracks the oldest (least recently accessed) query.
 A locally stored object cache (cache) stores queries for O(1) look up.
-When a query reaches the backend, Redis (server-side) cache is queried for that key. If it is living in the Redis cache, the query result is returned 
-= Cached Result. If a query is non-existent in Redis cache, the database (URI provided via the parameter "endpoint") is queried and returned = Uncached Result
+When a query arrives, the cache is queried for that key. If it's living in the cache, the query result is returned = Cached Result. 
+If a query doesn't existent in the cache, the database (URI provided via parameter "endpoint") is queried and returned = Uncached Result.
 That query result is stored in Redis, and at the head of our linked list. 
-Optionally, developers can choose to store the cache fully locally, simply by not providing a "redisClient" parameter. In this case, "cacheMoneyCache" 
-stores queries in object form, just like Redis.
+Developers can choose to store the cache in Object Storage, simply by not providing a "redisClient" parameter. In this case, "cacheMoneyCache" 
+stores queries in object form, just like Redis. We only recommend this for development purposes.
 The parameters "capacity" and "groupSize" determine the max capacity of the cache and the amount of queries in that cache that will be selected for 
-eviction scrutiny, respectively. Ex: capacity = 50, groupSize = 5 -> whenever cache capacity is reached (50 unique queries have been made anc cached), 
-the 5 least recently accessed queries are selected, and the one with the highest latency (time delay) is evicted from the Redis cache, local cache and linked list.
+eviction scrutiny, respectively. Ex: capacity = 50, groupSize = 5 -> whenever cache capacity is exceeded (51 unique queries have been made and cached), 
+the 5 least recently accessed queries are selected, and the one with the highest latency (time delay) is evicted from the cache.
 This custom eviction policy accounts for both query recency and latency.
 
 @params: endpoint (str), capacity (int), groupSize (int), redisClient (bool)
