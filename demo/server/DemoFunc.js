@@ -158,16 +158,16 @@ class Node {
   }
 }
 
-//Doubly linked list to keep track of our eviction order
+//Keep track of eviction order
 class EvictionQueue {
   constructor() {
     //Track front of queue (where newest queries go)
     this.head = null;
     //Track back of queue (oldest accessed query)
     this.tail = null;
-    //Keep track of the number of nodes in the queue
+    //Track the # of nodes in the queue
     this.length = 0;
-    //Keep all nodes of linkedlist in a hashmap associated with their redis keys to allow O(1) updates to node positions in the queue
+    //Keep all nodes of linkedlist in a hashmap associated with their Redis keys to allow O(1) updates to node positions in the queue
     this.cache = {};
     this.nodeNum = 1;
   }
@@ -197,11 +197,11 @@ class EvictionQueue {
   removeSmallestLatencyFromGroup(groupSize) {
     if (this.tail === null) return undefined;
 
-    //Keep track of smallest latency node.
+    //Track the smallest latency node.
     let minLatencyNodeInGroup = this.tail;
     let currentNode = this.tail;
 
-    //accounts for edge case if eviction policy capacity is set to 1 and the only node in queue is being removed.
+    //Account for edge case: eviction policy capacity is set to 1 and the only node in queue is being removed.
     if (this.head === this.tail) {
       this.head = null;
       this.tail = null;
@@ -210,7 +210,7 @@ class EvictionQueue {
       return currentNode;
     }
 
-    //Iterate through the least recent group and finds the smallest latency node.
+    //Iterate through the least recent group and find the smallest latency node.
     while (groupSize > 0 && currentNode) {
       if (currentNode.latency < minLatencyNodeInGroup.latency)
         minLatencyNodeInGroup = currentNode;
@@ -218,7 +218,7 @@ class EvictionQueue {
       groupSize -= 1;
     }
 
-    //Account for if the minLatencyNodeInGroup is the head of the list
+    //Account for: the smallest latency query in group is the head of the Eviction Queue
     if (this.head === minLatencyNodeInGroup) {
       this.head = this.head.next;
       this.head.prev = null;
@@ -227,7 +227,7 @@ class EvictionQueue {
       return minLatencyNodeInGroup;
     }
 
-    //Account for if the minLatencyNodeInGroup is the tail of the list
+    //Account for: the smallest latency query in group is the tail of the Eviction Queue
     if (this.tail === minLatencyNodeInGroup) {
       this.tail = this.tail.prev;
       this.tail.next = null;
@@ -236,7 +236,7 @@ class EvictionQueue {
       return minLatencyNodeInGroup;
     }
 
-    //Removes minLatencyNodeInGroup from the Eviction Queue if node is not the tail or head.
+    //Remove smallest latency query in group from the Eviction Queue if node is not the tail or head
     const removedNode = minLatencyNodeInGroup;
     minLatencyNodeInGroup.prev.next = minLatencyNodeInGroup.next;
     minLatencyNodeInGroup.next.prev = minLatencyNodeInGroup.prev;
@@ -245,15 +245,16 @@ class EvictionQueue {
     return removedNode;
   }
 
-  //Move node to front of the linkedList if its cache is accessed again inorder to update recency.
+  //Move node to front of the Eviction Queue if its cache is accessed again inorder to update recency
   updateRecencyOfExistingCache(cacheKey) {
     const node = this.cache[cacheKey];
-    //if node being updated is already at the head of list, we can just return since it is already in the most recent position.
+    //Edge case: if node being updated is already at the head of list -> its already in the most recent position
     if (this.head === node) {
       return;
     }
-    //Remove linkage of the node at the current position.
-    //Accounts for if the tail node is the one getting updated since it wouldnt have a next node in the list.
+    
+    //Unlink Node being updated
+    //Account for: if the tail node is getting updated
     if (this.tail === node) {
       node.prev.next = node.next;
       this.tail = node.prev;
