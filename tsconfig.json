@@ -101,6 +101,6 @@
     "demo/server/DemoFunc.ts",
     "demo/types.ts"
   ],
-  "include": ["./demo/"],
+  "include": ["./demo/", "__tests__/demoFuncTests.js"],
   "exclude": ["node_modules"]
 }
