@@ -4,7 +4,7 @@ Queries to /cacheMoney endpoint reach this middleware. Locally stored Eviction Q
 The doubly linked list ("EvictionQueue") has a head - tracks the newest query, and a tail - tracks the oldest (least recently accessed) query.
 A locally stored object cache (cache) stores queries for O(1) look up.
 When a query arrives, the cache is queried for that key. If it's living in the cache, the query result is returned = Cached Result. 
-If a query doesn't existent in the cache, the database (URI provided via parameter "endpoint") is queried and returned = Uncached Result.
+If a query doesn't exist in the cache, the database (URI provided via parameter "endpoint") is queried and returned = Uncached Result.
 That query result is stored in Redis, and at the head of our linked list. 
 Developers can choose to store the cache in Object Storage, simply by not providing a "redisClient" parameter. In this case, "cacheMoneyCache" 
 stores queries in object form, just like Redis. We only recommend this for development purposes.
@@ -20,6 +20,8 @@ const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
+  
+  //Return list of cached items (for demo purposes)
   const traverse = (list) => {
     let currNode = list.head;
     const output = [];
@@ -36,11 +38,10 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
     }
     return output;
   };
-  //Initalize a new eviction queue (linked list) for the server
-  let queue = new EvictionQueue();
-  //Keep track of the current group size
-  let currGroupSize = groupSize;
-  let cacheMoneyCache = {};
+  
+  let queue = new EvictionQueue(); //Initalize a new eviction queue (linked list) for the server
+  let currGroupSize = groupSize;  //Track of the current group size
+  let cacheMoneyCache = {};     //Initialize a the cache (Object Storge) for O(1) lookup
 
   if (capacity < 1 || groupSize < 1 || groupSize > capacity) {
     throw new Error(
@@ -78,7 +79,6 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
 
     if (valueFromCache) {
       //Update recency of the accessed cacheKey by moving it to the front of the linked list
-
       queue.updateRecencyOfExistingCache(cacheKey);
       //If cache contains the requested data, return data from the cache
       const parsedValue = JSON.parse(valueFromCache);
@@ -134,7 +134,20 @@ function CacheMoney(endpoint, capacity, groupSize, redisClient = null) {
               currGroupSize,
               cached: false,
             });
-          } else { //if it is a mutation
+          } else { //Mutation -> Cache invalidation
+            if (redisClient){
+              //Clear out cache in Redis
+              redisClient.flushall((err, success) => {
+                if (err) console.log('Error clearing Redis cache: ', err);
+                else console.log(success);
+              });
+              redisClient.set(cacheKey, JSON.stringify(data))
+            } else {
+              //Delete cache (Object Storage) and instantiate a new one
+              delete cacheMoneyCache;
+              let cacheMoneyCache = {};
+              (cacheMoneyCache[cacheKey] = JSON.stringify(data));
+            }
             return res.json(data);
           }
         })
@@ -167,7 +180,7 @@ class EvictionQueue {
     this.tail = null;
     //Track the # of nodes in the queue
     this.length = 0;
-    //Keep all nodes of linkedlist in a hashmap associated with their Redis keys to allow O(1) updates to node positions in the queue
+    //Keep all nodes of linkedlist in a hashmap associated with their query keys to allow O(1) updates to node positions in the queue
     this.cache = {};
     this.nodeNum = 1;
   }
@@ -197,11 +210,11 @@ class EvictionQueue {
   removeSmallestLatencyFromGroup(groupSize) {
     if (this.tail === null) return undefined;
 
-    //Track the smallest latency node.
+    //Initialize smallest latency tracker and current node tracker at the tail
     let minLatencyNodeInGroup = this.tail;
     let currentNode = this.tail;
 
-    //Account for edge case: eviction policy capacity is set to 1 and the only node in queue is being removed.
+    //Account for edge case: eviction policy capacity is set to 1 and the only node in queue is being removed
     if (this.head === this.tail) {
       this.head = null;
       this.tail = null;
@@ -241,13 +254,16 @@ class EvictionQueue {
     minLatencyNodeInGroup.prev.next = minLatencyNodeInGroup.next;
     minLatencyNodeInGroup.next.prev = minLatencyNodeInGroup.prev;
     this.length--;
+    //delete this.cache[minLatencyNodeInGroup.key];
     delete this.cache[removedNode.key];
     return removedNode;
   }
 
-  //Move node to front of the Eviction Queue if its cache is accessed again inorder to update recency
-  updateRecencyOfExistingCache(cacheKey) {
+  //Move node to front of the Eviction Queue when its cache is accessed again inorder to update recency
+  updateRecencyOfExistingCache(cacheKey) { //O(n) lookup 
+    //hashmap (cache) is used to lookup node in O(1) time and return the node
     const node = this.cache[cacheKey];
+
     //Edge case: if node being updated is already at the head of list -> its already in the most recent position
     if (this.head === node) {
       return;
