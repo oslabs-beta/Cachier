@@ -120,7 +120,7 @@ minLatencyNodeInGroup.next.prev = minLatencyNodeInGroup.prev;
 this.length--;
 delete this.cache[minLatencyNodeInGroup.key];
 return minLatencyNodeInGroup;
-}
+
 
 
 describe("add()", () => {
