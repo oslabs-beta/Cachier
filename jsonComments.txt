@@ -1,5 +1,0 @@
-"express-graphql": "^0.12.0",
-    "graphql": "^16.6.0",
-    this is a test change for git 29th nov 5:55
-     this is a test change for git 29th nov 6:01pm
-     
