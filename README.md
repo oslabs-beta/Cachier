@@ -107,7 +107,8 @@ const Cachier = require('@cachier/cache-partials');
 ~~~
 
 ## Set up your Cachier middleware function
-endpoint - the endpoint that the client will make GraphQL queries to if it wants to utilize the cache.
+#### Endpoint 
+- The endpoint that the client will make GraphQL queries to if it wants to utilize the cache.
 #### graphQLEndpoint 
 - The graphQLEndpoint parameter is where you will specify your GraphQL APIs endpoint. This allows Cachier to route all queries that are unable to be resolved by the Cachier Cache to your GraphQL API.
 #### cacheCapacity 
@@ -290,7 +291,7 @@ const Cachier = require('@cachier/server-side')
 #### groupSize 
 - the groupSize parameter allows the developer to configure the number of least recently used keys that will be considered for eviction. The key with the least latency out of the group will be evicted first. The whole group will be evicted first before moving on to the next group.
 #### RedisClient 
-- If you would like to use Redis to store your cache, insert your connected redis client as an arguement. If you leave out this parameter Cachier will default to its native built in cache.
+- If you would like to use Redis to store your cache, insert your connected redis client as an argument. If you leave out this parameter Cachier will default to its native built in cache.
 
 
 ~~~
